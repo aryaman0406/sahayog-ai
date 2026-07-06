@@ -1,0 +1,94 @@
+export const hi = {
+  // Navbar
+  brand: "सहयोग AI",
+  navHome: "होम",
+  navDashboard: "डैशबोर्ड",
+  navSaved: "बुकमार्क",
+  navAnalytics: "एनालिटिक्स",
+  navLogin: "लॉग इन",
+  navRegister: "रजिस्टर",
+  navLogout: "लॉग आउट",
+
+  // Common buttons
+  btnBack: "पीछे",
+  btnSave: "सहेजें",
+  btnSaved: "सहेजा गया",
+  btnRemove: "हटाएं",
+  btnShare: "साझा करें",
+  btnApply: "अभी आवेदन करें",
+
+  // Landing / Hero
+  heroEyebrow: "एआई के माध्यम से नागरिकों का सशक्तिकरण",
+  heroTitle: "सहयोग AI",
+  heroSubtitle: "उन सरकारी कल्याणकारी योजनाओं की खोज करें जिनके लिए आप पात्र हैं, सरल भाषा में लाभ समझें, और आवेदन करने के तरीके पर चरण-दर-चरण मार्गदर्शन प्राप्त करें।",
+  heroCTA: "पात्र योजनाएं खोजें",
+  statSchemes: "कैटलॉग की गई योजनाएं",
+  statTime: "सत्यापन का समय",
+  statUsers: "सक्रिय उपयोगकर्ता",
+
+  // AuthForm
+  authLoginTitle: "स्वागत है",
+  authLoginSubtitle: "अपनी मिलान की गई योजनाओं की जांच करने और बुकमार्क ट्रैक करने के लिए लॉग इन करें।",
+  authRegisterTitle: "खाता बनाएं",
+  authRegisterSubtitle: "अपनी प्रोफाइल सुरक्षित करने और पात्र कल्याणकारी योजनाओं की खोज करने के लिए रजिस्टर करें।",
+  authNameLabel: "पूरा नाम",
+  authEmailLabel: "ईमेल पता",
+  authPasswordLabel: "पासवर्ड",
+  authLoginBtn: "लॉग इन करें",
+  authRegisterBtn: "खाता बनाएं",
+  authNoAccount: "खाता नहीं है?",
+  authHaveAccount: "पहले से खाता है?",
+
+  // ProfileForm
+  profileFormTitle: "पात्रता प्रश्नावली",
+  profileFormSubtitle: "पात्र योजनाओं को स्कैन करने के लिए अपने बारे में कुछ विवरण साझा करें।",
+  profileAge: "आयु",
+  profileIncome: "वार्षिक पारिवारिक आय (₹)",
+  profileOccupation: "व्यवसाय",
+  profileArea: "क्षेत्र",
+  profileGender: "लिंग",
+  profileLanguage: "पसंदीदा भाषा",
+  profileSubmit: "योग्य योजनाएं दिखाएं",
+  profileUpdating: "प्रोफ़ाइल अपडेट हो रही है...",
+
+  // SchemeResults
+  resultsTitle: "आपकी पात्र योजनाएं",
+  resultsSubtitle: "आपकी प्रोफ़ाइल के आधार पर, यहाँ वे योजनाएं दी गई हैं जिनके लिए आप पात्र हैं।",
+  noMatches: "आपकी प्रोफ़ाइल विवरण से कोई योजना मेल नहीं खाती। ऊपर दिए गए सर्च बार में खोजने का प्रयास करें।",
+  searchPlaceholder: "योजना का नाम, श्रेणी या विवरण खोजें...",
+  matchScore: "मिलान स्कोर",
+
+  // SchemeDetails
+  schemeDetailTitle: "योजना की जानकारी",
+  schemeBenefits: "योजना के लाभ",
+  schemeEligibility: "पात्रता मापदंड",
+  schemeDocuments: "आवश्यक दस्तावेज",
+  schemeApply: "आवेदन कैसे करें",
+  copiedLink: "लिंक क्लिपबोर्ड पर कॉपी किया गया!",
+
+  // SavedSchemes
+  savedTitle: "मेरी बुकमार्क की गई योजनाएं",
+  savedSubtitle: "त्वरित संदर्भ के लिए आपने इन योजनाओं को सहेजा है।",
+  noSaved: "आपने अभी तक कोई योजना बुकमार्क नहीं की है।",
+
+  // ChatPanel
+  chatTitle: "सहयोग AI सहायक से पूछें",
+  chatMeta: "हिन्दी में वास्तविक समय के जवाब",
+  chatVoiceOn: "आवाज जवाब: चालू",
+  chatVoiceOff: "आवाज जवाब: बंद",
+  chatPlaceholder: "दस्तावेजों, लाभों या आवेदन करने के तरीकों के बारे में पूछें...",
+  chatSend: "भेजें",
+  chatListening: "सुन रहा हूँ...",
+  chatMicBtn: "बोलने के लिए दबाएं",
+  chatMicStop: "माइक बंद करें",
+
+  // Analytics
+  analyticsTitle: "मेरे विश्लेषण और इनसाइट्स",
+  analyticsSubtitle: "योजनाओं की उपलब्धता और मिलानों का सारांश।",
+  analyticsTotalMatched: "कुल पात्र योजनाएं",
+  analyticsTopCategory: "शीर्ष पात्र श्रेणी",
+  analyticsIncomeStatus: "आय स्थिति",
+  analyticsIncomeBelow: "गरीबी रेखा से नीचे (BPL) पात्र",
+  analyticsIncomeAbove: "गरीबी रेखा से ऊपर (APL) पात्र",
+  analyticsChartTitle: "श्रेणी के अनुसार पात्र योजनाएं"
+};

@@ -1,0 +1,94 @@
+export const en = {
+  // Navbar
+  brand: "Sahayog AI",
+  navHome: "Home",
+  navDashboard: "Dashboard",
+  navSaved: "Saved",
+  navAnalytics: "Analytics",
+  navLogin: "Login",
+  navRegister: "Register",
+  navLogout: "Logout",
+
+  // Common buttons
+  btnBack: "Back",
+  btnSave: "Save",
+  btnSaved: "Saved",
+  btnRemove: "Remove",
+  btnShare: "Share",
+  btnApply: "Apply Now",
+
+  // Landing / Hero
+  heroEyebrow: "EMPOWERING CITIZENS THROUGH AI",
+  heroTitle: "Sahayog AI",
+  heroSubtitle: "Discover Indian government welfare schemes you qualify for, understand benefits in plain language, and get step-by-step guidance on how to apply.",
+  heroCTA: "Find Eligible Schemes",
+  statSchemes: "Schemes Catalogued",
+  statTime: "Verification Time",
+  statUsers: "Active Users",
+
+  // AuthForm
+  authLoginTitle: "Welcome Back",
+  authLoginSubtitle: "Login to check your matched schemes and track bookmarks.",
+  authRegisterTitle: "Create Account",
+  authRegisterSubtitle: "Register to save your profile and discover eligible welfare schemes.",
+  authNameLabel: "Full Name",
+  authEmailLabel: "Email Address",
+  authPasswordLabel: "Password",
+  authLoginBtn: "Log In",
+  authRegisterBtn: "Create Account",
+  authNoAccount: "Don't have an account?",
+  authHaveAccount: "Already have an account?",
+
+  // ProfileForm
+  profileFormTitle: "Eligibility Questionnaire",
+  profileFormSubtitle: "Tell us a few details about yourself to scan matching welfare schemes.",
+  profileAge: "Age",
+  profileIncome: "Annual Household Income (₹)",
+  profileOccupation: "Occupation",
+  profileArea: "Area",
+  profileGender: "Gender",
+  profileLanguage: "Preferred Language",
+  profileSubmit: "Show Matching Schemes",
+  profileUpdating: "Updating profile...",
+
+  // SchemeResults
+  resultsTitle: "Your Eligible Schemes",
+  resultsSubtitle: "Based on your profile, here are the schemes you qualify for.",
+  noMatches: "No schemes match your profile details. Try searching in the search bar above.",
+  searchPlaceholder: "Search schemes by name, category or description...",
+  matchScore: "Match Score",
+
+  // SchemeDetails
+  schemeDetailTitle: "Scheme Information",
+  schemeBenefits: "Benefits",
+  schemeEligibility: "Eligibility Criteria",
+  schemeDocuments: "Required Documents",
+  schemeApply: "How to Apply",
+  copiedLink: "Link copied to clipboard!",
+
+  // SavedSchemes
+  savedTitle: "My Bookmarked Schemes",
+  savedSubtitle: "You have bookmarked these schemes for quick reference.",
+  noSaved: "You haven't bookmarked any schemes yet.",
+
+  // ChatPanel
+  chatTitle: "Ask Sahayog AI Assistant",
+  chatMeta: "Real-time responses in English",
+  chatVoiceOn: "Voice replies: ON",
+  chatVoiceOff: "Voice replies: OFF",
+  chatPlaceholder: "Ask about documents, benefits, or how to apply...",
+  chatSend: "Send",
+  chatListening: "Listening...",
+  chatMicBtn: "Hold to Speak",
+  chatMicStop: "Stop Mic",
+
+  // Analytics
+  analyticsTitle: "My Insights & Analytics",
+  analyticsSubtitle: "High-level summary of scheme availability and matches.",
+  analyticsTotalMatched: "Total Matched Schemes",
+  analyticsTopCategory: "Top Eligible Category",
+  analyticsIncomeStatus: "Income Status",
+  analyticsIncomeBelow: "Below Poverty Line Eligible",
+  analyticsIncomeAbove: "Above Poverty Line Eligible",
+  analyticsChartTitle: "Eligible Schemes by Category"
+};

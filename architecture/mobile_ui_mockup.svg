@@ -1,0 +1,88 @@
+<svg width="900" height="600" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+<rect width="900" height="600" fill="#FBF7EF"/>
+
+<!-- Phone 1: Profile intake -->
+<g transform="translate(40,40)">
+<rect x="0" y="0" width="240" height="500" rx="28" fill="#FFFFFF" stroke="#D8CDB0" stroke-width="2"/>
+<rect x="14" y="14" width="212" height="472" rx="16" fill="#FBF7EF"/>
+<text x="120" y="42" text-anchor="middle" font-size="13" font-weight="bold" fill="#1B2440">Sahayog AI</text>
+<text x="120" y="60" text-anchor="middle" font-size="10" fill="#6B7190">Step 1 of 2</text>
+
+<rect x="28" y="80" width="184" height="36" rx="8" fill="#FFFFFF" stroke="#D8CDB0"/>
+<text x="36" y="103" font-size="10" fill="#8A8FA8">Age: 35</text>
+
+<rect x="28" y="126" width="184" height="36" rx="8" fill="#FFFFFF" stroke="#D8CDB0"/>
+<text x="36" y="149" font-size="10" fill="#8A8FA8">Occupation: Farmer</text>
+
+<rect x="28" y="172" width="184" height="36" rx="8" fill="#FFFFFF" stroke="#D8CDB0"/>
+<text x="36" y="195" font-size="10" fill="#8A8FA8">Income: Rs. 1,20,000/yr</text>
+
+<rect x="28" y="218" width="86" height="32" rx="16" fill="#2A3563"/>
+<text x="71" y="239" text-anchor="middle" font-size="10" fill="#FFFFFF">Rural</text>
+<rect x="122" y="218" width="90" height="32" rx="16" fill="#FFFFFF" stroke="#D8CDB0"/>
+<text x="167" y="239" text-anchor="middle" font-size="10" fill="#2A3563">Urban</text>
+
+<rect x="28" y="430" width="184" height="40" rx="20" fill="#E08E2C"/>
+<text x="120" y="455" text-anchor="middle" font-size="11" font-weight="bold" fill="#FFFFFF">Show matching schemes</text>
+</g>
+
+<!-- Arrow between phones -->
+<line x1="300" y1="290" x2="340" y2="290" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow2)"/>
+<defs>
+<marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<!-- Phone 2: Results -->
+<g transform="translate(340,40)">
+<rect x="0" y="0" width="240" height="500" rx="28" fill="#FFFFFF" stroke="#D8CDB0" stroke-width="2"/>
+<rect x="14" y="14" width="212" height="472" rx="16" fill="#FBF7EF"/>
+<text x="120" y="42" text-anchor="middle" font-size="13" font-weight="bold" fill="#1B2440">5 schemes found</text>
+
+<rect x="28" y="58" width="184" height="58" rx="10" fill="#FFFFFF" stroke="#D8CDB0"/>
+<text x="38" y="78" font-size="10" font-weight="bold" fill="#1B2440">PM-KISAN</text>
+<text x="38" y="92" font-size="8" fill="#6B7190">Rs. 6,000/year income support</text>
+<text x="38" y="106" font-size="8" fill="#3C7A5C">100% match</text>
+
+<rect x="28" y="124" width="184" height="58" rx="10" fill="#FFFFFF" stroke="#D8CDB0"/>
+<text x="38" y="144" font-size="10" font-weight="bold" fill="#1B2440">Ayushman Bharat</text>
+<text x="38" y="158" font-size="8" fill="#6B7190">Rs. 5L health insurance cover</text>
+<text x="38" y="172" font-size="8" fill="#3C7A5C">100% match</text>
+
+<rect x="28" y="190" width="184" height="58" rx="10" fill="#FFFFFF" stroke="#D8CDB0"/>
+<text x="38" y="210" font-size="10" font-weight="bold" fill="#1B2440">PMAY Housing</text>
+<text x="38" y="224" font-size="8" fill="#6B7190">Home loan interest subsidy</text>
+<text x="38" y="238" font-size="8" fill="#3C7A5C">100% match</text>
+
+<rect x="28" y="430" width="184" height="40" rx="20" fill="#2A3563"/>
+<text x="120" y="455" text-anchor="middle" font-size="11" fill="#FFFFFF">Ask a question</text>
+</g>
+
+<!-- Arrow between phones -->
+<line x1="600" y1="290" x2="640" y2="290" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow2)"/>
+
+<!-- Phone 3: Chat -->
+<g transform="translate(640,40)">
+<rect x="0" y="0" width="240" height="500" rx="28" fill="#FFFFFF" stroke="#D8CDB0" stroke-width="2"/>
+<rect x="14" y="14" width="212" height="472" rx="16" fill="#FBF7EF"/>
+<text x="120" y="42" text-anchor="middle" font-size="13" font-weight="bold" fill="#1B2440">Ask Sahayog AI</text>
+
+<rect x="28" y="60" width="160" height="50" rx="12" fill="#F4EEDF"/>
+<text x="36" y="78" font-size="8" fill="#1B2440">Namaste! Tell me your</text>
+<text x="36" y="90" font-size="8" fill="#1B2440">age, income and area to</text>
+<text x="36" y="102" font-size="8" fill="#1B2440">find matching schemes.</text>
+
+<rect x="52" y="120" width="160" height="34" rx="12" fill="#2A3563"/>
+<text x="132" y="141" text-anchor="middle" font-size="8" fill="#FFFFFF">What documents do I need?</text>
+
+<rect x="28" y="164" width="170" height="50" rx="12" fill="#F4EEDF"/>
+<text x="36" y="182" font-size="8" fill="#1B2440">For PM-KISAN you'll need:</text>
+<text x="36" y="194" font-size="8" fill="#1B2440">Aadhaar, land papers,</text>
+<text x="36" y="206" font-size="8" fill="#1B2440">bank passbook.</text>
+
+<rect x="28" y="430" width="184" height="40" rx="20" fill="#FFFFFF" stroke="#D8CDB0"/>
+<text x="40" y="455" font-size="9" fill="#8A8FA8">Type a message...</text>
+</g>
+
+</svg>
