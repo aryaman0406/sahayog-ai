@@ -50,6 +50,17 @@ export const en = {
   profileLanguage: "Preferred Language",
   profileSubmit: "Show Matching Schemes",
   profileUpdating: "Updating profile...",
+  rural: "Rural",
+  urban: "Urban",
+  male: "Male",
+  female: "Female",
+  other: "Other",
+  farmer: "Farmer",
+  student: "Student",
+  "self-employed": "Self-Employed",
+  unemployed: "Unemployed",
+  salaried: "Salaried",
+  any: "Any",
 
   // SchemeResults
   resultsTitle: "Your Eligible Schemes",

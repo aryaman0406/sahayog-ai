@@ -50,6 +50,17 @@ export const hi = {
   profileLanguage: "पसंदीदा भाषा",
   profileSubmit: "योग्य योजनाएं दिखाएं",
   profileUpdating: "प्रोफ़ाइल अपडेट हो रही है...",
+  rural: "ग्रामीण",
+  urban: "शहरी",
+  male: "पुरुष",
+  female: "महिला",
+  other: "अन्य",
+  farmer: "किसान",
+  student: "छात्र",
+  "self-employed": "स्वरोजगार",
+  unemployed: "बेरोजगार",
+  salaried: "वेतनभोगी",
+  any: "कोई भी",
 
   // SchemeResults
   resultsTitle: "आपकी पात्र योजनाएं",

@@ -70,7 +70,8 @@ export default function SchemeDetail({ onCheckEligibility }) {
     async function fetchScheme() {
       try {
         setLoading(true);
-        const res = await fetch(`/api/schemes/${id}`);
+        const baseUrl = import.meta.env.VITE_API_URL || "";
+        const res = await fetch(`${baseUrl}/api/schemes/${id}`);
         if (!res.ok) throw new Error("Scheme not found");
         const data = await res.json();
         setScheme(data);

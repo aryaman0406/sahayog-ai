@@ -35,7 +35,8 @@ export function AuthProvider({ children }) {
     if (savedToken) {
       headers["Authorization"] = `Bearer ${savedToken}`;
     }
-    return fetch(url, { ...options, headers });
+    const baseUrl = import.meta.env.VITE_API_URL || "";
+    return fetch(`${baseUrl}${url}`, { ...options, headers });
   }, []);
 
   // On mount: restore session from localStorage token
@@ -47,7 +48,8 @@ export function AuthProvider({ children }) {
         return;
       }
       try {
-        const res = await fetch("/api/auth/me", {
+        const baseUrl = import.meta.env.VITE_API_URL || "";
+        const res = await fetch(`${baseUrl}/api/auth/me`, {
           headers: { Authorization: `Bearer ${savedToken}` },
         });
         if (res.ok) {
@@ -71,7 +73,8 @@ export function AuthProvider({ children }) {
   async function login(email, password) {
     let res;
     try {
-      res = await fetch("/api/auth/login", {
+      const baseUrl = import.meta.env.VITE_API_URL || "";
+      res = await fetch(`${baseUrl}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -99,7 +102,8 @@ export function AuthProvider({ children }) {
   async function register(registerData) {
     let res;
     try {
-      res = await fetch("/api/auth/register", {
+      const baseUrl = import.meta.env.VITE_API_URL || "";
+      res = await fetch(`${baseUrl}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(registerData),

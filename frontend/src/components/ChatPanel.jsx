@@ -62,8 +62,16 @@ export default function ChatPanel({ profile, matches }) {
     let reconnectTimeout = null;
 
     function connect() {
-      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${protocol}//${window.location.host}/ws/chat`;
+      const apiEndpoint = import.meta.env.VITE_API_URL || "";
+      let wsUrl;
+      if (apiEndpoint) {
+        const cleanEndpoint = apiEndpoint.replace(/^https?:\/\//, "");
+        const protocol = apiEndpoint.startsWith("https") ? "wss:" : "ws:";
+        wsUrl = `${protocol}//${cleanEndpoint}/ws/chat`;
+      } else {
+        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+        wsUrl = `${protocol}//${window.location.host}/ws/chat`;
+      }
       ws = new WebSocket(wsUrl);
 
       ws.onopen = () => {

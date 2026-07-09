@@ -110,7 +110,7 @@ export default function ProfileForm({ onSubmit }) {
             <select value={form.occupation} onChange={(e) => update("occupation", e.target.value)}>
               {OCCUPATIONS.map((o) => (
                 <option key={o} value={o}>
-                  {o.charAt(0).toUpperCase() + o.slice(1)}
+                  {t(o)}
                 </option>
               ))}
             </select>
@@ -124,14 +124,14 @@ export default function ProfileForm({ onSubmit }) {
                 className={form.location_type === "rural" ? "toggle active" : "toggle"}
                 onClick={() => update("location_type", "rural")}
               >
-                Rural
+                {t("rural")}
               </button>
               <button
                 type="button"
                 className={form.location_type === "urban" ? "toggle active" : "toggle"}
                 onClick={() => update("location_type", "urban")}
               >
-                Urban
+                {t("urban")}
               </button>
             </div>
           </label>
@@ -147,7 +147,7 @@ export default function ProfileForm({ onSubmit }) {
                 className={form.gender === g ? "toggle active" : "toggle"}
                 onClick={() => update("gender", g)}
               >
-                {g.charAt(0).toUpperCase() + g.slice(1)}
+                {t(g)}
               </button>
             ))}
           </div>
