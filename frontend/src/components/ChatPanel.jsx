@@ -233,7 +233,7 @@ export default function ChatPanel({ profile, matches }) {
       
       <div className="chat-meta-row">
         <span className="chat-meta-pill">
-          {language === "hi" ? "हिन्दी में जवाब" : "Replies in English"}
+          {t("chatMeta")}
         </span>
         <button 
           type="button" 

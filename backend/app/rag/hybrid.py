@@ -4,7 +4,7 @@ from app.data.schemes import get_scheme_by_id
 
 def hybrid_search(query: str, profile: dict, n_results: int = 5) -> list[dict]:
     # Step 1 - Semantic search
-    semantic_results = semantic_search(query, n_results=10)
+    semantic_results = semantic_search(query, n_results=10, apply_boost=True)
     semantic_ids = {str(r["id"]): r["relevance_score"] for r in semantic_results}
     
     # Step 2 - Rule-based matching

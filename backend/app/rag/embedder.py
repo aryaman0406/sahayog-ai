@@ -161,7 +161,8 @@ def _ensure_index():
 # ── semantic search ───────────────────────────────────────────────────────────
 
 def semantic_search(query: str, n_results: int = 5,
-                    filter_metadata: Optional[dict] = None) -> list[dict]:
+                    filter_metadata: Optional[dict] = None,
+                    apply_boost: bool = False) -> list[dict]:
     idx = _ensure_index()
     if not idx:
         return []
@@ -189,7 +190,7 @@ def semantic_search(query: str, n_results: int = 5,
         relevance = sim * 100
 
         sid = str(scheme.get("id", ""))
-        if sid in NATIONAL_SCHEMES:
+        if apply_boost and sid in NATIONAL_SCHEMES:
             relevance += 35.0
 
         scored.append({
