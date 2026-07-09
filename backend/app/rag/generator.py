@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 if settings.GEMINI_API_KEY and settings.GEMINI_API_KEY != "your_key_here":
     genai.configure(api_key=settings.GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")
 else:
     logger.warning("GEMINI_API_KEY is missing or invalid. Using fallback assistant.")
     model = None
