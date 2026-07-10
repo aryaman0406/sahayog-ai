@@ -13,6 +13,30 @@ export const bn = {
   btnRemove: "মুছুন",
   btnShare: "শেয়ার করুন",
   btnApply: "আবেদন করুন",
+
+  // Landing / Hero
+  heroEyebrow: "এআই এর মাধ্যমে নাগরিকদের ক্ষমতায়ন",
+  heroTitle: "সহযোগ AI",
+  heroSubtitle: "আপনি যে সমস্ত ভারতীয় সরকারি কল্যাণমূলক প্রকল্পগুলির জন্য যোগ্য তা আবিষ্কার করুন, সহজ ভাষায় সুবিধাগুলি বুঝুন এবং কীভাবে আবেদন করবেন সে সম্পর্কে ধাপে ধাপে নির্দেশিকা পান।",
+  heroCTA: "যোগ্য প্রকল্পগুলি খুঁজুন",
+  statSchemes: "ক্যাটালগভুক্ত প্রকল্পসমূহ",
+  statTime: "যাচাইকরণের সময়",
+  statInstant: "তাত্ক্ষণিক",
+  statUsers: "সক্রিয় ব্যবহারকারী",
+
+  // AuthForm
+  authLoginTitle: "স্বাগতম",
+  authLoginSubtitle: "আপনার মিলতি স্কিমগুলি পরীক্ষা করতে এবং বুকমার্কগুলি ট্র্যাক করতে লগ ইন করুন।",
+  authRegisterTitle: "অ্যাকাউন্ট তৈরি করুন",
+  authRegisterSubtitle: "আপনার প্রোফাইল সংরক্ষণ করতে এবং যোগ্য কল্যাণমূলক প্রকল্পগুলি আবিষ্কার করতে নিবন্ধন করুন।",
+  authNameLabel: "সম্পূর্ণ নাম",
+  authEmailLabel: "ইমেল ঠিকানা",
+  authPasswordLabel: "পাসওয়ার্ড",
+  authLoginBtn: "লগ ইন করুন",
+  authRegisterBtn: "অ্যাকাউন্ট তৈরি করুন",
+  authNoAccount: "অ্যাকাউন্ট নেই?",
+  authHaveAccount: "ইতিমধ্যেই অ্যাকাউন্ট আছে?",
+
   matchScore: "যোগ্যতার স্কোর",
   schemeBenefits: "পরিকল্পনার সুবিধাসমূহ",
   schemeEligibility: "যোগ্যতার মাপকাঠি",
@@ -48,5 +72,15 @@ export const bn = {
   chatVoiceOn: "ভয়েস প্রতিক্রিয়া: চালু",
   chatVoiceOff: "ভয়েস প্রতিক্রিয়া: বন্ধ",
   chatPlaceholder: "প্রয়োজনীয় কাগজপত্র, সুবিধা বা আবেদন প্রক্রিয়া সম্পর্কে জিজ্ঞাসা করুন...",
-  chatSend: "পাঠান"
+  chatSend: "পাঠান",
+
+  // Analytics
+  analyticsTitle: "আমার অন্তর্দৃষ্টি ও বিশ্লেষণ",
+  analyticsSubtitle: "স্কিম প্রাপ্যতা এবং মিলের উচ্চ-স্তরের সারাংশ।",
+  analyticsTotalMatched: "মোট মিলে যাওয়া প্রকল্প",
+  analyticsTopCategory: "শীর্ষ যোগ্য বিভাগ",
+  analyticsIncomeStatus: "আয়ের অবস্থা",
+  analyticsIncomeBelow: "দারিদ্র্য সীমার নিচে যোগ্য",
+  analyticsIncomeAbove: "দারিদ্র্য সীমার উপরে যোগ্য",
+  analyticsChartTitle: "বিভাগ অনুযায়ী যোগ্য প্রকল্পসমূহ"
 };

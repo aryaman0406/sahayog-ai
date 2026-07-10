@@ -20,18 +20,13 @@ export function LanguageProvider({ children }) {
     localStorage.setItem("language", language);
   }, [language]);
 
-  const toggleLanguage = () => {
-    // Legacy fallback, but switcher will now use direct select dropdown
-    setLanguage((prev) => (prev === "en" ? "hi" : "en"));
-  };
-
   const t = (key) => {
     const langDict = dictionary[language] || dictionary.en;
     return langDict[key] || dictionary.en[key] || key;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );

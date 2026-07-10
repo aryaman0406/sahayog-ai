@@ -13,6 +13,30 @@ export const mr = {
   btnRemove: "काढून टाका",
   btnShare: "शेअर करा",
   btnApply: "अर्ज करा",
+
+  // Landing / Hero
+  heroEyebrow: "एआयच्या माध्यमातून नागरिकांचे सक्षमीकरण",
+  heroTitle: "सहयोग AI",
+  heroSubtitle: "तुम्ही पात्र असलेल्या भारतीय सरकारी कल्याणकारी योजना शोधा, सोप्या भाषेत फायदे समजून घ्या आणि अर्ज कसा करावा याबद्दल चरण-दर-चरण मार्गदर्शन मिळवा.",
+  heroCTA: "पात्र योजना शोधा",
+  statSchemes: "नोंदणीकृत योजना",
+  statTime: "सत्यापन वेळ",
+  statInstant: "झटपट",
+  statUsers: "सक्रिय वापरकर्ते",
+
+  // AuthForm
+  authLoginTitle: "पुन्हा स्वागत आहे",
+  authLoginSubtitle: "आपल्या जुळणाऱ्या योजना तपासण्यासाठी आणि बुकमार्क ट्रॅक करण्यासाठी लॉग इन करा.",
+  authRegisterTitle: "खाते तयार करा",
+  authRegisterSubtitle: "आपले प्रोफाइल जतन करण्यासाठी आणि पात्र कल्याणकारी योजना शोधण्यासाठी नोंदणी करा.",
+  authNameLabel: "पूर्ण नाव",
+  authEmailLabel: "ईमेल पत्ता",
+  authPasswordLabel: "पासवर्ड",
+  authLoginBtn: "लॉग इन करा",
+  authRegisterBtn: "खाते तयार करा",
+  authNoAccount: "खाते नाही का?",
+  authHaveAccount: "आधीच खाते आहे का?",
+
   matchScore: "साम्य गुण",
   schemeBenefits: "योजनेचे फायदे",
   schemeEligibility: "पात्रता निकष",
@@ -48,5 +72,15 @@ export const mr = {
   chatVoiceOn: "आवाज प्रतिसाद: चालू",
   chatVoiceOff: "आवाज प्रतिसाद: बंद",
   chatPlaceholder: "कागदपत्रे, फायदे किंवा अर्ज कसा करावा याबद्दल विचारा...",
-  chatSend: "पाठवा"
+  chatSend: "पाठवा",
+
+  // Analytics
+  analyticsTitle: "माझे विश्लेषण आणि इनसाइट्स",
+  analyticsSubtitle: "योजनांची उपलब्धता आणि साम्य यांचा उच्च-स्तरीय सारांश.",
+  analyticsTotalMatched: "एकूण जुळलेल्या योजना",
+  analyticsTopCategory: "शीर्ष पात्र श्रेणी",
+  analyticsIncomeStatus: "उत्पन्न स्थिती",
+  analyticsIncomeBelow: "दारिद्र्यरेषेखालील (BPL) पात्र",
+  analyticsIncomeAbove: "दारिद्र्यरेषेवरील (APL) पात्र",
+  analyticsChartTitle: "श्रेणीनुसार पात्र योजना"
 };

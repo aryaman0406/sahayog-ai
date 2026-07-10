@@ -24,6 +24,7 @@ export const en = {
   heroCTA: "Find Eligible Schemes",
   statSchemes: "Schemes Catalogued",
   statTime: "Verification Time",
+  statInstant: "Instant",
   statUsers: "Active Users",
 
   // AuthForm

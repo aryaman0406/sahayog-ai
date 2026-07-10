@@ -39,7 +39,7 @@ export default function Hero({ isLanding = true }) {
           </div>
           <div className="hero-stat-divider" />
           <div className="hero-stat">
-            <span className="hero-stat-num">Instant</span>
+            <span className="hero-stat-num">{t("statInstant")}</span>
             <span className="hero-stat-label">{t("statTime")}</span>
           </div>
           <div className="hero-stat-divider" />

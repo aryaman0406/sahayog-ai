@@ -24,6 +24,7 @@ export const hi = {
   heroCTA: "पात्र योजनाएं खोजें",
   statSchemes: "कैटलॉग की गई योजनाएं",
   statTime: "सत्यापन का समय",
+  statInstant: "तत्काल",
   statUsers: "सक्रिय उपयोगकर्ता",
 
   // AuthForm

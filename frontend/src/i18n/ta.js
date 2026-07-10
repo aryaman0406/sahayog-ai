@@ -13,6 +13,30 @@ export const ta = {
   btnRemove: "அகற்று",
   btnShare: "பகிர்",
   btnApply: "விண்ணப்பிக்கவும்",
+
+  // Landing / Hero
+  heroEyebrow: "AI மூலம் குடிமக்களை மேம்படுத்துதல்",
+  heroTitle: "சஹயோக் AI",
+  heroSubtitle: "நீங்கள் தகுதிபெறும் இந்திய அரசு நலத்திட்டங்களைக் கண்டறியவும், எளிய மொழியில் பலன்களைப் புரிந்து கொள்ளவும், விண்ணப்பிப்பது எப்படி என்பது குறித்த படிப்படியான வழிகாட்டுதலைப் பெறவும்.",
+  heroCTA: "தகுதியான திட்டங்களைக் கண்டறியவும்",
+  statSchemes: "பட்டியலிடப்பட்ட திட்டங்கள்",
+  statTime: "சரிபார்ப்பு நேரம்",
+  statInstant: "உடனடி",
+  statUsers: "செயலில் உள்ள பயனர்கள்",
+
+  // AuthForm
+  authLoginTitle: "மீண்டும் வருக",
+  authLoginSubtitle: "உங்களின் பொருத்தமான திட்டங்களை சரிபார்க்கவும் புக்மார்க்குகளை கண்காணிக்கவும் உள்நுழையவும்.",
+  authRegisterTitle: "கணக்கை உருவாக்கு",
+  authRegisterSubtitle: "சுயவிவரத்தை சேமிக்கவும் தகுதியான திட்டங்களை கண்டறியவும் பதிவு செய்யவும்.",
+  authNameLabel: "முழு பெயர்",
+  authEmailLabel: "மின்னஞ்சல் முகவரி",
+  authPasswordLabel: "கடவுச்சொல்",
+  authLoginBtn: "உள்நுழை",
+  authRegisterBtn: "கணக்கை உருவாக்கு",
+  authNoAccount: "கணக்கு இல்லையா?",
+  authHaveAccount: "ஏற்கனவே கணக்கு உள்ளதா?",
+
   matchScore: "பொருத்த மதிப்பெண்",
   schemeBenefits: "திட்டத்தின் நன்மைகள்",
   schemeEligibility: "தகுதி வரம்பு",
@@ -48,5 +72,15 @@ export const ta = {
   chatVoiceOn: "குரல் பதில்கள்: ஆன்",
   chatVoiceOff: "குரல் பதில்கள்: ஆஃப்",
   chatPlaceholder: "ஆவணங்கள், நன்மைகள் அல்லது விண்ணப்பிப்பது பற்றி கேளுங்கள்...",
-  chatSend: "அனுப்பு"
+  chatSend: "அனுப்பு",
+
+  // Analytics
+  analyticsTitle: "எனது நுண்ணறிவு மற்றும் பகுப்பாய்வு",
+  analyticsSubtitle: "திட்டங்களின் கிடைக்கும் தன்மை மற்றும் பொருத்தங்களின் உயர்மட்ட சுருக்கம்.",
+  analyticsTotalMatched: "மொத்த பொருத்தப்பட்ட திட்டங்கள்",
+  analyticsTopCategory: "சிறந்த தகுதியான வகை",
+  analyticsIncomeStatus: "வருமான நிலை",
+  analyticsIncomeBelow: "வறுமைக் கோட்டிற்கு கீழ் தகுதியுடையவர்",
+  analyticsIncomeAbove: "வறுமைக் கோட்டிற்கு மேல் தகுதியுடையவர்",
+  analyticsChartTitle: "வகை வாரியாக தகுதியான திட்டங்கள்"
 };

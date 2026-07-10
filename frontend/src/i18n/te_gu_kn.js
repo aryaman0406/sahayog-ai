@@ -13,6 +13,30 @@ export const te = {
   btnRemove: "తొలగించు",
   btnShare: "షేర్ చేయి",
   btnApply: "దరఖాస్తు చేసుకోండి",
+
+  // Landing / Hero
+  heroEyebrow: "AI ద్వారా పౌరుల సాధికారత",
+  heroTitle: "సహయోగ్ AI",
+  heroSubtitle: "మీరు అర్హత పొందే భారత ప్రభుత్వ సంక్షేమ పథకాలను కనుగొనండి, సరళమైన భాషలో ప్రయోజనాలను అర్థం చేసుకోండి మరియు ఎలా దరఖాస్తు చేసుకోవాలో దశల వారీ మార్గదర్శకత్వాన్ని పొందండి.",
+  heroCTA: "అర్హత కలిగిన పథకాలను కనుగొనండి",
+  statSchemes: "జాబితా చేయబడిన పథకాలు",
+  statTime: "ధృవీకరణ సమయం",
+  statInstant: "తక్షణమే",
+  statUsers: "క్రియాశీల వినియోగదారులు",
+
+  // AuthForm
+  authLoginTitle: "స్వాగతం",
+  authLoginSubtitle: "మీ సరిపోలిన పథకాలను తనిఖీ చేయడానికి మరియు బుక్‌మార్క్‌లను ట్రాక్ చేయడానికి లాగిన్ చేయండి.",
+  authRegisterTitle: "ఖాతాను సృష్టించండి",
+  authRegisterSubtitle: "మీ ప్రొఫైల్‌ను సేవ్ చేయడానికి మరియు అర్హత కలిగిన సంక్షేమ పథకాలను కనుగొనడానికి రిజిస్టర్ చేయండి.",
+  authNameLabel: "పూర్తి పేరు",
+  authEmailLabel: "ఈమెయిల్ చిరునామా",
+  authPasswordLabel: "పాస్‌వర్డ్",
+  authLoginBtn: "లాగిన్",
+  authRegisterBtn: "ఖాతాను సృష్టించండి",
+  authNoAccount: "ఖాతా లేదా?",
+  authHaveAccount: "ఇప్పటికే ఖాతా ఉందా?",
+
   matchScore: "సరిపోలిక స్కోర్",
   schemeBenefits: "పథకం ప్రయోజనాలు",
   schemeEligibility: "అర్హత ప్రమాణాలు",
@@ -48,7 +72,17 @@ export const te = {
   chatVoiceOn: "వాయిస్ సమాధానాలు: ఆన్",
   chatVoiceOff: "వాయిస్ సమాధానాలు: ఆఫ్",
   chatPlaceholder: "పత్రాలు, ప్రయోజనాలు లేదా దరఖాస్తు గురించి అడగండి...",
-  chatSend: "పంపు"
+  chatSend: "పంపు",
+
+  // Analytics
+  analyticsTitle: "నా విశ్లేషణలు & అంతర్దృష్టులు",
+  analyticsSubtitle: "పథకాల లభ్యత మరియు సరిపోలికల ఉన్నత స్థాయి సారాంశం.",
+  analyticsTotalMatched: "మొత్తం సరిపోలిన పథకాలు",
+  analyticsTopCategory: "అత్యుత్తమ అర్హత కలిగిన వర్గం",
+  analyticsIncomeStatus: "ఆదాయ స్థితి",
+  analyticsIncomeBelow: "దారిద్య్ర రేఖకు దిగువన అర్హులు (BPL)",
+  analyticsIncomeAbove: "దారిద్య్ర రేఖకు ఎగువన అర్హులు (APL)",
+  analyticsChartTitle: "వర్గం వారీగా అర్హత కలిగిన పథకాలు"
 };
 export const gu = {
   brand: "સહયોગ AI",
@@ -65,6 +99,30 @@ export const gu = {
   btnRemove: "દૂર કરો",
   btnShare: "શેર કરો",
   btnApply: "અરજી કરો",
+
+  // Landing / Hero
+  heroEyebrow: "AI દ્વારા નાગરિકોનું સશક્તિકરણ",
+  heroTitle: "સહયોગ AI",
+  heroSubtitle: "તમે જે ભારતીય સરકારી કલ્યાણકારી યોજનાઓ માટે પાત્ર છો તે શોધો, સરળ ભાષામાં તેના ફાયદા સમજો અને અરજી કેવી રીતે કરવી તેનું સ્ટેપ-બાય-સ્ટેપ માર્ગદર્શન મેળવો.",
+  heroCTA: "પાત્ર યોજનાઓ શોધો",
+  statSchemes: "સૂચિબદ્ધ યોજનાઓ",
+  statTime: "ચકાસણી સમય",
+  statInstant: "ત્વરિત",
+  statUsers: "સક્રિય વપરાશકર્તાઓ",
+
+  // AuthForm
+  authLoginTitle: "ફરી સ્વાગત છે",
+  authLoginSubtitle: "તમારી મેળ ખાતી યોજનાઓ તપાસવા અને બુકમાર્ક્સ ટ્રૅક કરવા લોગ ઇન કરો.",
+  authRegisterTitle: "ખાતું બનાવો",
+  authRegisterSubtitle: "તમારી પ્રોફાઇલ સાચવવા અને પાત્ર કલ્યાણકારી યોજનાઓ શોધવા માટે રજીસ્ટર કરો.",
+  authNameLabel: "પૂરું નામ",
+  authEmailLabel: "ઈમેલ સરનામું",
+  authPasswordLabel: "પાસવર્ડ",
+  authLoginBtn: "લોગ ઇન",
+  authRegisterBtn: "ખાતું બનાવો",
+  authNoAccount: "ખાતું નથી?",
+  authHaveAccount: "પહેલેથી જ ખાતું છે?",
+
   matchScore: "મેળ ખાતો સ્કોર",
   schemeBenefits: "યોજનાના લાભો",
   schemeEligibility: "પાત્રતાના માપદંડ",
@@ -100,7 +158,17 @@ export const gu = {
   chatVoiceOn: "અવાજ જવાબો: ચાલુ",
   chatVoiceOff: "અવાજ જવાબો: બંધ",
   chatPlaceholder: "દસ્તાવેજો, લાભો અથવા અરજી કરવા વિશે પૂછો...",
-  chatSend: "મોકલો"
+  chatSend: "મોકલો",
+
+  // Analytics
+  analyticsTitle: "મારા વિશ્લેષણ અને આંતરદૃષ્ટિ",
+  analyticsSubtitle: "યોજનાઓની ઉપલબ્ધતા અને મેળ ખાતા આંકડાનો ઉચ્ચ સ્તરીય સારાંશ.",
+  analyticsTotalMatched: "કુલ મેળ ખાતી યોજનાઓ",
+  analyticsTopCategory: "ટોચની પાત્ર શ્રેણી",
+  analyticsIncomeStatus: "આવકની સ્થિતિ",
+  analyticsIncomeBelow: "ગરીબી રેખા નીચે પાત્ર (BPL)",
+  analyticsIncomeAbove: "ગરીબી રેખા ઉપર પાત્ર (APL)",
+  analyticsChartTitle: "શ્રેણી અનુસાર પાત્ર યોજનાઓ"
 };
 export const kn = {
   brand: "ಸಹಯೋಗ್ AI",
@@ -117,6 +185,30 @@ export const kn = {
   btnRemove: "ತೆಗೆದುಹಾಕಿ",
   btnShare: "ಹಂಚಿಕೊಳ್ಳಿ",
   btnApply: "ಅರ್ಜಿ ಸಲ್ಲಿಸಿ",
+
+  // Landing / Hero
+  heroEyebrow: "AI ಮೂಲಕ ನಾಗರಿಕರ ಸಬಲೀಕರಣ",
+  heroTitle: "ಸಹಯೋಗ್ AI",
+  heroSubtitle: "ನೀವು ಅರ್ಹತೆ ಪಡೆಯುವ ಭಾರತ ಸರ್ಕಾರದ ಕಲ್ಯಾಣ ಯೋಜನೆಗಳನ್ನು ಅನ್ವೇಷಿಸಿ, ಸರಳ ಭಾಷೆಯಲ್ಲಿ ಪ್ರಯೋಜನಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ ಮತ್ತು ಹೇಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಬೇಕು ಎಂಬುದರ ಕುರಿತು ಹಂತ-ಹಂತದ ಮಾರ್ಗದರ್ಶನ ಪಡೆಯಿರಿ.",
+  heroCTA: "ಅರ್ಹ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ",
+  statSchemes: "ಪಟ್ಟಿ ಮಾಡಲಾದ ಯೋಜನೆಗಳು",
+  statTime: "ಪರಿಶೀಲನಾ ಸಮಯ",
+  statInstant: "ತತ್‌ಕ್ಷಣ",
+  statUsers: "ಸಕ್ರಿಯ ಬಳಕೆದಾರರು",
+
+  // AuthForm
+  authLoginTitle: "ಸ್ವಾಗತ",
+  authLoginSubtitle: "ನಿಮ್ಮ ಹೊಂದಾಣಿಕೆಯ ಯೋಜನೆಗಳನ್ನು ಪರಿಶೀಲಿಸಲು ಮತ್ತು ಬುಕ್‌ಮಾರ್ಕ್‌ಗಳನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಲು ಲಾಗಿನ್ ಮಾಡಿ.",
+  authRegisterTitle: "ಖಾತೆಯನ್ನು ರಚಿಸಿ",
+  authRegisterSubtitle: "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಉಳಿಸಲು ಮತ್ತು ಅರ್ಹ ಕಲ್ಯಾಣ ಯೋಜನೆಗಳನ್ನು ಅನ್ವೇಷಿಸಲು ನೋಂದಾಯಿಸಿ.",
+  authNameLabel: "ಪ್ರತಿ ಹೆಸರು",
+  authEmailLabel: "ಇಮೇಲ್ ವಿಳಾಸ",
+  authPasswordLabel: "ಪಾಸ್‌ವರ್ಡ್",
+  authLoginBtn: "ಲಾಗಿನ್",
+  authRegisterBtn: "ಖಾತೆಯನ್ನು ರಚಿಸಿ",
+  authNoAccount: "ಖಾತೆ ಇಲ್ಲವೇ?",
+  authHaveAccount: "ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ?",
+
   matchScore: "ಹೊಂದಾಣಿಕೆಯ ಸ್ಕೋರ್",
   schemeBenefits: "ಯೋಜನೆಯ ಪ್ರಯೋಜನಗಳು",
   schemeEligibility: "ಅರ್ಹತೆಯ ಮಾನದಂಡ",
@@ -152,5 +244,15 @@ export const kn = {
   chatVoiceOn: "ಧ್ವನಿ ಪ್ರತಿಕ್ರಿಯೆಗಳು: ಆನ್",
   chatVoiceOff: "ಧ್ವನಿ ಪ್ರತಿಕ್ರಿಯೆಗಳು: ಆಫ್",
   chatPlaceholder: "ದಾಖಲೆಗಳು, ಪ್ರಯೋಜನಗಳು ಅಥವಾ ಅರ್ಜಿ ಸಲ್ಲಿಸುವ ಬಗ್ಗೆ ಕೇಳಿ...",
-  chatSend: "ಕಳುಹಿಸಿ"
+  chatSend: "ಕಳುಹಿಸಿ",
+
+  // Analytics
+  analyticsTitle: "ನನ್ನ ಒಳನೋಟಗಳು ಮತ್ತು ವಿಲೇಷಣೆ",
+  analyticsSubtitle: "ಯೋಜನೆಗಳ ಲಭ್ಯತೆ ಮತ್ತು ಹೊಂದಾಣಿಕೆಗಳ ಉನ್ನತ ಮಟ್ಟದ ಸಾರಾಂಶ.",
+  analyticsTotalMatched: "ಒಟ್ಟು ಹೊಂದಾಣಿಕೆಯಾದ ಯೋಜನೆಗಳು",
+  analyticsTopCategory: "ಉನ್ನತ ಅರ್ಹತಾ ವರ್ಗ",
+  analyticsIncomeStatus: "ಆದಾಯ ಸ್ಥಿತಿ",
+  analyticsIncomeBelow: "ಬಡತನ ರೇಖೆಗಿಂತ ಕೆಳಗಿನ ಅರ್ಹರು (BPL)",
+  analyticsIncomeAbove: "ಬಡತನ ರೇಖೆಗಿಂತ ಮೇಲಿನ ಅರ್ಹರು (APL)",
+  analyticsChartTitle: "ವರ್ಗದ ಪ್ರಕಾರ ಅರ್ಹ ಯೋಜನೆಗಳು"
 };
