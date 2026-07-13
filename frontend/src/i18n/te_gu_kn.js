@@ -37,7 +37,13 @@ export const te = {
   authNoAccount: "ఖాతా లేదా?",
   authHaveAccount: "ఇప్పటికే ఖాతా ఉందా?",
 
+  // SchemeResults
+  resultsTitle: "మీ అర్హత కలిగిన పథకాలు",
+  resultsSubtitle: "మీ ప్రొఫైల్ ఆధారంగా, మీరు అర్హత పొందే పథకాలు ఇక్కడ ఉన్నాయి.",
+  noMatches: "మీ ప్రొఫైల్ వివరాలతో ఏ పథకమూ సరిపోలడం లేదు. పైన ఉన్న శోధన పట్టీలో వెతకడానికి ప్రయత్నించండి.",
+  searchPlaceholder: "పేరు, వర్గం లేదా వివరణ ద్వారా పథకాలను వెతకండి...",
   matchScore: "సరిపోలిక స్కోర్",
+  schemeDetailTitle: "పథకం సమాచారం",
   schemeBenefits: "పథకం ప్రయోజనాలు",
   schemeEligibility: "అర్హత ప్రమాణాలు",
   schemeDocuments: "కావలసిన పత్రాలు",
@@ -73,6 +79,9 @@ export const te = {
   chatVoiceOff: "వాయిస్ సమాధానాలు: ఆఫ్",
   chatPlaceholder: "పత్రాలు, ప్రయోజనాలు లేదా దరఖాస్తు గురించి అడగండి...",
   chatSend: "పంపు",
+  chatListening: "వింటున్నాము...",
+  chatMicBtn: "మాట్లాడటానికి నొక్కి పట్టుకోండి",
+  chatMicStop: "మైక్ ఆపివేయి",
 
   // Analytics
   analyticsTitle: "నా విశ్లేషణలు & అంతర్దృష్టులు",
@@ -123,7 +132,13 @@ export const gu = {
   authNoAccount: "ખાતું નથી?",
   authHaveAccount: "પહેલેથી જ ખાતું છે?",
 
+  // SchemeResults
+  resultsTitle: "તમારી પાત્ર યોજનાઓ",
+  resultsSubtitle: "તમારી પ્રોફાઇલના આધારે, તમે આ યોજનાઓ માટે પાત્ર છો.",
+  noMatches: "તમારી પ્રોફાઇલ વિગતો સાથે કોઈ યોજના મેળ ખાતી નથી. ઉપરના સર્ચ બારમાં શોધવાનો પ્રયાસ કરો.",
+  searchPlaceholder: "નામ, શ્રેણી અથવા વર્ણન દ્વારા યોજનાઓ શોધો...",
   matchScore: "મેળ ખાતો સ્કોર",
+  schemeDetailTitle: "યોજનાની માહિતી",
   schemeBenefits: "યોજનાના લાભો",
   schemeEligibility: "પાત્રતાના માપદંડ",
   schemeDocuments: "જરૂરી દસ્તાવેજો",
@@ -159,6 +174,9 @@ export const gu = {
   chatVoiceOff: "અવાજ જવાબો: બંધ",
   chatPlaceholder: "દસ્તાવેજો, લાભો અથવા અરજી કરવા વિશે પૂછો...",
   chatSend: "મોકલો",
+  chatListening: "સાંભળી રહ્યા છીએ...",
+  chatMicBtn: "બોલવા માટે દબાવી રાખો",
+  chatMicStop: "માઈક બંધ કરો",
 
   // Analytics
   analyticsTitle: "મારા વિશ્લેષણ અને આંતરદૃષ્ટિ",
@@ -209,7 +227,13 @@ export const kn = {
   authNoAccount: "ಖಾತೆ ಇಲ್ಲವೇ?",
   authHaveAccount: "ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ?",
 
+  // SchemeResults
+  resultsTitle: "ನಿಮ್ಮ ಅರ್ಹ ಯೋಜನೆಗಳು",
+  resultsSubtitle: "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ಆಧಾರದ ಮೇಲೆ, ನೀವು ಅರ್ಹತೆ ಪಡೆಯುವ ಯೋಜನೆಗಳು ಇಲ್ಲಿವೆ.",
+  noMatches: "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ವಿವರಗಳಿಗೆ ಯಾವುದೇ ಯೋಜನೆ ಹೊಂದಿಕೆಯಾಗುವುದಿಲ್ಲ. ಮೇಲಿನ ಹುಡುಕಾಟ ಪಟ್ಟಿಯಲ್ಲಿ ಹುಡುಕಲು ಪ್ರಯತ್ನಿಸಿ.",
+  searchPlaceholder: "ಹೆಸರು, ವರ್ಗ ಅಥವಾ ವಿವರಣೆಯ ಮೂಲಕ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ...",
   matchScore: "ಹೊಂದಾಣಿಕೆಯ ಸ್ಕೋರ್",
+  schemeDetailTitle: "ಯೋಜನೆಯ ಮಾಹಿತಿ",
   schemeBenefits: "ಯೋಜನೆಯ ಪ್ರಯೋಜನಗಳು",
   schemeEligibility: "ಅರ್ಹತೆಯ ಮಾನದಂಡ",
   schemeDocuments: "ಅಗತ್ಯ ದಾಖಲೆಗಳು",
@@ -245,6 +269,9 @@ export const kn = {
   chatVoiceOff: "ಧ್ವನಿ ಪ್ರತಿಕ್ರಿಯೆಗಳು: ಆಫ್",
   chatPlaceholder: "ದಾಖಲೆಗಳು, ಪ್ರಯೋಜನಗಳು ಅಥವಾ ಅರ್ಜಿ ಸಲ್ಲಿಸುವ ಬಗ್ಗೆ ಕೇಳಿ...",
   chatSend: "ಕಳುಹಿಸಿ",
+  chatListening: "ಕೇಳಿಸಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ...",
+  chatMicBtn: "ಮಾತನಾಡಲು ಒತ್ತಿ ಹಿಡಿಯಿರಿ",
+  chatMicStop: "ಮೈಕ್ ನಿಲ್ಲಿಸಿ",
 
   // Analytics
   analyticsTitle: "ನನ್ನ ಒಳನೋಟಗಳು ಮತ್ತು ವಿಲೇಷಣೆ",

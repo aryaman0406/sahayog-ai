@@ -37,7 +37,13 @@ export const ta = {
   authNoAccount: "கணக்கு இல்லையா?",
   authHaveAccount: "ஏற்கனவே கணக்கு உள்ளதா?",
 
+  // SchemeResults
+  resultsTitle: "உங்கள் தகுதியான திட்டங்கள்",
+  resultsSubtitle: "உங்கள் சுயவிவரத்தின் அடிப்படையில், நீங்கள் தகுதிபெறும் திட்டங்கள் இதோ.",
+  noMatches: "உங்கள் சுயவிவர விவரங்களுடன் எந்த திட்டமும் பொருந்தவில்லை. மேலே உள்ள தேடல் பட்டியில் தேட முயற்சிக்கவும்.",
+  searchPlaceholder: "பெயர், வகை அல்லது விளக்கம் மூலம் திட்டங்களைத் தேடுங்கள்...",
   matchScore: "பொருத்த மதிப்பெண்",
+  schemeDetailTitle: "திட்ட தகவல்",
   schemeBenefits: "திட்டத்தின் நன்மைகள்",
   schemeEligibility: "தகுதி வரம்பு",
   schemeDocuments: "தேவையான ஆவணங்கள்",
@@ -73,6 +79,9 @@ export const ta = {
   chatVoiceOff: "குரல் பதில்கள்: ஆஃப்",
   chatPlaceholder: "ஆவணங்கள், நன்மைகள் அல்லது விண்ணப்பிப்பது பற்றி கேளுங்கள்...",
   chatSend: "அனுப்பு",
+  chatListening: "கேட்கிறது...",
+  chatMicBtn: "பேசுவதற்கு அழுத்திப் பிடிக்கவும்",
+  chatMicStop: "மைக்கை நிறுத்து",
 
   // Analytics
   analyticsTitle: "எனது நுண்ணறிவு மற்றும் பகுப்பாய்வு",

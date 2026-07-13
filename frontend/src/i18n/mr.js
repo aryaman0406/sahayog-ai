@@ -37,7 +37,13 @@ export const mr = {
   authNoAccount: "खाते नाही का?",
   authHaveAccount: "आधीच खाते आहे का?",
 
+  // SchemeResults
+  resultsTitle: "तुमच्या पात्र योजना",
+  resultsSubtitle: "तुमच्या प्रोफाइलवर आधारित, तुम्ही या योजनांसाठी पात्र आहात.",
+  noMatches: "तुमच्या प्रोफाइल तपशीलांशी कोणतीही योजना जुळत नाही. वरील शोध बारमध्ये शोधण्याचा प्रयत्न करा.",
+  searchPlaceholder: "नाव, श्रेणी किंवा वर्णनानुसार योजना शोधा...",
   matchScore: "साम्य गुण",
+  schemeDetailTitle: "योजनेची माहिती",
   schemeBenefits: "योजनेचे फायदे",
   schemeEligibility: "पात्रता निकष",
   schemeDocuments: "आवश्यक कागदपत्रे",
@@ -73,6 +79,9 @@ export const mr = {
   chatVoiceOff: "आवाज प्रतिसाद: बंद",
   chatPlaceholder: "कागदपत्रे, फायदे किंवा अर्ज कसा करावा याबद्दल विचारा...",
   chatSend: "पाठवा",
+  chatListening: "ऐकत आहे...",
+  chatMicBtn: "बोलण्यासाठी दाबून ठेवा",
+  chatMicStop: "माईक बंद करा",
 
   // Analytics
   analyticsTitle: "माझे विश्लेषण आणि इनसाइट्स",

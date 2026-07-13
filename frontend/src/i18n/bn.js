@@ -37,7 +37,13 @@ export const bn = {
   authNoAccount: "অ্যাকাউন্ট নেই?",
   authHaveAccount: "ইতিমধ্যেই অ্যাকাউন্ট আছে?",
 
+  // SchemeResults
+  resultsTitle: "আপনার যোগ্য পরিকল্পনাসমূহ",
+  resultsSubtitle: "আপনার প্রোফাইলের উপর ভিত্তি করে, আপনি এই পরিকল্পনাসমূহের জন্য যোগ্য।",
+  noMatches: "কোনো পরিকল্পনা আপনার প্রোফাইলের বিবরণের সাথে মিলছে না। উপরের সার্চ বারে অনুসন্ধান করার চেষ্টা করুন।",
+  searchPlaceholder: "নাম, বিভাগ বা বিবরণ দ্বারা পরিকল্পনা অনুসন্ধান করুন...",
   matchScore: "যোগ্যতার স্কোর",
+  schemeDetailTitle: "পরিকল্পনার বিবরণ",
   schemeBenefits: "পরিকল্পনার সুবিধাসমূহ",
   schemeEligibility: "যোগ্যতার মাপকাঠি",
   schemeDocuments: "প্রয়োজনীয় নথি",
@@ -73,6 +79,9 @@ export const bn = {
   chatVoiceOff: "ভয়েস প্রতিক্রিয়া: বন্ধ",
   chatPlaceholder: "প্রয়োজনীয় কাগজপত্র, সুবিধা বা আবেদন প্রক্রিয়া সম্পর্কে জিজ্ঞাসা করুন...",
   chatSend: "পাঠান",
+  chatListening: "শুনছি...",
+  chatMicBtn: "কথা বলার জন্য টিপে ধরে রাখুন",
+  chatMicStop: "মাইক বন্ধ করুন",
 
   // Analytics
   analyticsTitle: "আমার অন্তর্দৃষ্টি ও বিশ্লেষণ",
