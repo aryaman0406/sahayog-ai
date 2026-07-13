@@ -2,8 +2,7 @@
 
 A full-stack platform to help Indian citizens discover and apply for government welfare schemes using semantic search and Generative AI (RAG).
 
-![Sahayog AI Screenshot](screenshot_placeholder.png)
-*(Placeholder: Add your UI screenshot here)*
+<img width="1900" height="967" alt="image" src="https://github.com/user-attachments/assets/9ad85926-bb5f-45ef-9ec2-b62ce29b0eee" />
 
 ## Tech Stack
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -93,5 +92,4 @@ Key Endpoints:
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
