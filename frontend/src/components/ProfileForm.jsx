@@ -5,7 +5,13 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 const OCCUPATIONS = ["farmer", "student", "self-employed", "unemployed", "salaried", "any"];
 const LANGUAGE_OPTIONS = [
   { value: "en", label: "English" },
-  { value: "hi", label: "हिन्दी" }
+  { value: "hi", label: "हिन्दी" },
+  { value: "ta", label: "தமிழ்" },
+  { value: "mr", label: "मराठी" },
+  { value: "bn", label: "বাংলা" },
+  { value: "te", label: "తెలుగు" },
+  { value: "kn", label: "ಕನ್ನಡ" },
+  { value: "gu", label: "ગુજરાતી" }
 ];
 
 export default function ProfileForm({ onSubmit }) {

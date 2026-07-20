@@ -77,6 +77,11 @@ export const hi = {
   schemeDocuments: "आवश्यक दस्तावेज",
   schemeApply: "आवेदन कैसे करें",
   copiedLink: "लिंक क्लिपबोर्ड पर कॉपी किया गया!",
+  viewDetail: "विवरण देखें",
+  loadingScheme: "योजना विवरण लोड हो रहा है...",
+  translatingTitle: "शीर्षक का अनुवाद हो रहा है...",
+  checkEligibility: "मेरी पात्रता जाँचें →",
+  similarSchemes: "समान योजनाएं",
 
   // SavedSchemes
   savedTitle: "मेरी बुकमार्क की गई योजनाएं",
@@ -93,6 +98,11 @@ export const hi = {
   chatListening: "सुन रहा हूँ...",
   chatMicBtn: "बोलने के लिए दबाएं",
   chatMicStop: "माइक बंद करें",
+  chatConnecting: "चैट सर्वर से जोड़ा जा रहा है...",
+  chatAskAny: "अपनी पसंदीदा भाषा में प्रश्न पूछें।",
+  chatDisconnected: "चैट सर्वर से कनेक्शन टूट गया। दोबारा जोड़ा जा रहा है...",
+  pdfGenerating: "गाइड तैयार हो रही है...",
+  pdfDownload: "📥 PDF डाउनलोड करें / प्रिंट करें",
 
   // Analytics
   analyticsTitle: "मेरे विश्लेषण और इनसाइट्स",
@@ -102,5 +112,13 @@ export const hi = {
   analyticsIncomeStatus: "आय स्थिति",
   analyticsIncomeBelow: "गरीबी रेखा से नीचे (BPL) पात्र",
   analyticsIncomeAbove: "गरीबी रेखा से ऊपर (APL) पात्र",
-  analyticsChartTitle: "श्रेणी के अनुसार पात्र योजनाएं"
+  analyticsChartTitle: "श्रेणी के अनुसार पात्र योजनाएं",
+  analyticsEmpty: "अपने विश्लेषण देखने के लिए डैशबोर्ड पर अपनी प्रोफ़ाइल पूर्ण करें।",
+  catAgriculture: "कृषि 🌾",
+  catHealthcare: "स्वास्थ्य सेवा 🏥",
+  catHousing: "आवास 🏠",
+  catEducation: "शिक्षा 🎓",
+  catHousehold: "घरेलू 🔥",
+  catPension: "पेंशन 👵",
+  catGeneral: "सामान्य 📜",
 };

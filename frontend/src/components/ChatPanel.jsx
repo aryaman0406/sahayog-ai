@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { translateText } from "../utils/translate.js";
 
 const SPEECH_LOCALES = {
@@ -15,6 +16,9 @@ const SPEECH_LOCALES = {
 
 export default function ChatPanel({ profile, matches }) {
   const { t, language } = useLanguage();
+  const { user } = useAuth();
+  // User-specific session ID — ensures chat history is isolated per user
+  const sessionId = user?.id || user?.email || "guest";
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -204,7 +208,7 @@ export default function ChatPanel({ profile, matches }) {
     if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
       setMessages((m) => [
         ...m,
-        { role: "assistant", text: "Chat server disconnected. Reconnecting, please wait..." }
+        { role: "assistant", text: t("chatDisconnected") }
       ]);
       return;
     }
@@ -221,7 +225,8 @@ export default function ChatPanel({ profile, matches }) {
       message: text,
       profile: profile || {},
       matched_schemes: matches || [],
-      language: language
+      language: language,
+      session_id: sessionId
     };
 
     wsRef.current.send(JSON.stringify(payload));
@@ -264,7 +269,7 @@ export default function ChatPanel({ profile, matches }) {
             </div>
           ) : (
             <span className="chat-status">
-              {!wsConnected ? "Connecting to chat server..." : "Ask questions in your preferred language."}
+              {!wsConnected ? t("chatConnecting") : t("chatAskAny")}
             </span>
           )}
         </div>

@@ -1095,7 +1095,6 @@ body.dark .count-highlight {
   margin-top: 48px;
 }
 
-/* Responsive grid changes */
 @media (max-width: 680px) {
   .app-shell {
     padding: 0 16px 32px;
@@ -1127,4 +1126,149 @@ body.dark .count-highlight {
   .scheme-action-right {
     justify-content: space-between;
   }
+
+  /* Mobile fix: detail actions should stack */
+  .detail-actions-row {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .detail-actions-row .btn-ghost,
+  .detail-actions-row .btn-primary,
+  .detail-actions-row a.btn-primary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Missing classes discovered in bug audit ─────────────── */
+
+/* SchemeResults: results header row */
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* SchemeDetail: similar schemes section */
+.similar-schemes-section {
+  border-top: 1.5px solid var(--border);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.similar-schemes-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--saffron-deep);
+  margin: 0;
+}
+
+.similar-schemes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.similar-scheme-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--paper-warm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  color: var(--text);
+  text-decoration: none;
+  transition: background-color 0.15s, transform 0.1s;
+}
+
+.similar-scheme-chip:hover {
+  background-color: var(--thread);
+  transform: translateY(-1px);
+}
+
+body.dark .similar-scheme-chip {
+  background: var(--surface);
+}
+
+/* Language switcher dropdown */
+.lang-switcher-wrapper {
+  position: relative;
+}
+
+.lang-select-dropdown {
+  padding: 6px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.lang-select-dropdown:focus {
+  border-color: var(--saffron);
+}
+
+/* Language notice banner (shown when content is being translated) */
+.lang-notice-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(242, 181, 68, 0.12);
+  border: 1px solid rgba(242, 181, 68, 0.3);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--saffron-deep);
+  margin-bottom: 16px;
+}
+
+/* Translating pulse spinner */
+.translating-pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--saffron);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* Dark mode fixes for scheme detail */
+body.dark .detail-cat-pill {
+  background: rgba(242, 181, 68, 0.15);
+  color: var(--marigold);
+}
+
+/* Padding utility */
+.pad-lg {
+  padding: 48px 32px;
+}
+
+/* Width utility */
+.w-full {
+  width: 100%;
+}
+
+/* Text center utility */
+.text-center {
+  text-align: center;
 }

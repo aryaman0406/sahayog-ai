@@ -147,7 +147,7 @@ export default function SchemeCard({ item, isSaved, onToggleSave }) {
 
         <div className="scheme-card-actions">
           <Link to={`/scheme/${displayScheme.id}`} className="btn-ghost text-center">
-            {t("navHome")} / Detail →
+            {t("viewDetail")} →
           </Link>
           <div className="scheme-action-right">
             <button 

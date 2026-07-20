@@ -77,6 +77,11 @@ export const en = {
   schemeDocuments: "Required Documents",
   schemeApply: "How to Apply",
   copiedLink: "Link copied to clipboard!",
+  viewDetail: "View Detail",
+  loadingScheme: "Loading scheme details...",
+  translatingTitle: "Translating title...",
+  checkEligibility: "Check my eligibility →",
+  similarSchemes: "Similar Schemes",
 
   // SavedSchemes
   savedTitle: "My Bookmarked Schemes",
@@ -93,6 +98,11 @@ export const en = {
   chatListening: "Listening...",
   chatMicBtn: "Hold to Speak",
   chatMicStop: "Stop Mic",
+  chatConnecting: "Connecting to chat server...",
+  chatAskAny: "Ask questions in your preferred language.",
+  chatDisconnected: "Chat server disconnected. Reconnecting, please wait...",
+  pdfGenerating: "Generating Guide...",
+  pdfDownload: "📥 Download PDF Guide",
 
   // Analytics
   analyticsTitle: "My Insights & Analytics",
@@ -102,5 +112,13 @@ export const en = {
   analyticsIncomeStatus: "Income Status",
   analyticsIncomeBelow: "Below Poverty Line Eligible",
   analyticsIncomeAbove: "Above Poverty Line Eligible",
-  analyticsChartTitle: "Eligible Schemes by Category"
+  analyticsChartTitle: "Eligible Schemes by Category",
+  analyticsEmpty: "Complete your profile on the Dashboard to see your analytics.",
+  catAgriculture: "Agriculture 🌾",
+  catHealthcare: "Healthcare 🏥",
+  catHousing: "Housing 🏠",
+  catEducation: "Education 🎓",
+  catHousehold: "Household 🔥",
+  catPension: "Pension 👵",
+  catGeneral: "General 📜",
 };

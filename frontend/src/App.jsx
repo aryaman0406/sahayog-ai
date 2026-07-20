@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
@@ -12,6 +12,7 @@ import AuthForm from "./components/AuthForm.jsx";
 import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { LanguageProvider } from "./context/LanguageContext.jsx";
+import { useLanguage } from "./context/LanguageContext.jsx";
 
 // Protected Route Guard
 function ProtectedRoute({ children }) {
@@ -19,7 +20,7 @@ function ProtectedRoute({ children }) {
   if (loading) {
     return (
       <div className="card-panel text-center pad-lg animate-fade-in">
-        <p className="empty-state">Verifying session details...</p>
+        <p className="empty-state">⏳ Verifying session…</p>
       </div>
     );
   }
@@ -35,7 +36,7 @@ function AuthRoute({ children }) {
   if (loading) {
     return (
       <div className="card-panel text-center pad-lg animate-fade-in">
-        <p className="empty-state">Checking session...</p>
+        <p className="empty-state">⏳ Checking session…</p>
       </div>
     );
   }
@@ -73,7 +74,7 @@ function AppContent() {
   }, [user]);
 
   // Handle scheme eligibility matching
-  const handleProfileSubmit = async (profileData) => {
+  const handleProfileSubmit = useCallback(async (profileData) => {
     try {
       const res = await authFetch("/api/match/", {
         method: "POST",
@@ -87,7 +88,7 @@ function AppContent() {
     } catch (err) {
       console.error("Scoring request failed:", err);
     }
-  };
+  }, [authFetch]);
 
   // Run matches if user profile data exists on session load
   useEffect(() => {

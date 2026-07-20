@@ -358,9 +358,9 @@ export default function SchemeResults({ matches, savedSchemeIds, onToggleSave })
 
   const getPdfBtnText = () => {
     if (pdfLoading) {
-      return language === "hi" ? "दस्तावेज़ तैयार हो रहा है..." : "Generating Guide...";
+      return t("pdfGenerating");
     }
-    return language === "hi" ? "📥 PDF डाउनलोड करें / प्रिंट करें" : "📥 Download PDF Guide";
+    return t("pdfDownload");
   };
 
   return (

@@ -159,7 +159,7 @@ export default function SchemeDetail({ onCheckEligibility }) {
   if (loading) {
     return (
       <section className="card-panel detail-panel animate-fade-in text-center">
-        <p className="empty-state">{language === "hi" ? "योजना विवरण लोड हो रहा है..." : "Loading scheme details..."}</p>
+        <p className="empty-state">{t("loadingScheme")}</p>
       </section>
     );
   }
@@ -192,7 +192,7 @@ export default function SchemeDetail({ onCheckEligibility }) {
         <div className="detail-title-col">
           <span className="detail-cat-pill">{categoryLabel}</span>
           <h2 className="panel-title font-serif">
-            {translating ? "Translating title..." : displayScheme.name}
+            {translating ? t("translatingTitle") : displayScheme.name}
           </h2>
         </div>
       </div>
@@ -255,7 +255,7 @@ export default function SchemeDetail({ onCheckEligibility }) {
           {copied ? t("copiedLink") : `🔗 ${t("btnShare")}`}
         </button>
         <button onClick={handleCheckEligibility} className="btn-ghost">
-          {language === "hi" ? "पात्रता जाँचें →" : "Check my eligibility →"}
+          {t("checkEligibility")}
         </button>
         <a
           href={applyUrl}
@@ -270,7 +270,7 @@ export default function SchemeDetail({ onCheckEligibility }) {
       {/* Similar schemes */}
       {displayScheme.similar_schemes?.length > 0 && (
         <div className="similar-schemes-section">
-          <h3>{language === "hi" ? "समान योजनाएं" : "Similar Schemes"}</h3>
+          <h3>{t("similarSchemes")}</h3>
           <div className="similar-schemes-list">
             {displayScheme.similar_schemes.map((s) => (
               <Link key={s.id} to={`/scheme/${s.id}`} className="similar-scheme-chip">

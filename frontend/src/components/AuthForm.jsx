@@ -75,7 +75,7 @@ export default function AuthForm({ isRegister = false }) {
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               <label className="field">
-                <span>Age</span>
+                <span>{t("profileAge")}</span>
                 <input
                   type="number"
                   min="18" max="120"
@@ -85,7 +85,7 @@ export default function AuthForm({ isRegister = false }) {
                 />
               </label>
               <label className="field">
-                <span>Annual Income (₹)</span>
+                <span>{t("profileIncome")}</span>
                 <input
                   type="number"
                   min="0"
@@ -96,30 +96,30 @@ export default function AuthForm({ isRegister = false }) {
               </label>
             </div>
             <label className="field">
-              <span>Occupation</span>
-              <select className="input" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--thread)', background: 'var(--white)' }} value={form.occupation} onChange={(e) => update("occupation", e.target.value)}>
-                <option value="farmer">Farmer</option>
-                <option value="student">Student</option>
-                <option value="unemployed">Unemployed</option>
-                <option value="selfEmployed">Self Employed</option>
-                <option value="salaried">Salaried</option>
-                <option value="any">Other / Any</option>
+              <span>{t("profileOccupation")}</span>
+              <select value={form.occupation} onChange={(e) => update("occupation", e.target.value)}>
+                <option value="farmer">{t("farmer")}</option>
+                <option value="student">{t("student")}</option>
+                <option value="unemployed">{t("unemployed")}</option>
+                <option value="self-employed">{t("self-employed")}</option>
+                <option value="salaried">{t("salaried")}</option>
+                <option value="any">{t("any")}</option>
               </select>
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               <label className="field">
-                <span>Location</span>
-                <select className="input" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--thread)', background: 'var(--white)' }} value={form.location_type} onChange={(e) => update("location_type", e.target.value)}>
-                  <option value="rural">Rural</option>
-                  <option value="urban">Urban</option>
+                <span>{t("profileArea")}</span>
+                <select value={form.location_type} onChange={(e) => update("location_type", e.target.value)}>
+                  <option value="rural">{t("rural")}</option>
+                  <option value="urban">{t("urban")}</option>
                 </select>
               </label>
               <label className="field">
-                <span>Gender</span>
-                <select className="input" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--thread)', background: 'var(--white)' }} value={form.gender} onChange={(e) => update("gender", e.target.value)}>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                <span>{t("profileGender")}</span>
+                <select value={form.gender} onChange={(e) => update("gender", e.target.value)}>
+                  <option value="male">{t("male")}</option>
+                  <option value="female">{t("female")}</option>
+                  <option value="other">{t("other")}</option>
                 </select>
               </label>
             </div>
@@ -149,7 +149,7 @@ export default function AuthForm({ isRegister = false }) {
         </label>
 
         <button type="submit" className="btn-primary w-full justify-center" disabled={loading}>
-          {loading ? "Please wait..." : isRegister ? t("authRegisterBtn") : t("authLoginBtn")}
+          {loading ? t("profileUpdating") : isRegister ? t("authRegisterBtn") : t("authLoginBtn")}
         </button>
 
         <div className="auth-footer-link text-center">

@@ -2,19 +2,19 @@ import React, { useMemo } from "react";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 
-const CATEGORY_LABELS = {
-  agriculture: "Agriculture 🌾",
-  healthcare: "Healthcare 🏥",
-  housing: "Housing 🏠",
-  education: "Education 🎓",
-  household: "Household 🔥",
-  pension: "Pension 👵",
-  general: "General 📜"
-};
-
 export default function AnalyticsDashboard({ matches }) {
   const { t } = useLanguage();
   const { user } = useAuth();
+
+  const CATEGORY_LABELS = {
+    agriculture: t("catAgriculture") || "Agriculture 🌾",
+    healthcare: t("catHealthcare") || "Healthcare 🏥",
+    housing: t("catHousing") || "Housing 🏠",
+    education: t("catEducation") || "Education 🎓",
+    household: t("catHousehold") || "Household 🔥",
+    pension: t("catPension") || "Pension 👵",
+    general: t("catGeneral") || "General 📜",
+  };
 
   // Compute insights
   const stats = useMemo(() => {
@@ -63,7 +63,7 @@ export default function AnalyticsDashboard({ matches }) {
       <p className="panel-subtitle">{t("analyticsSubtitle")}</p>
 
       {stats.total === 0 ? (
-        <p className="empty-state">{t("noSaved")} / Complete your profile on the Dashboard to see analytics.</p>
+      <p className="empty-state">{t("analyticsEmpty") || "Complete your profile on the Dashboard to see your analytics."}</p>
       ) : (
         <>
           <div className="analytics-grid">

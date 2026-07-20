@@ -49,6 +49,11 @@ export const ta = {
   schemeDocuments: "தேவையான ஆவணங்கள்",
   schemeApply: "விண்ணப்பிப்பது எப்படி",
   copiedLink: "இணைப்பு நகலெடுக்கப்பட்டது!",
+  viewDetail: "விவரங்களைக் காண்க்",
+  loadingScheme: "திட்ட விவரங்களை ஏற்றுகிரது...",
+  translatingTitle: "தலைப்பு மொழிபெயர்க்கப்படுகிறது...",
+  checkEligibility: "எனது தகுதியை சரிபார்க்கவும் →",
+  similarSchemes: "ஒத்த திட்டங்கள்",
   profileFormTitle: "தகுதி கேள்வித்தாள்",
   profileFormSubtitle: "பொருத்தமான நலத்திட்டங்களை கண்டறிய உங்களைப் பற்றிய சில விவரங்களைக் கூறவும்.",
   profileAge: "வயது",
@@ -82,6 +87,11 @@ export const ta = {
   chatListening: "கேட்கிறது...",
   chatMicBtn: "பேசுவதற்கு அழுத்திப் பிடிக்கவும்",
   chatMicStop: "மைக்கை நிறுத்து",
+  chatConnecting: "சேட் சர்வரில் இணைகிறது...",
+  chatAskAny: "உங்கள் விருப்பமான மொழியில் கேள்வி கேளுங்கள்.",
+  chatDisconnected: "சேட் சர்வர் தொடர்பு துணித்து. மீண்டும் இணைகிறது, காத்திருங்கள்...",
+  pdfGenerating: "வழிகாட்ட் தயாராகிறது...",
+  pdfDownload: "📥 PDF வழிகாட்டை பதிவிறக்கும்",
 
   // Analytics
   analyticsTitle: "எனது நுண்ணறிவு மற்றும் பகுப்பாய்வு",
@@ -91,5 +101,13 @@ export const ta = {
   analyticsIncomeStatus: "வருமான நிலை",
   analyticsIncomeBelow: "வறுமைக் கோட்டிற்கு கீழ் தகுதியுடையவர்",
   analyticsIncomeAbove: "வறுமைக் கோட்டிற்கு மேல் தகுதியுடையவர்",
-  analyticsChartTitle: "வகை வாரியாக தகுதியான திட்டங்கள்"
+  analyticsChartTitle: "வகை வாரியாக தகுதியான திட்டங்கள்",
+  analyticsEmpty: "உங்கள் பகுப்பாய்வைப் பார்க்க டேஷ்போர்டில் உங்கள் சுயவிவரத்தை நிரப்பவும்.",
+  catAgriculture: "விவசாயம் 🌾",
+  catHealthcare: "சுகாதாரம் 🏥",
+  catHousing: "வீட்டுவசதி 🏠",
+  catEducation: "கல்வி 🎓",
+  catHousehold: "வீட்டு உபயோகம் 🔥",
+  catPension: "ஓய்வூதியம் 👵",
+  catGeneral: "பொது 📜",
 };
