@@ -1,20 +1,11 @@
 import React, { useMemo } from "react";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import { getCategoryLabel } from "../utils/categoryHelper.js";
 
 export default function AnalyticsDashboard({ matches }) {
   const { t } = useLanguage();
   const { user } = useAuth();
-
-  const CATEGORY_LABELS = {
-    agriculture: t("catAgriculture") || "Agriculture 🌾",
-    healthcare: t("catHealthcare") || "Healthcare 🏥",
-    housing: t("catHousing") || "Housing 🏠",
-    education: t("catEducation") || "Education 🎓",
-    household: t("catHousehold") || "Household 🔥",
-    pension: t("catPension") || "Pension 👵",
-    general: t("catGeneral") || "General 📜",
-  };
 
   // Compute insights
   const stats = useMemo(() => {
@@ -41,21 +32,21 @@ export default function AnalyticsDashboard({ matches }) {
     const total = matches.length;
     const bplEligible = user?.annual_income <= 250000;
 
-    // Format chart data
+    // Format chart data with localized category labels
     const chartData = Object.entries(counts).map(([cat, val]) => ({
       category: cat,
-      label: CATEGORY_LABELS[cat] || cat,
+      label: getCategoryLabel(cat, t),
       count: val,
       percentage: Math.round((val / total) * 100)
     })).sort((a, b) => b.count - a.count);
 
     return {
       total,
-      topCategory: CATEGORY_LABELS[topCat] || topCat,
+      topCategory: getCategoryLabel(topCat, t),
       bplEligible,
       chartData
     };
-  }, [matches, user]);
+  }, [matches, user, t]);
 
   return (
     <section className="card-panel analytics-panel animate-fade-in">

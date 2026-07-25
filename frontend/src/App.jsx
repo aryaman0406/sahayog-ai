@@ -9,6 +9,7 @@ import SavedSchemes from "./components/SavedSchemes.jsx";
 import AnalyticsDashboard from "./components/AnalyticsDashboard.jsx";
 import SchemeDetail from "./components/SchemeDetail.jsx";
 import AuthForm from "./components/AuthForm.jsx";
+import FloatingChatbot from "./components/FloatingChatbot.jsx";
 import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { LanguageProvider } from "./context/LanguageContext.jsx";
@@ -199,6 +200,7 @@ function AppContent() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
+      {user && <FloatingChatbot matches={matches} />}
       <footer className="app-footer">
         <p>© 2026 Sahayog AI · Empowerment Through Access</p>
       </footer>

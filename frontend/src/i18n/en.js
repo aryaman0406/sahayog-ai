@@ -118,7 +118,22 @@ export const en = {
   catHealthcare: "Healthcare 🏥",
   catHousing: "Housing 🏠",
   catEducation: "Education 🎓",
+  catEmployment: "Employment & Skills 💼",
+  catSocialWelfare: "Social Welfare & Empowerment 🤝",
+  catBusiness: "Business & Entrepreneurship 🏢",
+  catBanking: "Banking & Financial Services 🏦",
+  catWomenChild: "Women & Child Development 👩‍👧",
+  catUtility: "Utility & Sanitation 🧹",
+  catTransport: "Transport & Infrastructure 🚜",
+  catTravel: "Travel & Tourism 🧳",
+  catSports: "Sports & Culture 🏆",
+  catScience: "Science & Technology 💻",
+  catSafety: "Public Safety & Law ⚖️",
   catHousehold: "Household 🔥",
   catPension: "Pension 👵",
   catGeneral: "General 📜",
+
+  // Floating Chatbot
+  chatFloatingBtn: "Ask Sahayog AI",
+  chatFloatingTooltip: "Need help? Click to chat with AI Assistant",
 };

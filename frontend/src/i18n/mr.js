@@ -107,7 +107,22 @@ export const mr = {
   catHealthcare: "आरोग्यसेवा 🏥",
   catHousing: "गृहनिर्माण 🏠",
   catEducation: "शिक्षण 🎓",
+  catEmployment: "रोजगार आणि कौशल्ये 💼",
+  catSocialWelfare: "समाजकल्याण आणि सक्षमीकरण 🤝",
+  catBusiness: "व्यवसाय आणि उद्योजकता 🏢",
+  catBanking: "बँकिंग आणि आर्थिक सेवा 🏦",
+  catWomenChild: "महिला व बालविकास 👩‍👧",
+  catUtility: "उपयुक्तता आणि स्वच्छता 🧹",
+  catTransport: "वाहतूक आणि पायाभूत सुविधा 🚜",
+  catTravel: "प्रवास आणि पर्यटन 🧳",
+  catSports: "क्रीडा आणि संस्कृती 🏆",
+  catScience: "विज्ञान आणि तंत्रज्ञान 💻",
+  catSafety: "सार्वजनिक सुरक्षा आणि कायदा ⚖️",
   catHousehold: "घरगुती 🔥",
   catPension: "निवृत्ती वेतन 👵",
   catGeneral: "सामान्य 📜",
+
+  // Floating Chatbot
+  chatFloatingBtn: "सहयोग AI ला विचारा",
+  chatFloatingTooltip: "मदत हवी आहे? AI सहाय्यकाशी चॅट करण्यासाठी क्लिक करा",
 };

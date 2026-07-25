@@ -118,7 +118,22 @@ export const hi = {
   catHealthcare: "स्वास्थ्य सेवा 🏥",
   catHousing: "आवास 🏠",
   catEducation: "शिक्षा 🎓",
+  catEmployment: "रोजगार और कौशल 💼",
+  catSocialWelfare: "सामाजिक कल्याण और सशक्तिकरण 🤝",
+  catBusiness: "व्यापार और उद्यमिता 🏢",
+  catBanking: "बैंकिंग और वित्तीय सेवाएं 🏦",
+  catWomenChild: "महिला एवं बाल विकास 👩‍👧",
+  catUtility: "उपयोगिता और स्वच्छता 🧹",
+  catTransport: "परिवहन और बुनियादी ढांचा 🚜",
+  catTravel: "यात्रा और पर्यटन 🧳",
+  catSports: "खेल और संस्कृति 🏆",
+  catScience: "विज्ञान और प्रौद्योगिकी 💻",
+  catSafety: "सार्वजनिक सुरक्षा और कानून ⚖️",
   catHousehold: "घरेलू 🔥",
   catPension: "पेंशन 👵",
   catGeneral: "सामान्य 📜",
+
+  // Floating Chatbot
+  chatFloatingBtn: "सहयोग AI से पूछें",
+  chatFloatingTooltip: "सहायता चाहिए? AI सहायक से चैट करने के लिए क्लिक करें",
 };
