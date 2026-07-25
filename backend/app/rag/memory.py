@@ -1,6 +1,6 @@
 import time
 import threading
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 MAX_HISTORY = 12
 MAX_SESSIONS = 1000
@@ -10,33 +10,54 @@ class ConversationMemory:
     def __init__(self):
         self._store: Dict[str, List[Dict]] = {}
         self._timestamps: Dict[str, float] = {}
+        self._active_scheme: Dict[str, Dict] = {}  # session_id -> full scheme dict
         self._lock = threading.Lock()
 
     def add_message(self, session_id: str, role: str, content: str):
         if role not in ["user", "assistant"]:
             raise ValueError("Role must be 'user' or 'assistant'")
-            
+
         with self._lock:
             self._evict_expired()
-            
+
             if session_id not in self._store:
                 if len(self._store) >= MAX_SESSIONS:
-                    # Evict oldest
                     oldest = min(self._timestamps, key=self._timestamps.get)
                     del self._store[oldest]
                     del self._timestamps[oldest]
+                    self._active_scheme.pop(oldest, None)
                 self._store[session_id] = []
-                
+
             self._store[session_id].append({
                 "role": role,
                 "content": content,
                 "timestamp": time.time()
             })
-            
+
             if len(self._store[session_id]) > MAX_HISTORY:
                 self._store[session_id] = self._store[session_id][-MAX_HISTORY:]
-                
+
             self._timestamps[session_id] = time.time()
+
+    # ── Active scheme tracking ────────────────────────────────────────────────
+
+    def set_active_scheme(self, session_id: str, scheme: Dict):
+        """Store the scheme currently being discussed in this session."""
+        if not scheme:
+            return
+        with self._lock:
+            self._active_scheme[session_id] = scheme
+
+    def get_active_scheme(self, session_id: str) -> Optional[Dict]:
+        """Return the scheme currently being discussed, or None."""
+        with self._lock:
+            return self._active_scheme.get(session_id)
+
+    def clear_active_scheme(self, session_id: str):
+        with self._lock:
+            self._active_scheme.pop(session_id, None)
+
+    # ── History helpers ───────────────────────────────────────────────────────
 
     def get_history(self, session_id: str) -> List[Dict]:
         with self._lock:
@@ -58,49 +79,27 @@ class ConversationMemory:
             lines.append(f"{role}: {msg['content']}")
         return "\n".join(lines)
 
-    def get_last_mentioned_scheme(self, session_id: str) -> str:
-        """Scan recent assistant messages to find the last scheme name mentioned.
-        Returns the scheme name string or empty string if none found."""
-        import re
-        history = self.get_history(session_id)
-        # Walk backwards through assistant messages
-        for msg in reversed(history):
-            if msg["role"] != "assistant":
-                continue
-            content = msg["content"]
-            # Match **Scheme Name**: pattern (bold markdown)
-            bold = re.findall(r"\*\*(.+?)\*\*", content)
-            if bold:
-                return bold[0]
-            # Match "Scheme Name:" plain pattern
-            colon = re.findall(r"^([A-Z][A-Za-z ()\-]{5,80}):", content, re.MULTILINE)
-            if colon:
-                return colon[0]
-        return ""
-
     def clear_session(self, session_id: str) -> bool:
         with self._lock:
             existed = session_id in self._store
             if existed:
                 del self._store[session_id]
                 del self._timestamps[session_id]
+            self._active_scheme.pop(session_id, None)
             return existed
 
     def get_stats(self) -> Dict:
         with self._lock:
             active_sessions = len(self._store)
             total_messages = sum(len(msgs) for msgs in self._store.values())
-            
-            if self._timestamps:
-                oldest_ts = min(self._timestamps.values())
-                oldest_age = time.time() - oldest_ts
-            else:
-                oldest_age = 0.0
-                
+            oldest_age = (
+                time.time() - min(self._timestamps.values())
+                if self._timestamps else 0.0
+            )
             return {
                 "active_sessions": active_sessions,
                 "total_messages": total_messages,
-                "oldest_session_age": oldest_age
+                "oldest_session_age": oldest_age,
             }
 
     def _evict_expired(self):
@@ -109,5 +108,6 @@ class ConversationMemory:
         for sid in expired:
             del self._store[sid]
             del self._timestamps[sid]
+            self._active_scheme.pop(sid, None)
 
 memory = ConversationMemory()

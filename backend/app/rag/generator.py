@@ -11,34 +11,25 @@ from app.data.assistant import generate_fallback_reply, is_off_topic
 logger = logging.getLogger(__name__)
 
 # ── Gemini model initialisation ───────────────────────────────────────────────
-# SDK 0.8.x uses v1beta internally; valid names for this version:
-_CANDIDATE_MODELS = [
-    "models/gemini-1.5-flash",
-    "models/gemini-1.5-pro",
-    "models/gemini-1.0-pro",
-]
-
 model = None
 if settings.GEMINI_API_KEY and settings.GEMINI_API_KEY not in ("your_key_here", ""):
     try:
         genai.configure(api_key=settings.GEMINI_API_KEY)
-        # Discover which model is actually available for this key
         available = []
         try:
-            available = [m.name for m in genai.list_models()
-                         if "generateContent" in m.supported_generation_methods]
+            available = [
+                m.name for m in genai.list_models()
+                if "generateContent" in m.supported_generation_methods
+            ]
             logger.info(f"Available Gemini models: {available[:5]}")
         except Exception as e:
             logger.warning(f"Could not list models: {e}")
 
-        # Pick first candidate that is available
-        chosen = None
-        for candidate in _CANDIDATE_MODELS:
-            if not available or candidate in available:
-                chosen = candidate
-                break
+        # Preferred order; fall back to whatever the key supports
+        preferred = ["models/gemini-1.5-flash", "models/gemini-1.5-pro", "models/gemini-1.0-pro"]
+        chosen = next((p for p in preferred if p in available), None)
         if chosen is None and available:
-            chosen = available[0]  # use whatever the key supports
+            chosen = available[0]
 
         if chosen:
             model = genai.GenerativeModel(chosen)
@@ -47,7 +38,6 @@ if settings.GEMINI_API_KEY and settings.GEMINI_API_KEY not in ("your_key_here", 
             logger.warning("No Gemini model available — using rule-based fallback.")
     except Exception as e:
         logger.error(f"Gemini init failed: {e}")
-        model = None
 else:
     logger.warning("GEMINI_API_KEY not set — using rule-based fallback assistant.")
 
@@ -61,23 +51,45 @@ def _semantic_search(query: str, n_results: int = 5) -> list:
         return []
 
 
-# ── Context-aware query builder ───────────────────────────────────────────────
-# Pronouns / vague follow-ups that need context from previous turn
-_VAGUE_PATTERNS = re.compile(
-    r"^(how to apply|how do i apply|apply for it|apply for this|"
-    r"documents (for it|for this|needed|required)|what documents|"
-    r"eligib(le|ility) for (it|this)|tell me more|more details|"
-    r"benefits of (it|this)|how much|amount|and then|next step|"
-    r"what is it|explain|elaborate)\??\s*$",
+# ── Vague follow-up detection ─────────────────────────────────────────────────
+# These patterns mean the user is asking about the SAME scheme as before
+_VAGUE_RE = re.compile(
+    r"^(how\s+to\s+apply(\s+for\s+(it|this))?|"
+    r"apply(\s+for\s+(it|this))?|"
+    r"(what\s+)?(documents?|papers?|required|needed)(\s+(for\s+)?(it|this))?|"
+    r"(eligib(le|ility))(\s+for\s+(it|this))?|"
+    r"(benefits?|amount|how\s+much|kitna|paise)(\s+(of|for)\s+(it|this))?|"
+    r"tell\s+me\s+more|more\s+details?|explain\s+(it|this|more)|"
+    r"next\s+step(s)?|and\s+then|what\s+is\s+it|elaborate)\??\s*$",
     re.IGNORECASE,
 )
 
+def _is_vague_followup(msg: str) -> bool:
+    return bool(_VAGUE_RE.match(msg.strip()))
+
+
+# ── Active scheme resolution ──────────────────────────────────────────────────
+def _resolve_active_scheme_from_results(results: list) -> dict | None:
+    """Pick the top result if it has meaningful relevance (> 15 score)."""
+    if not results:
+        return None
+    top = results[0]
+    if top.get("relevance_score", 0) > 15:
+        # Return the full scheme dict from the ID
+        from app.data.schemes import get_scheme_by_id
+        scheme = get_scheme_by_id(str(top.get("id", "")))
+        return scheme
+    return None
+
+
 def _build_search_query(user_message: str, session_id: str) -> str:
-    """Enrich vague follow-up queries with the last-mentioned scheme name."""
-    if _VAGUE_PATTERNS.match(user_message.strip()):
-        last_scheme = memory.get_last_mentioned_scheme(session_id)
-        if last_scheme:
-            return f"{user_message} {last_scheme}"
+    """For vague follow-ups, append the active scheme name so TF-IDF finds the right doc."""
+    if _is_vague_followup(user_message):
+        active = memory.get_active_scheme(session_id)
+        if active:
+            name = active.get("name", "")
+            if name:
+                return f"{user_message} {name}"
     return user_message
 
 
@@ -100,9 +112,9 @@ Strict Rules:
    "I'm Sahayog AI, designed only to help with Indian government welfare \
    schemes. Please ask me about schemes, eligibility, documents, or how to apply!"
 3. IMPORTANT: When the user says "how to apply", "documents needed", "benefits" \
-   without naming a scheme — use the conversation history to determine WHICH \
-   scheme they are asking about. Never answer about a different scheme.
-4. If the retrieved context doesn't contain the answer, say:
+   without naming a scheme — look at CONVERSATION HISTORY to find which scheme \
+   was being discussed, then answer about THAT scheme only.
+4. If context doesn't contain the answer, say:
    "I don't have that specific information. Please visit myscheme.gov.in \
    or call 1800-180-1111 for details."
 5. Never invent scheme details, amounts, or dates.
@@ -116,13 +128,7 @@ LANG_MAP = {
 }
 
 
-def build_prompt(
-    user_message: str,
-    profile: dict,
-    retrieved_schemes: list,
-    conversation_history: str,
-    language: str,
-) -> str:
+def build_prompt(user_message, profile, retrieved_schemes, conversation_history, language):
     lang_str = LANG_MAP.get(language, "English")
     profile_str = "\n".join(f"{k}: {v}" for k, v in profile.items() if v)
     schemes_str = "".join(
@@ -141,20 +147,18 @@ def build_prompt(
     )
 
 
-# ── Gemini call helpers ───────────────────────────────────────────────────────
-def _gemini_sync(prompt: str) -> str | None:
+# ── Gemini helpers ────────────────────────────────────────────────────────────
+def _gemini_sync(prompt: str):
     if not model:
         return None
     try:
-        resp = model.generate_content(prompt)
-        return resp.text
+        return model.generate_content(prompt).text
     except Exception as e:
         logger.error(f"Gemini generate error: {e}")
         return None
 
 
 def _gemini_stream_obj(prompt: str):
-    """Returns (stream_obj, error_str). One of them will be None."""
     if not model:
         return None, "No model"
     try:
@@ -165,16 +169,17 @@ def _gemini_stream_obj(prompt: str):
 
 
 # ── Public API ────────────────────────────────────────────────────────────────
-def rag_generate(
-    user_message: str,
-    profile: dict,
-    session_id: str,
-    language: str = "en",
-) -> str:
+def rag_generate(user_message: str, profile: dict, session_id: str, language: str = "en") -> str:
     search_query = _build_search_query(user_message, session_id)
     semantic_results = _semantic_search(search_query, n_results=5)
     history_str = memory.get_context_string(session_id)
     relevant = [s for s in semantic_results if s.get("relevance_score", 0) > 5]
+
+    # Update active scheme if user named a specific one (non-vague query)
+    if not _is_vague_followup(user_message):
+        found = _resolve_active_scheme_from_results(semantic_results)
+        if found:
+            memory.set_active_scheme(session_id, found)
 
     reply = None
     if model and not is_off_topic(user_message):
@@ -190,19 +195,21 @@ def rag_generate(
 
 
 async def rag_stream(
-    user_message: str,
-    profile: dict,
-    session_id: str,
-    language: str = "en",
+    user_message: str, profile: dict, session_id: str, language: str = "en"
 ) -> AsyncGenerator[str, None]:
     search_query = _build_search_query(user_message, session_id)
     semantic_results = _semantic_search(search_query, n_results=5)
     history_str = memory.get_context_string(session_id)
     relevant = [s for s in semantic_results if s.get("relevance_score", 0) > 5]
 
+    # Update active scheme if user named a specific one (non-vague query)
+    if not _is_vague_followup(user_message):
+        found = _resolve_active_scheme_from_results(semantic_results)
+        if found:
+            memory.set_active_scheme(session_id, found)
+
     full_response = ""
 
-    # Fast-path: off-topic — skip Gemini entirely
     if is_off_topic(user_message):
         fallback = generate_fallback_reply(user_message, [], language, session_id)
         for word in fallback.split():
@@ -220,7 +227,7 @@ async def rag_stream(
                         full_response += chunk.text
                         yield chunk.text
             except Exception as e:
-                logger.error(f"Gemini chunk iteration error: {e}")
+                logger.error(f"Gemini chunk error: {e}")
                 if not full_response:
                     fallback = generate_fallback_reply(user_message, semantic_results, language, session_id)
                     for word in fallback.split():
