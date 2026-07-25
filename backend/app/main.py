@@ -29,6 +29,12 @@ async def lifespan(app: FastAPI):
         from app.rag.embedder import build_index, get_index_stats
         index_result = build_index()
         logger.info(f"RAG Index built: {index_result}")
+        # Pre-warm scheme lookup dict and occupation index so first login is instant
+        from app.data.schemes import get_all_schemes
+        from app.data.matcher import _build_occupation_index
+        get_all_schemes()
+        _build_occupation_index()
+        logger.info("Scheme lookup indexes warmed up")
     except Exception as e:
         logger.warning(f"RAG index not available (AI features disabled): {e}")
         
