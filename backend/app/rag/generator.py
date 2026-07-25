@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 if settings.GEMINI_API_KEY and settings.GEMINI_API_KEY != "your_key_here":
     genai.configure(api_key=settings.GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-flash-latest")
+    model = genai.GenerativeModel("gemini-1.5-flash")
 else:
     logger.warning("GEMINI_API_KEY is missing or invalid. Using fallback assistant.")
     model = None
@@ -36,8 +36,13 @@ Your personality:
 - Actionable: always end with a clear next step
 
 Rules:
-- Answer ONLY from the provided scheme context
-- If context doesn't contain the answer, say:
+- Answer ONLY questions related to Indian government schemes, welfare benefits,
+  eligibility, documents, application process, or the user's matched schemes.
+- If the user asks anything UNRELATED to government schemes or welfare
+  (e.g. cricket, movies, general knowledge, coding, jokes, etc.), respond with:
+  "I'm Sahayog AI, designed only to help you with Indian government welfare schemes 
+   and benefits. Please ask me about schemes, eligibility, documents, or how to apply!"
+- If context doesn't contain the answer for a scheme question, say:
   "I don't have that specific information. Please visit 
    myscheme.gov.in or call 1800-180-1111 for details."
 - Never make up scheme details or amounts
@@ -98,7 +103,9 @@ def rag_generate(
     semantic_results = _semantic_search(user_message, n_results=5)
     history_str = memory.get_context_string(session_id)
     
-    prompt = build_prompt(user_message, profile, semantic_results, history_str, language)
+    # Only inject schemes with meaningful relevance (score > 5)
+    relevant_schemes = [s for s in semantic_results if s.get("relevance_score", 0) > 5]
+    prompt = build_prompt(user_message, profile, relevant_schemes, history_str, language)
     
     if model:
         try:
@@ -125,7 +132,9 @@ async def rag_stream(
     semantic_results = _semantic_search(user_message, n_results=5)
     history_str = memory.get_context_string(session_id)
     
-    prompt = build_prompt(user_message, profile, semantic_results, history_str, language)
+    # Only inject schemes with meaningful relevance (score > 5)
+    relevant_schemes = [s for s in semantic_results if s.get("relevance_score", 0) > 5]
+    prompt = build_prompt(user_message, profile, relevant_schemes, history_str, language)
     
     full_response = ""
     

@@ -53,7 +53,7 @@ async def websocket_chat(websocket: WebSocket):
     except WebSocketDisconnect:
         pass
     except Exception as e:
-        await websocket.send_json({"type": "error", "content": str(e)})
+        await websocket.send_json({"type": "error", "message": str(e)})
 
 @router.post("/")
 async def chat_http(request: ChatRequest):
