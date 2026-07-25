@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import ProfileForm from "./components/ProfileForm.jsx";
 import SchemeResults from "./components/SchemeResults.jsx";
-import ChatPanel from "./components/ChatPanel.jsx";
+
 import SavedSchemes from "./components/SavedSchemes.jsx";
 import AnalyticsDashboard from "./components/AnalyticsDashboard.jsx";
 import SchemeDetail from "./components/SchemeDetail.jsx";
@@ -13,7 +13,6 @@ import FloatingChatbot from "./components/FloatingChatbot.jsx";
 import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { LanguageProvider } from "./context/LanguageContext.jsx";
-import { useLanguage } from "./context/LanguageContext.jsx";
 
 // Protected Route Guard
 function ProtectedRoute({ children }) {
@@ -104,7 +103,7 @@ function AppContent() {
     } else {
       setMatches([]);
     }
-  }, [user]);
+  }, [user?.id]);
 
   // Toggle saving scheme to MongoDB
   const toggleBookmark = async (schemeId) => {
@@ -162,14 +161,11 @@ function AppContent() {
                 <div className="dashboard-grid">
                   <ProfileForm onSubmit={handleProfileSubmit} />
                   {matches.length > 0 && (
-                    <>
-                      <SchemeResults 
-                        matches={matches} 
-                        savedSchemeIds={savedSchemeIds} 
-                        onToggleSave={toggleBookmark} 
-                      />
-                      <ChatPanel profile={user} matches={matches} />
-                    </>
+                    <SchemeResults 
+                      matches={matches} 
+                      savedSchemeIds={savedSchemeIds} 
+                      onToggleSave={toggleBookmark} 
+                    />
                   )}
                 </div>
               </ProtectedRoute>
@@ -201,9 +197,6 @@ function AppContent() {
         </Routes>
       </main>
       {user && <FloatingChatbot matches={matches} />}
-      <footer className="app-footer">
-        <p>© 2026 Sahayog AI · Empowerment Through Access</p>
-      </footer>
     </div>
   );
 }

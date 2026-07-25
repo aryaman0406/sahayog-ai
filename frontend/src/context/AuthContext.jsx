@@ -3,13 +3,29 @@ import React, { createContext, useState, useEffect, useContext, useCallback } fr
 const AuthContext = createContext(null);
 
 const TOKEN_KEY = "sahayog_token";
+const BASE_URL = import.meta.env.VITE_API_URL || "";
 
 /**
- * Extract a human-readable error message from a FastAPI error response.
- * FastAPI validation errors return detail as an array of objects:
- *   [{loc: [...], msg: "...", type: "..."}, ...]
- * Normal errors return detail as a string.
+ * Decode a JWT payload without verifying the signature (client-side only).
+ * Used to quickly check token expiry before making a network request.
  */
+function decodeJwtPayload(token) {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    return JSON.parse(atob(base64));
+  } catch {
+    return null;
+  }
+}
+
+function isTokenExpired(token) {
+  const payload = decodeJwtPayload(token);
+  if (!payload || !payload.exp) return true;
+  // exp is in seconds; add 10s buffer
+  return Date.now() / 1000 > payload.exp - 10;
+}
+
 function extractErrorMessage(errorData, fallback) {
   const detail = errorData?.detail;
   if (!detail) return fallback;
@@ -24,44 +40,41 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  /**
-   * Authenticated fetch helper. Reads the JWT from localStorage
-   * and attaches it as a Bearer token on every request.
-   * Use this for ALL protected API calls.
-   */
   const authFetch = useCallback((url, options = {}) => {
     const savedToken = localStorage.getItem(TOKEN_KEY);
     const headers = { ...(options.headers || {}) };
     if (savedToken) {
       headers["Authorization"] = `Bearer ${savedToken}`;
     }
-    const baseUrl = import.meta.env.VITE_API_URL || "";
-    return fetch(`${baseUrl}${url}`, { ...options, headers });
+    return fetch(`${BASE_URL}${url}`, { ...options, headers });
   }, []);
 
-  // On mount: restore session from localStorage token
+  // On mount: restore session from localStorage token — skip network if token is expired
   useEffect(() => {
     async function checkAuth() {
       const savedToken = localStorage.getItem(TOKEN_KEY);
-      if (!savedToken) {
+      if (!savedToken || isTokenExpired(savedToken)) {
+        if (savedToken) localStorage.removeItem(TOKEN_KEY);
         setLoading(false);
         return;
       }
       try {
-        const baseUrl = import.meta.env.VITE_API_URL || "";
-        const res = await fetch(`${baseUrl}/api/auth/me`, {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 5000);
+        const res = await fetch(`${BASE_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${savedToken}` },
+          signal: controller.signal,
         });
+        clearTimeout(timeout);
         if (res.ok) {
           const userData = await res.json();
           setUser(userData);
         } else {
-          // Token expired or invalid — clean up
           localStorage.removeItem(TOKEN_KEY);
           setUser(null);
         }
       } catch (err) {
-        console.error("Auth check failed:", err);
+        // On timeout or network error, keep the user logged out cleanly
         setUser(null);
       } finally {
         setLoading(false);
@@ -73,28 +86,21 @@ export function AuthProvider({ children }) {
   async function login(email, password) {
     let res;
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || "";
-      res = await fetch(`${baseUrl}/api/auth/login`, {
+      res = await fetch(`${BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-    } catch (networkErr) {
+    } catch {
       throw new Error("Network error — please check your connection.");
     }
     if (!res.ok) {
       let errorData;
-      try {
-        errorData = await res.json();
-      } catch {
-        throw new Error("Login failed (server error).");
-      }
+      try { errorData = await res.json(); } catch { throw new Error("Login failed (server error)."); }
       throw new Error(extractErrorMessage(errorData, "Login failed"));
     }
     const data = await res.json();
-    // BUG FIX: Store token in localStorage for persistence
     localStorage.setItem(TOKEN_KEY, data.access_token);
-    // BUG FIX: Extract just the user object, not the entire TokenResponse
     setUser(data.user);
     return data.user;
   }
@@ -102,35 +108,27 @@ export function AuthProvider({ children }) {
   async function register(registerData) {
     let res;
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || "";
-      res = await fetch(`${baseUrl}/api/auth/register`, {
+      res = await fetch(`${BASE_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(registerData),
       });
-    } catch (networkErr) {
+    } catch {
       throw new Error("Network error — please check your connection.");
     }
     if (!res.ok) {
       let errorData;
-      try {
-        errorData = await res.json();
-      } catch {
-        throw new Error("Registration failed (server error).");
-      }
+      try { errorData = await res.json(); } catch { throw new Error("Registration failed (server error)."); }
       throw new Error(extractErrorMessage(errorData, "Registration failed"));
     }
     const data = await res.json();
-    // BUG FIX: Store token in localStorage for persistence
     localStorage.setItem(TOKEN_KEY, data.access_token);
-    // BUG FIX: Extract just the user object, not the entire TokenResponse
     setUser(data.user);
     return data.user;
   }
 
   async function logout() {
     try {
-      // BUG FIX: Send Authorization header (logout route requires auth)
       await authFetch("/api/auth/logout", { method: "POST" });
     } catch {
       // Ignore network errors on logout
@@ -142,23 +140,17 @@ export function AuthProvider({ children }) {
   async function updateProfile(profileData) {
     let res;
     try {
-      // BUG FIX: Correct URL /api/auth/me (PUT), was /api/auth/profile
-      // BUG FIX: Send Authorization header via authFetch
       res = await authFetch("/api/auth/me", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(profileData),
       });
-    } catch (networkErr) {
+    } catch {
       throw new Error("Network error — please check your connection.");
     }
     if (!res.ok) {
       let errorData;
-      try {
-        errorData = await res.json();
-      } catch {
-        throw new Error("Profile update failed (server error).");
-      }
+      try { errorData = await res.json(); } catch { throw new Error("Profile update failed (server error)."); }
       throw new Error(extractErrorMessage(errorData, "Profile update failed"));
     }
     const userData = await res.json();

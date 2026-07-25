@@ -19,6 +19,9 @@ async def connect_to_mongo():
         db.client = AsyncIOMotorClient(settings.MONGO_URI)
         # Verify connection
         await db.client.admin.command('ping')
+        # Ensure index on email for fast login/register lookups
+        database = db.client.sahayog_ai
+        await database.users.create_index("email", unique=True, background=True)
         print("MongoDB connected")
         logger.info("MongoDB connected")
     except Exception as e:

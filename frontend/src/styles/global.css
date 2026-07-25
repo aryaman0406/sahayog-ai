@@ -1085,15 +1085,6 @@ body.dark .count-highlight {
   text-decoration: underline;
 }
 
-/* Footer */
-.app-footer {
-  text-align: center;
-  padding: 24px 0;
-  font-size: 12px;
-  color: var(--muted-text);
-  border-top: 1.5px solid var(--border);
-  margin-top: 48px;
-}
 
 @media (max-width: 680px) {
   .app-shell {
