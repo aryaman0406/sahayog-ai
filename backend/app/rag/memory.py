@@ -51,13 +51,32 @@ class ConversationMemory:
         history = self.get_history(session_id)
         if not history:
             return ""
-            
         recent = history[-6:]
         lines = []
         for msg in recent:
             role = "User" if msg["role"] == "user" else "Assistant"
             lines.append(f"{role}: {msg['content']}")
         return "\n".join(lines)
+
+    def get_last_mentioned_scheme(self, session_id: str) -> str:
+        """Scan recent assistant messages to find the last scheme name mentioned.
+        Returns the scheme name string or empty string if none found."""
+        import re
+        history = self.get_history(session_id)
+        # Walk backwards through assistant messages
+        for msg in reversed(history):
+            if msg["role"] != "assistant":
+                continue
+            content = msg["content"]
+            # Match **Scheme Name**: pattern (bold markdown)
+            bold = re.findall(r"\*\*(.+?)\*\*", content)
+            if bold:
+                return bold[0]
+            # Match "Scheme Name:" plain pattern
+            colon = re.findall(r"^([A-Z][A-Za-z ()\-]{5,80}):", content, re.MULTILINE)
+            if colon:
+                return colon[0]
+        return ""
 
     def clear_session(self, session_id: str) -> bool:
         with self._lock:

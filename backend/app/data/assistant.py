@@ -98,7 +98,7 @@ OFF_TOPIC_REPLY_HI = (
 
 # ── Main fallback function ────────────────────────────────────────────────────
 
-def generate_fallback_reply(message: str, matched_schemes: List[Dict], language: str = "en") -> str:
+def generate_fallback_reply(message: str, matched_schemes: List[Dict], language: str = "en", session_id: str = "") -> str:
     is_hindi = language == "hi"
 
     # 1. Off-topic guard — must come first
@@ -106,6 +106,24 @@ def generate_fallback_reply(message: str, matched_schemes: List[Dict], language:
         return OFF_TOPIC_REPLY_HI if is_hindi else OFF_TOPIC_REPLY_EN
 
     intent = detect_intent(message)
+
+    # 2. Context resolution — for vague follow-ups like "how to apply for it"
+    #    pull the last mentioned scheme from conversation memory
+    context_scheme = None
+    if session_id:
+        try:
+            from app.rag.memory import memory as _memory
+            from app.data.schemes import get_all_schemes
+            last_name = _memory.get_last_mentioned_scheme(session_id)
+            if last_name:
+                all_schemes = get_all_schemes()
+                last_name_lower = last_name.lower()
+                for s in all_schemes:
+                    if s.get("name", "").lower() == last_name_lower:
+                        context_scheme = s
+                        break
+        except Exception:
+            pass
 
     # 2. "list" intent — user wants to see available schemes by category
     if intent == "list":
@@ -126,21 +144,25 @@ def generate_fallback_reply(message: str, matched_schemes: List[Dict], language:
         return "I couldn't find schemes matching your query. Please visit myscheme.gov.in or call 1800-180-1111."
 
     # 3. No scheme results at all
-    if not matched_schemes:
+    if not matched_schemes and not context_scheme:
         if is_hindi:
             return "आपके प्रश्न के लिए कोई योजना नहीं मिली। कृपया अपना प्रोफ़ाइल पूरा करें या myscheme.gov.in पर जाएँ।"
         return "I couldn't find a scheme matching your question. Please complete your profile or visit myscheme.gov.in."
 
     # 4. Resolve top scheme details
-    first_item = matched_schemes[0]
-    from app.data.schemes import get_scheme_by_id
-    if "scheme" in first_item:
-        # from match_schemes output
-        top_scheme = first_item["scheme"]
+    #    PRIORITY: context from conversation history > TF-IDF first result
+    if context_scheme:
+        top_scheme = context_scheme
+    elif matched_schemes:
+        first_item = matched_schemes[0]
+        from app.data.schemes import get_scheme_by_id
+        if "scheme" in first_item:
+            top_scheme = first_item["scheme"]
+        else:
+            sid = first_item.get("id", "")
+            top_scheme = get_scheme_by_id(str(sid)) or {}
     else:
-        # from semantic_search output
-        sid = first_item.get("id", "")
-        top_scheme = get_scheme_by_id(str(sid)) or {}
+        top_scheme = {}
 
     scheme_name = top_scheme.get("name", "the recommended scheme")
 
