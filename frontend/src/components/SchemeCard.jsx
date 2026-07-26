@@ -101,8 +101,8 @@ export default function SchemeCard({ item, isSaved, onToggleSave }) {
 
   return (
     <div className={`scheme-card animate-fade-in ${translating ? "translating-pulse" : ""}`}>
-      <div 
-        className="scheme-card-head" 
+      <div
+        className="scheme-card-head"
         onClick={() => setExpanded(!expanded)}
         role="button"
         aria-expanded={expanded}
@@ -116,11 +116,25 @@ export default function SchemeCard({ item, isSaved, onToggleSave }) {
           </span>
           <span className="scheme-desc">{translating ? "..." : displayScheme.description}</span>
         </div>
-        {match_score !== undefined && (
-          <span className="scheme-score">
-            {t("matchScore")}: {match_score}%
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "6px", flexShrink: 0 }}>
+          {match_score !== undefined && (
+            <span className="scheme-score">
+              {t("matchScore")}: {match_score}%
+            </span>
+          )}
+          <span
+            style={{
+              fontSize: "18px",
+              color: "var(--muted-text)",
+              transition: "transform 0.3s ease",
+              transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+              lineHeight: 1,
+            }}
+            aria-hidden="true"
+          >
+            ▾
           </span>
-        )}
+        </div>
       </div>
 
       <div className={`scheme-card-body ${expanded ? "open" : ""}`}>
@@ -137,12 +151,16 @@ export default function SchemeCard({ item, isSaved, onToggleSave }) {
 
         <div className="scheme-detail-row">
           <strong>{t("schemeBenefits")}</strong>
-          <p>{displayScheme.benefits}</p>
+          <p style={{ whiteSpace: "pre-wrap" }}>{displayScheme.benefits}</p>
         </div>
 
         <div className="scheme-detail-row">
           <strong>{t("schemeDocuments")}</strong>
-          <p>{displayScheme.documents_required?.join(", ")}</p>
+          <ul className="reason-list">
+            {(displayScheme.documents_required || []).map((doc, i) => (
+              <li key={i}>{doc}</li>
+            ))}
+          </ul>
         </div>
 
         <div className="scheme-card-actions">
@@ -150,16 +168,16 @@ export default function SchemeCard({ item, isSaved, onToggleSave }) {
             {t("viewDetail")} →
           </Link>
           <div className="scheme-action-right">
-            <button 
-              onClick={handleSaveClick} 
+            <button
+              onClick={handleSaveClick}
               className={`btn-save-bookmark ${isSaved ? "saved" : "btn-ghost"}`}
             >
               {isSaved ? `★ ${t("btnSaved")}` : `☆ ${t("btnSave")}`}
             </button>
-            <a 
-              href={getApplyUrl(displayScheme)} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href={getApplyUrl(displayScheme)}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary"
             >
               {t("btnApply")} ↗
