@@ -114,7 +114,7 @@ export default function SchemeCard({ item, isSaved, onToggleSave }) {
           <span className="scheme-name">
             {translating ? "Translating..." : displayScheme.name}
           </span>
-          <span className="scheme-desc">{displayScheme.description}</span>
+          <span className="scheme-desc">{translating ? "..." : displayScheme.description}</span>
         </div>
         {match_score !== undefined && (
           <span className="scheme-score">

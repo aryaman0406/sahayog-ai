@@ -29,6 +29,12 @@ export default function ChatPanel({ profile, matches }) {
   const scrollRef = useRef(null);
   const recognitionRef = useRef(null);
   const wsRef = useRef(null);
+  const voiceEnabledRef = useRef(voiceEnabled);
+
+  // Keep voiceEnabledRef in sync so WS handler can read it without re-connecting
+  useEffect(() => {
+    voiceEnabledRef.current = voiceEnabled;
+  }, [voiceEnabled]);
 
   // Initialize Welcome Message when language or profile changes
   useEffect(() => {
@@ -60,12 +66,18 @@ export default function ChatPanel({ profile, matches }) {
     };
   }, [language]);
 
-  // Connect WebSocket
+  // Connect WebSocket with exponential back-off (max 8 attempts)
   useEffect(() => {
     let ws = null;
     let reconnectTimeout = null;
+    let attempts = 0;
+    const MAX_ATTEMPTS = 8;
 
     function connect() {
+      if (attempts >= MAX_ATTEMPTS) {
+        console.warn("Chat WebSocket: max reconnect attempts reached. Giving up.");
+        return;
+      }
       const apiEndpoint = import.meta.env.VITE_API_URL || "";
       let wsUrl;
       if (apiEndpoint) {
@@ -80,6 +92,7 @@ export default function ChatPanel({ profile, matches }) {
 
       ws.onopen = () => {
         console.log("Chat WebSocket connected");
+        attempts = 0; // reset on success
         setWsConnected(true);
       };
 
@@ -100,7 +113,7 @@ export default function ChatPanel({ profile, matches }) {
             setMessages((prev) => {
               const list = [...prev];
               const last = list[list.length - 1];
-              if (last && last.role === "assistant" && voiceEnabled) {
+              if (last && last.role === "assistant" && voiceEnabledRef.current) {
                 speakReply(last.text);
               }
               return list;
@@ -118,9 +131,15 @@ export default function ChatPanel({ profile, matches }) {
       };
 
       ws.onclose = () => {
-        console.log("Chat WebSocket closed. Reconnecting...");
         setWsConnected(false);
-        reconnectTimeout = setTimeout(connect, 3000);
+        attempts += 1;
+        if (attempts < MAX_ATTEMPTS) {
+          const delay = Math.min(1000 * 2 ** attempts, 30000);
+          console.log(`Chat WebSocket closed. Reconnecting in ${delay}ms (attempt ${attempts}/${MAX_ATTEMPTS})...`);
+          reconnectTimeout = setTimeout(connect, delay);
+        } else {
+          console.warn("Chat WebSocket: backend unreachable. AI chat requires a deployed backend.");
+        }
       };
 
       wsRef.current = ws;
@@ -132,7 +151,7 @@ export default function ChatPanel({ profile, matches }) {
       if (ws) ws.close();
       if (reconnectTimeout) clearTimeout(reconnectTimeout);
     };
-  }, [voiceEnabled]);
+  }, []);
 
   // Scroll to bottom on new messages
   useEffect(() => {

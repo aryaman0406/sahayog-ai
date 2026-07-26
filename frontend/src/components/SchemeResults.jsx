@@ -3,13 +3,8 @@ import SchemeCard from "./SchemeCard.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { translateText } from "../utils/translate.js";
 
-// Helper function to generate clean print layout and open print/PDF dialog
+// Generate print layout and trigger download via a Blob URL (never blocked by browsers)
 function downloadChecklistPDF(matches, language) {
-  const printWindow = window.open("", "_blank");
-  if (!printWindow) {
-    alert("Please allow popups to download the PDF guide.");
-    return;
-  }
 
   // Localized headings for PDF
   const labels = {
@@ -293,8 +288,14 @@ function downloadChecklistPDF(matches, language) {
     </html>
   `;
   
-  printWindow.document.write(html);
-  printWindow.document.close();
+  const blob = new Blob([html], { type: "text/html;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
 }
 
 export default function SchemeResults({ matches, savedSchemeIds, onToggleSave }) {

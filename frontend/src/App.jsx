@@ -107,7 +107,8 @@ function AppContent() {
 
     // Both fire at the same time
     Promise.all([fetchSaved, fetchMatches]);
-  }, [user?.id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id, handleProfileSubmit]);
 
   // Toggle saving scheme to MongoDB
   const toggleBookmark = async (schemeId) => {
@@ -165,12 +166,18 @@ function AppContent() {
               <ProtectedRoute>
                 <div className="dashboard-grid">
                   <ProfileForm onSubmit={handleProfileSubmit} />
-                  {matches.length > 0 && (
+                  {matches.length > 0 ? (
                     <SchemeResults
                       matches={matches}
                       savedSchemeIds={savedSchemeIds}
                       onToggleSave={toggleBookmark}
                     />
+                  ) : (
+                    <div className="card-panel animate-fade-in" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', padding: '3rem 2rem', textAlign: 'center' }}>
+                      <span style={{ fontSize: '3rem' }}>📋</span>
+                      <p className="panel-title" style={{ margin: 0 }}>No schemes matched yet</p>
+                      <p className="panel-subtitle" style={{ margin: 0 }}>Fill in your profile on the left and click <strong>Find Matching Schemes →</strong> to discover government schemes you are eligible for.</p>
+                    </div>
                   )}
                 </div>
               </ProtectedRoute>
@@ -195,7 +202,9 @@ function AppContent() {
           <Route
             path="/scheme/:id"
             element={
-              <SchemeDetail onCheckEligibility={(sch) => console.log("Prefilling scheme eligibility", sch)} />
+              <ProtectedRoute>
+                <SchemeDetail onCheckEligibility={(sch) => console.log("Prefilling scheme eligibility", sch)} />
+              </ProtectedRoute>
             }
           />
           <Route path="*" element={<Navigate to="/" replace />} />
