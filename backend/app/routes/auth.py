@@ -1,5 +1,7 @@
+import asyncio
 from fastapi import APIRouter, Depends, HTTPException, status
 from datetime import datetime
+from pymongo.errors import DuplicateKeyError
 from app.models import UserCreate, UserLogin, UserResponse, TokenResponse, ProfileUpdate
 from app.auth import get_current_user, hash_password, verify_password, create_access_token
 from app.database import get_database
@@ -10,31 +12,44 @@ router = APIRouter(prefix="/api/auth", tags=["auth"])
 @router.post("/register", response_model=TokenResponse)
 async def register(user_data: UserCreate):
     db = get_database()
-    existing = await db.users.find_one({"email": user_data.email})
-    if existing:
-        raise HTTPException(status_code=400, detail="Email already registered")
-        
+    
+    # Hash password in a thread pool to avoid blocking the asyncio event loop
+    hashed_password = await asyncio.to_thread(hash_password, user_data.password)
+    
     user_dict = user_data.model_dump()
-    user_dict["password"] = hash_password(user_dict["password"])
+    user_dict["password"] = hashed_password
     user_dict["created_at"] = datetime.now()
     
-    result = await db.users.insert_one(user_dict)
+    # Single database round-trip using unique index instead of separate find_one
+    try:
+        result = await db.users.insert_one(user_dict)
+    except DuplicateKeyError:
+        raise HTTPException(status_code=400, detail="Email already registered")
+        
     user_dict["id"] = str(result.inserted_id)
+    user_dict.pop("password", None)
     
-    token = create_access_token({"sub": user_dict["email"]})
+    token = create_access_token({"sub": user_dict["email"], "uid": user_dict["id"]})
     return {"access_token": token, "token_type": "bearer", "user": user_dict}
 
 @router.post("/login", response_model=TokenResponse)
 async def login(credentials: UserLogin):
     db = get_database()
-    user = await db.users.find_one({"email": credentials.email}, {"password": 1, "email": 1, "name": 1, "age": 1, "occupation": 1, "annual_income": 1, "location_type": 1, "gender": 1, "created_at": 1})
+    user = await db.users.find_one(
+        {"email": credentials.email},
+        {"password": 1, "email": 1, "name": 1, "age": 1, "occupation": 1, "annual_income": 1, "location_type": 1, "gender": 1, "state": 1, "language": 1, "created_at": 1}
+    )
     
-    if not user or not verify_password(credentials.password, user["password"]):
+    if not user:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+        
+    valid = await asyncio.to_thread(verify_password, credentials.password, user["password"])
+    if not valid:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
     user["id"] = str(user["_id"])
     user.pop("password", None)
-    token = create_access_token({"sub": user["email"]})
+    token = create_access_token({"sub": user["email"], "uid": user["id"]})
     
     return {"access_token": token, "token_type": "bearer", "user": user}
 

@@ -50,7 +50,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> dict:
         )
     
     db = get_database()
-    user = await db.users.find_one({"email": email})
+    user = await db.users.find_one({"email": email}, {"password": 0})
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

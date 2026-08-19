@@ -16,12 +16,23 @@ def get_database():
 
 async def connect_to_mongo():
     try:
-        db.client = AsyncIOMotorClient(settings.MONGO_URI)
+        db.client = AsyncIOMotorClient(
+            settings.MONGO_URI,
+            minPoolSize=5,
+            maxPoolSize=50,
+            maxIdleTimeMS=45000,
+            serverSelectionTimeoutMS=5000,
+            connectTimeoutMS=5000,
+            socketTimeoutMS=10000,
+        )
         # Verify connection
         await db.client.admin.command('ping')
-        # Ensure index on email for fast login/register lookups
+        # Ensure indexes for fast authentication and data lookups
         database = db.client.sahayog_ai
         await database.users.create_index("email", unique=True, background=True)
+        await database.saved.create_index([("user_id", 1), ("scheme_id", 1)], unique=True, background=True)
+        await database.saved.create_index([("user_id", 1), ("saved_at", -1)], background=True)
+        await database.sessions.create_index([("user_id", 1), ("created_at", -1)], background=True)
         print("MongoDB connected")
         logger.info("MongoDB connected")
     except Exception as e:
