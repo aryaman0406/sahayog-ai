@@ -235,7 +235,7 @@ export const en = {
   aboutCard2Desc: "Read scheme benefits and requirements in 8 Indian regional languages.",
   aboutCard3Title: "Secure & Private",
   aboutCard3Desc: "Your personal and eligibility data is kept strictly confidential.",
-  contactTitle: "Need Help? Contact Us",
+  contactTitle: "Contact Below",
   contactSubtitle: "Have questions about scheme eligibility or documentation? Reach out through official government channels.",
   contactTollFree: "Official Government Toll-Free Number: 1800-115-555 (Govt. of India Citizen Helpline, 24x7 Toll-Free)",
   contactEmail: "Official Government Email: support-myscheme@gov.in",

@@ -779,7 +779,7 @@ export default function Hero({ isLanding = true }) {
       <section className="hero-contact-section" id="contact-section">
         <div className="contact-card-box">
           <div className="contact-text-col">
-            <h2 className="contact-main-title">{t("contactTitle") || "Need Help? Contact Us"}</h2>
+            <h2 className="contact-main-title">{t("contactTitle") || "Contact Below"}</h2>
             <p className="contact-main-subtitle">
               {t("contactSubtitle") || "Have questions about scheme eligibility or documentation? Reach out through official government channels."}
             </p>
