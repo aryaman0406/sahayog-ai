@@ -236,8 +236,8 @@ export const en = {
   aboutCard3Title: "Secure & Private",
   aboutCard3Desc: "Your personal and eligibility data is kept strictly confidential.",
   contactTitle: "Need Help? Contact Us",
-  contactSubtitle: "Have questions about scheme eligibility or documentation? Reach out to our team.",
-  contactTollFree: "National Toll-Free Helpline: 1800-11-2026 (Mon-Sat, 9 AM - 6 PM)",
-  contactEmail: "Email Support: support@sahayog.gov.in",
+  contactSubtitle: "Have questions about scheme eligibility or documentation? Reach out through official government channels.",
+  contactTollFree: "Official Government Toll-Free Number: 1800-115-555 (Govt. of India Citizen Helpline, 24x7 Toll-Free)",
+  contactEmail: "Official Government Email: support-myscheme@gov.in",
   footerRights: "© 2026 Sahayog. Empowering citizens across India with seamless access to welfare schemes.",
 };

@@ -781,16 +781,16 @@ export default function Hero({ isLanding = true }) {
           <div className="contact-text-col">
             <h2 className="contact-main-title">{t("contactTitle") || "Need Help? Contact Us"}</h2>
             <p className="contact-main-subtitle">
-              {t("contactSubtitle") || "Have questions about scheme eligibility or documentation? Reach out to our team."}
+              {t("contactSubtitle") || "Have questions about scheme eligibility or documentation? Reach out through official government channels."}
             </p>
             <div className="contact-details-list">
               <div className="contact-detail-row">
                 <span className="contact-detail-icon">📞</span>
-                <span>{t("contactTollFree") || "National Toll-Free Helpline: 1800-11-2026 (Mon-Sat, 9 AM - 6 PM)"}</span>
+                <span>{t("contactTollFree") || "Official Government Toll-Free Number: 1800-115-555 (Govt. of India Citizen Helpline, 24x7 Toll-Free)"}</span>
               </div>
               <div className="contact-detail-row">
                 <span className="contact-detail-icon">✉️</span>
-                <span>{t("contactEmail") || "Email Support: support@sahayog.gov.in"}</span>
+                <span>{t("contactEmail") || "Official Government Email: support-myscheme@gov.in"}</span>
               </div>
             </div>
           </div>
