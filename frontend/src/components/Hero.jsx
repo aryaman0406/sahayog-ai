@@ -89,6 +89,11 @@ export default function Hero({ isLanding = true }) {
 
   // Voice Input Handler (Web Speech API)
   const handleVoiceInput = (target = "search") => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
     if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
       alert("Speech recognition is not supported in this browser. Please use Chrome, Edge, or Safari.");
       return;
@@ -127,6 +132,11 @@ export default function Hero({ isLanding = true }) {
   const handleSearchSubmit = (e) => {
     if (e) e.preventDefault();
     if (!searchQuery.trim()) return;
+
+    if (!user) {
+      navigate("/login");
+      return;
+    }
 
     // Send to embedded chat
     handleSendChatMessage(searchQuery);
@@ -285,21 +295,39 @@ export default function Hero({ isLanding = true }) {
             <button
               type="button"
               className="try-pill"
-              onClick={() => handleSendChatMessage("I am a student, which scholarships can I get?")}
+              onClick={() => {
+                if (!user) {
+                  navigate("/login");
+                } else {
+                  handleSendChatMessage("I am a student, which scholarships can I get?");
+                }
+              }}
             >
               🎓 I am a student, which scholarships can I get?
             </button>
             <button
               type="button"
               className="try-pill"
-              onClick={() => handleSendChatMessage("Schemes for farmers")}
+              onClick={() => {
+                if (!user) {
+                  navigate("/login");
+                } else {
+                  handleSendChatMessage("Schemes for farmers");
+                }
+              }}
             >
               🚜 Schemes for farmers
             </button>
             <button
               type="button"
               className="try-pill"
-              onClick={() => handleSendChatMessage("Housing schemes for families")}
+              onClick={() => {
+                if (!user) {
+                  navigate("/login");
+                } else {
+                  handleSendChatMessage("Housing schemes for families");
+                }
+              }}
             >
               🏠 Housing schemes for families
             </button>
@@ -411,7 +439,18 @@ export default function Hero({ isLanding = true }) {
         <div className="hero-right-column">
           {/* Top Feature Highlights Stack */}
           <div className="feature-highlights-stack">
-            <div className="feature-highlight-card">
+            <div
+              className="feature-highlight-card"
+              onClick={() => {
+                if (user) {
+                  const el = document.getElementById("ai-assistant-card");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                } else {
+                  navigate("/login");
+                }
+              }}
+              style={{ cursor: "pointer" }}
+            >
               <div className="feature-badge-icon icon-purple">
                 <span>🤖</span>
               </div>
@@ -421,7 +460,11 @@ export default function Hero({ isLanding = true }) {
               </div>
             </div>
 
-            <div className="feature-highlight-card">
+            <div
+              className="feature-highlight-card"
+              onClick={() => navigate(user ? "/dashboard" : "/login")}
+              style={{ cursor: "pointer" }}
+            >
               <div className="feature-badge-icon icon-green">
                 <span>🎯</span>
               </div>
@@ -431,7 +474,11 @@ export default function Hero({ isLanding = true }) {
               </div>
             </div>
 
-            <div className="feature-highlight-card">
+            <div
+              className="feature-highlight-card"
+              onClick={() => navigate(user ? "/dashboard" : "/login")}
+              style={{ cursor: "pointer" }}
+            >
               <div className="feature-badge-icon icon-blue">
                 <span>📄</span>
               </div>
@@ -441,7 +488,11 @@ export default function Hero({ isLanding = true }) {
               </div>
             </div>
 
-            <div className="feature-highlight-card">
+            <div
+              className="feature-highlight-card"
+              onClick={() => navigate(user ? "/saved" : "/login")}
+              style={{ cursor: "pointer" }}
+            >
               <div className="feature-badge-icon icon-red">
                 <span>🔖</span>
               </div>
@@ -452,126 +503,178 @@ export default function Hero({ isLanding = true }) {
             </div>
           </div>
 
-          {/* Embedded Live AI Assistant Chat Panel */}
-          <div className="ai-assistant-card-panel" id="ai-assistant-card">
-            {/* Chat Header */}
-            <div className="chat-card-header">
-              <div className="chat-bot-brand">
-                <div className="chat-bot-avatar">🤖</div>
-                <span className="chat-bot-title">AI Assistant</span>
-              </div>
-              <button
-                type="button"
-                className="btn-new-chat"
-                onClick={handleResetChat}
-                title="Start a new chat conversation"
-              >
-                New Chat
-              </button>
-            </div>
-
-            {/* Chat Message Stream */}
-            <div className="chat-messages-viewport">
-              {chatMessages.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`chat-bubble-row ${msg.sender === "user" ? "user-row" : "bot-row"}`}
+          {/* Embedded Live AI Assistant Chat Panel OR Login-Gated Preview */}
+          {user ? (
+            <div className="ai-assistant-card-panel animate-fade-in" id="ai-assistant-card">
+              {/* Chat Header */}
+              <div className="chat-card-header">
+                <div className="chat-bot-brand">
+                  <div className="chat-bot-avatar">🤖</div>
+                  <span className="chat-bot-title">AI Assistant</span>
+                </div>
+                <button
+                  type="button"
+                  className="btn-new-chat"
+                  onClick={handleResetChat}
+                  title="Start a new chat conversation"
                 >
-                  {msg.sender === "assistant" && (
+                  New Chat
+                </button>
+              </div>
+
+              {/* Chat Message Stream */}
+              <div className="chat-messages-viewport">
+                {chatMessages.map((msg) => (
+                  <div
+                    key={msg.id}
+                    className={`chat-bubble-row ${msg.sender === "user" ? "user-row" : "bot-row"}`}
+                  >
+                    {msg.sender === "assistant" && (
+                      <div className="bot-bubble-avatar">🤖</div>
+                    )}
+                    <div className={`chat-bubble ${msg.sender === "user" ? "user-bubble" : "bot-bubble"}`}>
+                      <p>{msg.text}</p>
+                    </div>
+                  </div>
+                ))}
+
+                {isChatLoading && (
+                  <div className="chat-bubble-row bot-row">
                     <div className="bot-bubble-avatar">🤖</div>
-                  )}
-                  <div className={`chat-bubble ${msg.sender === "user" ? "user-bubble" : "bot-bubble"}`}>
-                    <p>{msg.text}</p>
+                    <div className="chat-bubble bot-bubble loading-dots">
+                      <span>•</span><span>•</span><span>•</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Suggested Quick Prompt Bubbles inside Chat */}
+                {chatMessages.length <= 2 && (
+                  <div className="chat-quick-suggestions">
+                    <button
+                      type="button"
+                      className="suggestion-chip"
+                      onClick={() => handleSendChatMessage("Which schemes can I apply for as a student?")}
+                    >
+                      <span className="chip-icon">📄</span>
+                      <span>Which schemes can I apply for as a student?</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="suggestion-chip"
+                      onClick={() => handleSendChatMessage("I'm a farmer from MP, what schemes are for me?")}
+                    >
+                      <span className="chip-icon">❓</span>
+                      <span>I'm a farmer from MP, what schemes are for me?</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="suggestion-chip"
+                      onClick={() => handleSendChatMessage("मैं एक महिला हूँ, मेरे लिए कौन सी योजनाएं हैं?")}
+                    >
+                      <span className="chip-icon">💬</span>
+                      <span>मैं एक महिला हूँ, मेरे लिए कौन सी योजनाएं हैं?</span>
+                    </button>
+                  </div>
+                )}
+
+                <div ref={chatBottomRef} />
+              </div>
+
+              {/* Powered By Gemini Footer Tag */}
+              <div className="chat-gemini-badge">
+                <span>⚡ Powered by Gemini AI</span>
+              </div>
+
+              {/* Chat Input Bar */}
+              <form
+                className="chat-input-wrapper"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSendChatMessage();
+                }}
+              >
+                <input
+                  type="text"
+                  className="chat-text-input"
+                  placeholder="Type your question..."
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
+                  disabled={isChatLoading}
+                  aria-label="Type your question to AI Assistant"
+                />
+                <button
+                  type="button"
+                  className={`chat-mic-icon-btn ${isChatListening ? "listening" : ""}`}
+                  onClick={() => handleVoiceInput("chat")}
+                  title="Speak question"
+                  aria-label="Voice input"
+                >
+                  🎙️
+                </button>
+                <button
+                  type="submit"
+                  className="chat-send-icon-btn"
+                  disabled={!chatInput.trim() || isChatLoading}
+                  title="Send message"
+                  aria-label="Send message"
+                >
+                  <span>➤</span>
+                </button>
+              </form>
+            </div>
+          ) : (
+            <div className="ai-assistant-card-panel ai-assistant-locked-panel animate-fade-in" id="ai-assistant-card">
+              <div className="chat-card-header">
+                <div className="chat-bot-brand">
+                  <div className="chat-bot-avatar">🤖</div>
+                  <span className="chat-bot-title">AI Assistant</span>
+                </div>
+                <span className="locked-badge">🔒 Sign In Required</span>
+              </div>
+
+              <div className="locked-card-body">
+                <div className="locked-icon-wrapper">
+                  <div className="locked-bot-icon">🤖</div>
+                  <span className="locked-sparkle-badge">✨ Gemini AI</span>
+                </div>
+
+                <h3 className="locked-card-title">Chat with Gemini AI</h3>
+                <p className="locked-card-desc">
+                  Sign in or register to unlock our Gemini-powered conversational assistant. Ask questions in 8 Indian languages, check real-time eligibility, and get step-by-step guidance.
+                </p>
+
+                <div className="locked-features-list">
+                  <div className="locked-feature-item">
+                    <span className="locked-check-icon">✓</span>
+                    <span>Multilingual Q&A in 8 Indian languages</span>
+                  </div>
+                  <div className="locked-feature-item">
+                    <span className="locked-check-icon">✓</span>
+                    <span>Instant eligibility checking & document checklists</span>
+                  </div>
+                  <div className="locked-feature-item">
+                    <span className="locked-check-icon">✓</span>
+                    <span>Direct conversational guidance for 1200+ schemes</span>
                   </div>
                 </div>
-              ))}
 
-              {isChatLoading && (
-                <div className="chat-bubble-row bot-row">
-                  <div className="bot-bubble-avatar">🤖</div>
-                  <div className="chat-bubble bot-bubble loading-dots">
-                    <span>•</span><span>•</span><span>•</span>
-                  </div>
+                <div className="locked-actions-group">
+                  <Link to="/login" className="btn-locked-login">
+                    Login to Access Gemini AI →
+                  </Link>
+                  <Link to="/register" className="btn-locked-register">
+                    Create Free Account
+                  </Link>
                 </div>
-              )}
+              </div>
 
-              {/* Suggested Quick Prompt Bubbles inside Chat */}
-              {chatMessages.length <= 2 && (
-                <div className="chat-quick-suggestions">
-                  <button
-                    type="button"
-                    className="suggestion-chip"
-                    onClick={() => handleSendChatMessage("Which schemes can I apply for as a student?")}
-                  >
-                    <span className="chip-icon">📄</span>
-                    <span>Which schemes can I apply for as a student?</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="suggestion-chip"
-                    onClick={() => handleSendChatMessage("I'm a farmer from MP, what schemes are for me?")}
-                  >
-                    <span className="chip-icon">❓</span>
-                    <span>I'm a farmer from MP, what schemes are for me?</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="suggestion-chip"
-                    onClick={() => handleSendChatMessage("मैं एक महिला हूँ, मेरे लिए कौन सी योजनाएं हैं?")}
-                  >
-                    <span className="chip-icon">💬</span>
-                    <span>मैं एक महिला हूँ, मेरे लिए कौन सी योजनाएं हैं?</span>
-                  </button>
-                </div>
-              )}
-
-              <div ref={chatBottomRef} />
+              <div className="chat-gemini-badge">
+                <span>⚡ Powered by Google Gemini AI</span>
+              </div>
             </div>
-
-            {/* Powered By Gemini Footer Tag */}
-            <div className="chat-gemini-badge">
-              <span>⚡ Powered by Gemini AI</span>
-            </div>
-
-            {/* Chat Input Bar */}
-            <form
-              className="chat-input-wrapper"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSendChatMessage();
-              }}
-            >
-              <input
-                type="text"
-                className="chat-text-input"
-                placeholder="Type your question..."
-                value={chatInput}
-                onChange={(e) => setChatInput(e.target.value)}
-                disabled={isChatLoading}
-                aria-label="Type your question to AI Assistant"
-              />
-              <button
-                type="button"
-                className={`chat-mic-icon-btn ${isChatListening ? "listening" : ""}`}
-                onClick={() => handleVoiceInput("chat")}
-                title="Speak question"
-                aria-label="Voice input"
-              >
-                🎙️
-              </button>
-              <button
-                type="submit"
-                className="chat-send-icon-btn"
-                disabled={!chatInput.trim() || isChatLoading}
-                title="Send message"
-                aria-label="Send message"
-              >
-                <span>➤</span>
-              </button>
-            </form>
-          </div>
+          )}
         </div>
       </section>
 

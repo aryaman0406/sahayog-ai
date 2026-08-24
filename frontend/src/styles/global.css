@@ -1435,6 +1435,170 @@ html, body, #root {
   cursor: not-allowed;
 }
 
+/* LOCKED / GUEST AI ASSISTANT PANEL */
+.ai-assistant-locked-panel {
+  border-top: 2px solid #F59E0B;
+}
+
+.locked-badge {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #FBBF24;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.locked-card-body {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.locked-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.locked-bot-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.35) 0%, rgba(37, 99, 235, 0.15) 100%);
+  border: 1.5px solid rgba(139, 92, 246, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.35);
+  animation: floatBot 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatBot {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-5px); }
+}
+
+.locked-sparkle-badge {
+  position: absolute;
+  bottom: -6px;
+  background: linear-gradient(135deg, #8B5CF6, #3B82F6);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+}
+
+.locked-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #F8FAFC;
+  margin: 6px 0 0 0;
+}
+
+.locked-card-desc {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #94A3B8;
+  margin: 0;
+  max-width: 320px;
+}
+
+.locked-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(30, 41, 59, 0.85);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.locked-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #CBD5E1;
+}
+
+.locked-check-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.locked-actions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn-locked-login {
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 11px 18px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.btn-locked-login:hover {
+  background: linear-gradient(135deg, #D97706, #B45309);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+  color: #FFFFFF;
+}
+
+.btn-locked-register {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #334155;
+  color: #CBD5E1;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-locked-register:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #64748B;
+  color: #FFFFFF;
+}
+
 /* ==========================================================================
    BOTTOM TRUST & METRICS TICKER BAR
    ========================================================================== */
