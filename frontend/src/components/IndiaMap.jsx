@@ -1,64 +1,66 @@
 import React, { useState } from "react";
+import { useLanguage } from "../context/LanguageContext.jsx";
 
 export default function IndiaMap({ onSelectCategory }) {
+  const { t } = useLanguage();
   const [hoveredNode, setHoveredNode] = useState(null);
 
   // Category Nodes positioned accurately relative to the map canvas
   const categoryNodes = [
     {
       id: "education",
-      name: "Education & Scholarships",
+      name: t("mapEducation") || "Education & Scholarships",
       icon: "🎓",
       color: "#8B5CF6", // purple
       bg: "rgba(139, 92, 246, 0.25)",
       border: "#A78BFA",
       x: 340,
       y: 190,
-      count: "350+ Schemes",
+      count: `350+ ${t("mapSchemes") || "Schemes"}`,
     },
     {
       id: "health",
-      name: "Health & Ayushman",
+      name: t("mapHealth") || "Health & Ayushman",
       icon: "❤️",
       color: "#EF4444", // red/pink
       bg: "rgba(239, 68, 68, 0.25)",
       border: "#F87171",
       x: 215,
       y: 280,
-      count: "180+ Schemes",
+      count: `180+ ${t("mapSchemes") || "Schemes"}`,
     },
     {
       id: "housing",
-      name: "Housing & PM Awas",
+      name: t("mapHousing") || "Housing & PM Awas",
       icon: "🏠",
       color: "#10B981", // green
       bg: "rgba(16, 185, 129, 0.25)",
       border: "#34D399",
       x: 485,
       y: 290,
-      count: "120+ Schemes",
+      count: `120+ ${t("mapSchemes") || "Schemes"}`,
     },
     {
       id: "agriculture",
-      name: "Agriculture & Farmers",
+      name: t("mapAgriculture") || "Agriculture & Farmers",
       icon: "🚜",
       color: "#F59E0B", // amber/gold
       bg: "rgba(245, 158, 11, 0.25)",
       border: "#FBBF24",
       x: 470,
       y: 380,
-      count: "240+ Schemes",
+      count: `240+ ${t("mapSchemes") || "Schemes"}`,
     },
     {
       id: "welfare",
-      name: "Social Welfare & Women",
+      name: t("mapWelfare") || "Social Welfare & Women",
       icon: "👥",
       color: "#6366F1", // indigo
       bg: "rgba(99, 102, 241, 0.25)",
       border: "#818CF8",
       x: 320,
       y: 435,
-      count: "310+ Schemes",
+      count: `310+ ${t("mapSchemes") || "Schemes"}`,
     },
   ];
 

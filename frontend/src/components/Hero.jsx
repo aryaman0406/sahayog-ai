@@ -30,50 +30,50 @@ export default function Hero({ isLanding = true }) {
   const popularSchemes = [
     {
       id: "1",
-      name: "PM Scholarship Scheme",
-      category: "Education",
+      name: t("scheme1Name") || "PM Scholarship Scheme",
+      category: t("scheme1Cat") || "Education",
       icon: "🎓",
       iconColor: "#10B981",
       iconBg: "rgba(16, 185, 129, 0.15)",
-      description: "Financial assistance for meritorious students pursuing higher education.",
+      description: t("scheme1Desc") || "Financial assistance for meritorious students pursuing higher education.",
       benefit: "₹50,000",
-      benefitLabel: "Max Benefit",
+      benefitLabel: t("popularMaxBenefit") || "Max Benefit",
       matchScore: 92,
     },
     {
       id: "2",
-      name: "PM Awas Yojana (Urban)",
-      category: "Housing",
+      name: t("scheme2Name") || "PM Awas Yojana (Urban)",
+      category: t("scheme2Cat") || "Housing",
       icon: "🏠",
       iconColor: "#F59E0B",
       iconBg: "rgba(245, 158, 11, 0.15)",
-      description: "Affordable housing for urban poor with pucca house financial assistance.",
+      description: t("scheme2Desc") || "Affordable housing for urban poor with pucca house financial assistance.",
       benefit: "₹2,50,000",
-      benefitLabel: "Max Benefit",
+      benefitLabel: t("popularMaxBenefit") || "Max Benefit",
       matchScore: 89,
     },
     {
       id: "3",
-      name: "Ayushman Bharat Yojana",
-      category: "Health",
+      name: t("scheme3Name") || "Ayushman Bharat Yojana",
+      category: t("scheme3Cat") || "Health",
       icon: "💙",
       iconColor: "#3B82F6",
       iconBg: "rgba(59, 130, 246, 0.15)",
-      description: "Health coverage up to ₹5 lakh per family per year for secondary care.",
+      description: t("scheme3Desc") || "Health coverage up to ₹5 lakh per family per year for secondary care.",
       benefit: "₹5,00,000",
-      benefitLabel: "Coverage",
+      benefitLabel: t("popularCoverage") || "Coverage",
       matchScore: 95,
     },
     {
       id: "4",
-      name: "PM Kisan Samman Nidhi",
-      category: "Agriculture",
+      name: t("scheme4Name") || "PM Kisan Samman Nidhi",
+      category: t("scheme4Cat") || "Agriculture",
       icon: "🚜",
       iconColor: "#10B981",
       iconBg: "rgba(16, 185, 129, 0.15)",
-      description: "Income support of ₹6,000 per year to all landholding farmers in 3 installments.",
+      description: t("scheme4Desc") || "Income support of ₹6,000 per year to all landholding farmers in 3 installments.",
       benefit: "₹6,000 / year",
-      benefitLabel: "Benefit",
+      benefitLabel: t("popularBenefit") || "Benefit",
       matchScore: 90,
     },
   ];
@@ -249,21 +249,21 @@ export default function Hero({ isLanding = true }) {
           {/* Discovery Badge */}
           <div className="hero-discovery-badge">
             <span className="badge-sparkle">✦</span>
-            <span>{user ? "AI-Powered Government Scheme Discovery" : "Government Welfare Schemes Portal"}</span>
+            <span>{user ? (t("heroBadgeAI") || "AI-Powered Government Scheme Discovery") : (t("heroBadge") || "Government Welfare Schemes Portal")}</span>
           </div>
 
           {/* Main Hero Heading */}
           <h1 className="hero-main-title">
-            Find Government<br />
-            Schemes You're<br />
-            <span className="hero-highlight-gold">Eligible For</span>
+            {t("heroTitle1") || "Find Government"}<br />
+            {t("heroTitle2") || "Schemes You're"}<br />
+            <span className="hero-highlight-gold">{t("heroTitle3") || "Eligible For"}</span>
           </h1>
 
           {/* Subheading */}
           <p className="hero-main-subtitle">
             {user
-              ? "Discover, understand and apply for 1200+ government welfare schemes using the power of AI in your language."
-              : "Discover, understand and apply for 1200+ central and state government welfare schemes in your preferred language."}
+              ? (t("heroSubtitleAI") || "Discover, understand and apply for 1200+ government welfare schemes using the power of AI in your language.")
+              : (t("heroSubtitle") || "Discover, understand and apply for 1200+ central and state government welfare schemes in your preferred language.")}
           </p>
 
           {/* Main Search Bar */}
@@ -272,7 +272,7 @@ export default function Hero({ isLanding = true }) {
             <input
               type="text"
               className="search-bar-input"
-              placeholder={user ? "Ask anything about government schemes..." : "Search government schemes by name, category, or benefit..."}
+              placeholder={user ? (t("heroSearchPlaceholderAI") || "Ask anything about government schemes...") : (t("heroSearchPlaceholder") || "Search government schemes by name, category, or benefit...")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search government schemes"
@@ -288,16 +288,16 @@ export default function Hero({ isLanding = true }) {
             </button>
             <button type="submit" className="search-ask-btn">
               {user ? (
-                <>Ask AI <span className="ask-sparkle">✨</span></>
+                <>{t("heroSearchBtnAI") || "Ask AI"} <span className="ask-sparkle">✨</span></>
               ) : (
-                <>Search <span className="ask-sparkle">🔍</span></>
+                <>{t("heroSearchBtn") || "Search"} <span className="ask-sparkle">🔍</span></>
               )}
             </button>
           </form>
 
           {/* Try Asking / Quick Topics */}
           <div className="hero-try-asking-row">
-            <span className="try-label">{user ? "Try asking:" : "Popular topics:"}</span>
+            <span className="try-label">{user ? (t("heroTryLabelAI") || "Try asking:") : (t("heroTryLabel") || "Popular topics:")}</span>
             <button
               type="button"
               className="try-pill"
@@ -309,7 +309,7 @@ export default function Hero({ isLanding = true }) {
                 }
               }}
             >
-              🎓 Student Scholarships
+              {t("heroPillStudent") || "🎓 Student Scholarships"}
             </button>
             <button
               type="button"
@@ -322,7 +322,7 @@ export default function Hero({ isLanding = true }) {
                 }
               }}
             >
-              🚜 Farmer Welfare Schemes
+              {t("heroPillFarmer") || "🚜 Farmer Welfare Schemes"}
             </button>
             <button
               type="button"
@@ -335,7 +335,7 @@ export default function Hero({ isLanding = true }) {
                 }
               }}
             >
-              🏠 Housing Schemes for Families
+              {t("heroPillHousing") || "🏠 Housing Schemes for Families"}
             </button>
           </div>
 
@@ -353,8 +353,8 @@ export default function Hero({ isLanding = true }) {
               </div>
               <div className="metric-info">
                 <div className="metric-val">1200+</div>
-                <div className="metric-title">Schemes Catalogued</div>
-                <div className="metric-desc">From Central & State Governments</div>
+                <div className="metric-title">{t("statSchemes") || "Schemes Catalogued"}</div>
+                <div className="metric-desc">{t("statSchemesDesc") || "From Central & State Governments"}</div>
               </div>
             </div>
 
@@ -364,8 +364,8 @@ export default function Hero({ isLanding = true }) {
                 <span>⚡</span>
               </div>
               <div className="metric-info">
-                <div className="metric-val">Instant Results</div>
-                <div className="metric-desc">Match your profile with relevant schemes in seconds</div>
+                <div className="metric-val">{t("statInstant") || "Instant Results"}</div>
+                <div className="metric-desc">{t("statInstantDesc") || "Match your profile with relevant schemes in seconds"}</div>
               </div>
             </div>
 
@@ -376,8 +376,8 @@ export default function Hero({ isLanding = true }) {
               </div>
               <div className="metric-info">
                 <div className="metric-val">10K+</div>
-                <div className="metric-title">Active Users</div>
-                <div className="metric-desc">Citizens across India trusting Sahayog</div>
+                <div className="metric-title">{t("statUsers") || "Active Users"}</div>
+                <div className="metric-desc">{t("statUsersDesc") || "Citizens across India trusting Sahayog"}</div>
               </div>
             </div>
 
@@ -387,8 +387,8 @@ export default function Hero({ isLanding = true }) {
                 <span>🛡️</span>
               </div>
               <div className="metric-info">
-                <div className="metric-val">100% Secure</div>
-                <div className="metric-desc">Your data is safe and private with us</div>
+                <div className="metric-val">{t("statSecure") || "100% Secure"}</div>
+                <div className="metric-desc">{t("statSecureDesc") || "Your data is safe and private with us"}</div>
               </div>
             </div>
           </div>
@@ -398,10 +398,10 @@ export default function Hero({ isLanding = true }) {
             <div className="popular-schemes-header">
               <div className="popular-heading-group">
                 <span className="popular-fire-emoji">🔥</span>
-                <h3 className="popular-heading-text">Popular Schemes</h3>
+                <h3 className="popular-heading-text">{t("popularTitle") || "Popular Schemes"}</h3>
               </div>
               <Link to="/dashboard" className="popular-view-all-link">
-                View all schemes →
+                {t("popularViewAll") || "View all schemes →"}
               </Link>
             </div>
 
@@ -432,7 +432,7 @@ export default function Hero({ isLanding = true }) {
                       <span className="benefit-label-sub">{scheme.benefitLabel}</span>
                     </div>
                     <div className="scheme-match-pill">
-                      {scheme.matchScore}% Match
+                      {scheme.matchScore}% {t("popularMatch") || "Match"}
                     </div>
                   </div>
                 </div>
@@ -458,8 +458,8 @@ export default function Hero({ isLanding = true }) {
                   <span>🤖</span>
                 </div>
                 <div className="feature-content">
-                  <h4 className="feature-name">AI Assistant</h4>
-                  <p className="feature-summary">Get instant answers in your language</p>
+                  <h4 className="feature-name">{t("featAI") || "AI Assistant"}</h4>
+                  <p className="feature-summary">{t("featAIDesc") || "Get instant answers in your language"}</p>
                 </div>
               </div>
             ) : (
@@ -472,8 +472,8 @@ export default function Hero({ isLanding = true }) {
                   <span>🌐</span>
                 </div>
                 <div className="feature-content">
-                  <h4 className="feature-name">Multilingual Support</h4>
-                  <p className="feature-summary">Available in 8 Indian regional languages</p>
+                  <h4 className="feature-name">{t("featMultilingual") || "Multilingual Support"}</h4>
+                  <p className="feature-summary">{t("featMultilingualDesc") || "Available in 8 Indian regional languages"}</p>
                 </div>
               </div>
             )}
@@ -487,8 +487,8 @@ export default function Hero({ isLanding = true }) {
                 <span>🎯</span>
               </div>
               <div className="feature-content">
-                <h4 className="feature-name">Smart Scheme Matching</h4>
-                <p className="feature-summary">Matches schemes perfectly for your profile</p>
+                <h4 className="feature-name">{t("featMatching") || "Smart Scheme Matching"}</h4>
+                <p className="feature-summary">{t("featMatchingDesc") || "Matches schemes perfectly for your profile"}</p>
               </div>
             </div>
 
@@ -501,8 +501,8 @@ export default function Hero({ isLanding = true }) {
                 <span>📄</span>
               </div>
               <div className="feature-content">
-                <h4 className="feature-name">Step-by-Step Guidance</h4>
-                <p className="feature-summary">Understand documents, process & how to apply</p>
+                <h4 className="feature-name">{t("featGuidance") || "Step-by-Step Guidance"}</h4>
+                <p className="feature-summary">{t("featGuidanceDesc") || "Understand documents, process & how to apply"}</p>
               </div>
             </div>
 
@@ -515,8 +515,8 @@ export default function Hero({ isLanding = true }) {
                 <span>🔖</span>
               </div>
               <div className="feature-content">
-                <h4 className="feature-name">Save & Track</h4>
-                <p className="feature-summary">Save schemes and track your application progress</p>
+                <h4 className="feature-name">{t("featSave") || "Save & Track"}</h4>
+                <p className="feature-summary">{t("featSaveDesc") || "Save schemes and track your application progress"}</p>
               </div>
             </div>
           </div>
@@ -528,7 +528,7 @@ export default function Hero({ isLanding = true }) {
               <div className="chat-card-header">
                 <div className="chat-bot-brand">
                   <div className="chat-bot-avatar">🤖</div>
-                  <span className="chat-bot-title">AI Assistant</span>
+                  <span className="chat-bot-title">{t("featAI") || "AI Assistant"}</span>
                 </div>
                 <button
                   type="button"
@@ -649,10 +649,10 @@ export default function Hero({ isLanding = true }) {
                   <div className="chat-bot-avatar" style={{ background: "rgba(245, 158, 11, 0.2)", borderColor: "rgba(245, 158, 11, 0.4)" }}>
                     📋
                   </div>
-                  <span className="chat-bot-title">Eligibility Checker</span>
+                  <span className="chat-bot-title">{t("checkerTitle") || "Eligibility Checker"}</span>
                 </div>
                 <span className="locked-badge" style={{ background: "rgba(16, 185, 129, 0.15)", borderColor: "rgba(16, 185, 129, 0.4)", color: "#34D399" }}>
-                  ⚡ Free Instant Scan
+                  ⚡ {t("checkerBadge") || "Free Instant Scan"}
                 </span>
               </div>
 
@@ -662,42 +662,42 @@ export default function Hero({ isLanding = true }) {
                     🏛️
                   </div>
                   <span className="locked-sparkle-badge" style={{ background: "linear-gradient(135deg, #F59E0B, #D97706)" }}>
-                    1200+ Schemes
+                    {t("checkerBadgeSchemes") || "1200+ Schemes"}
                   </span>
                 </div>
 
-                <h3 className="locked-card-title">Check Your Scheme Eligibility</h3>
+                <h3 className="locked-card-title">{t("checkerHeading") || "Check Your Scheme Eligibility"}</h3>
                 <p className="locked-card-desc">
-                  Find out which central and state government welfare schemes you and your family qualify for in less than 2 minutes.
+                  {t("checkerDesc") || "Find out which central and state government welfare schemes you and your family qualify for in less than 2 minutes."}
                 </p>
 
                 <div className="locked-features-list">
                   <div className="locked-feature-item">
                     <span className="locked-check-icon">✓</span>
-                    <span>100% Free & Secure Profile Matching</span>
+                    <span>{t("checkerFeat1") || "100% Free & Secure Profile Matching"}</span>
                   </div>
                   <div className="locked-feature-item">
                     <span className="locked-check-icon">✓</span>
-                    <span>Verified Criteria & Required Documents List</span>
+                    <span>{t("checkerFeat2") || "Verified Criteria & Required Documents List"}</span>
                   </div>
                   <div className="locked-feature-item">
                     <span className="locked-check-icon">✓</span>
-                    <span>Direct Application Steps & Portal Links</span>
+                    <span>{t("checkerFeat3") || "Direct Application Steps & Portal Links"}</span>
                   </div>
                 </div>
 
                 <div className="locked-actions-group">
                   <Link to="/login" className="btn-locked-login">
-                    Check Eligibility Now →
+                    {t("checkerBtn") || "Check Eligibility Now →"}
                   </Link>
                   <Link to="/register" className="btn-locked-register">
-                    Create Free Account
+                    {t("checkerRegister") || "Create Free Account"}
                   </Link>
                 </div>
               </div>
 
               <div className="chat-gemini-badge" style={{ color: "#94A3B8" }}>
-                <span>🇮🇳 Official Central & State Welfare Schemes</span>
+                <span>🇮🇳 {t("checkerFooter") || "Official Central & State Welfare Schemes"}</span>
               </div>
             </div>
           )}
@@ -709,43 +709,105 @@ export default function Hero({ isLanding = true }) {
         <div className="trust-metric-item">
           <span className="trust-icon">🌐</span>
           <div className="trust-text-col">
-            <span className="trust-main-val">8 Languages</span>
-            <span className="trust-sub-label">Supported</span>
+            <span className="trust-main-val">{t("trustLangVal") || "8 Languages"}</span>
+            <span className="trust-sub-label">{t("trustLangLabel") || "Supported"}</span>
           </div>
         </div>
 
         <div className="trust-metric-item">
           <span className="trust-icon">💬</span>
           <div className="trust-text-col">
-            <span className="trust-main-val">{user ? "24/7 AI Assistant" : "24/7 Assistance"}</span>
-            <span className="trust-sub-label">Available</span>
+            <span className="trust-main-val">{user ? (t("trustAssistValAI") || "24/7 AI Assistant") : (t("trustAssistVal") || "24/7 Assistance")}</span>
+            <span className="trust-sub-label">{t("trustAssistLabel") || "Available"}</span>
           </div>
         </div>
 
         <div className="trust-metric-item">
           <span className="trust-icon">🗺️</span>
           <div className="trust-text-col">
-            <span className="trust-main-val">All India</span>
-            <span className="trust-sub-label">Coverage</span>
+            <span className="trust-main-val">{t("trustIndiaVal") || "All India"}</span>
+            <span className="trust-sub-label">{t("trustIndiaLabel") || "Coverage"}</span>
           </div>
         </div>
 
         <div className="trust-metric-item">
           <span className="trust-icon">🛡️</span>
           <div className="trust-text-col">
-            <span className="trust-main-val">Zero</span>
-            <span className="trust-sub-label">Hidden Charges</span>
+            <span className="trust-main-val">{t("trustZeroVal") || "Zero"}</span>
+            <span className="trust-sub-label">{t("trustZeroLabel") || "Hidden Charges"}</span>
           </div>
         </div>
 
         <div className="trust-metric-item">
           <span className="trust-icon">⚡</span>
           <div className="trust-text-col">
-            <span className="trust-main-val">99.5%</span>
-            <span className="trust-sub-label">Uptime</span>
+            <span className="trust-main-val">{t("trustUptimeVal") || "99.5%"}</span>
+            <span className="trust-sub-label">{t("trustUptimeLabel") || "Uptime"}</span>
           </div>
         </div>
       </section>
+
+      {/* ── ABOUT US SECTION ────────────────────────────────────────── */}
+      <section className="hero-about-section" id="about-section">
+        <div className="about-header-group">
+          <h2 className="about-main-title">{t("aboutTitle") || "About Sahayog"}</h2>
+          <p className="about-main-desc">
+            {t("aboutDesc") || "Sahayog is a citizen-first digital platform designed to bridge the gap between government welfare programs and eligible citizens across India. Our goal is to ensure every family discovers, understands, and receives the benefits they are entitled to."}
+          </p>
+        </div>
+
+        <div className="about-features-grid">
+          <div className="about-feature-card">
+            <div className="about-card-icon">🏛️</div>
+            <h3 className="about-card-title">{t("aboutCard1Title") || "100% Free & Transparent"}</h3>
+            <p className="about-card-desc">{t("aboutCard1Desc") || "Zero hidden fees. Direct links to official government application portals."}</p>
+          </div>
+          <div className="about-feature-card">
+            <div className="about-card-icon">🌐</div>
+            <h3 className="about-card-title">{t("aboutCard2Title") || "Multilingual Access"}</h3>
+            <p className="about-card-desc">{t("aboutCard2Desc") || "Read scheme benefits and requirements in 8 Indian regional languages."}</p>
+          </div>
+          <div className="about-feature-card">
+            <div className="about-card-icon">🛡️</div>
+            <h3 className="about-card-title">{t("aboutCard3Title") || "Secure & Private"}</h3>
+            <p className="about-card-desc">{t("aboutCard3Desc") || "Your personal and eligibility data is kept strictly confidential."}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONTACT & CITIZEN HELPDESK SECTION ──────────────────────── */}
+      <section className="hero-contact-section" id="contact-section">
+        <div className="contact-card-box">
+          <div className="contact-text-col">
+            <h2 className="contact-main-title">{t("contactTitle") || "Need Help? Contact Us"}</h2>
+            <p className="contact-main-subtitle">
+              {t("contactSubtitle") || "Have questions about scheme eligibility or documentation? Reach out to our team."}
+            </p>
+            <div className="contact-details-list">
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon">📞</span>
+                <span>{t("contactTollFree") || "National Toll-Free Helpline: 1800-11-2026 (Mon-Sat, 9 AM - 6 PM)"}</span>
+              </div>
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon">✉️</span>
+                <span>{t("contactEmail") || "Email Support: support@sahayog.gov.in"}</span>
+              </div>
+            </div>
+          </div>
+          <div className="contact-action-col">
+            <Link to={user ? "/dashboard" : "/login"} className="btn-contact-action">
+              {user ? (t("navDashboard") || "Go to Dashboard →") : (t("checkerBtn") || "Check Eligibility Now →")}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ──────────────────────────────────────────────────── */}
+      <footer className="hero-footer">
+        <p className="footer-copyright">
+          {t("footerRights") || "© 2026 Sahayog. Empowering citizens across India with seamless access to welfare schemes."}
+        </p>
+      </footer>
     </div>
   );
 }

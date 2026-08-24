@@ -5,15 +5,22 @@ const ThemeContext = createContext(null);
 export function ThemeProvider({ children }) {
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem("theme");
-    return saved === "dark";
+    if (saved) return saved === "dark";
+    return true;
   });
 
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add("dark");
+      document.body.classList.remove("light");
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
       localStorage.setItem("theme", "dark");
     } else {
       document.body.classList.remove("dark");
+      document.body.classList.add("light");
+      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.add("light");
       localStorage.setItem("theme", "light");
     }
   }, [darkMode]);

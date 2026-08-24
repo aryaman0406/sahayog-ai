@@ -40,10 +40,10 @@ export default function Navbar({ savedCount = 0 }) {
         {/* Desktop Links */}
         <div className="navbar-links">
           <NavLink to="/" end className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
-            Home
+            {t("navHome") || "Home"}
           </NavLink>
           <NavLink to={user ? "/dashboard" : "/login"} className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
-            Schemes
+            {t("navSchemes") || "Schemes"}
           </NavLink>
           {user && (
             <button 
@@ -55,7 +55,7 @@ export default function Navbar({ savedCount = 0 }) {
                 else navigate("/dashboard");
               }}
             >
-              AI Assistant
+              {t("navAIAssistant") || "AI Assistant"}
             </button>
           )}
           <button 
@@ -63,15 +63,15 @@ export default function Navbar({ savedCount = 0 }) {
             className="nav-item-btn" 
             onClick={() => navigate(user ? "/dashboard" : "/login")}
           >
-            Eligibility Checker
+            {t("navEligibility") || "Eligibility Checker"}
           </button>
           {user ? (
             <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
-              Dashboard
+              {t("navDashboard") || "Dashboard"}
             </NavLink>
           ) : (
             <NavLink to="/login" className="nav-item">
-              Dashboard
+              {t("navDashboard") || "Dashboard"}
             </NavLink>
           )}
           <button
@@ -82,7 +82,7 @@ export default function Navbar({ savedCount = 0 }) {
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
           >
-            About Us
+            {t("navAbout") || "About Us"}
           </button>
           <button
             type="button"
@@ -92,7 +92,7 @@ export default function Navbar({ savedCount = 0 }) {
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
           >
-            Contact
+            {t("navContact") || "Contact"}
           </button>
         </div>
 
@@ -105,21 +105,21 @@ export default function Navbar({ savedCount = 0 }) {
             <div className="user-profile-menu">
               <span className="user-name-display">{user.name}</span>
               {savedCount > 0 && (
-                <Link to="/saved" className="nav-saved-pill" title="Saved Schemes">
+                <Link to="/saved" className="nav-saved-pill" title={t("navSaved") || "Saved Schemes"}>
                   🔖 {savedCount}
                 </Link>
               )}
               <button onClick={handleLogout} className="btn-logout">
-                Logout
+                {t("navLogout") || "Logout"}
               </button>
             </div>
           ) : (
             <div className="auth-action-group">
               <Link to="/login" className="btn-login-outline">
-                Login
+                {t("navLogin") || "Login"}
               </Link>
               <Link to="/register" className="btn-register-solid">
-                Register
+                {t("navRegister") || "Register"}
               </Link>
             </div>
           )}
@@ -141,10 +141,10 @@ export default function Navbar({ savedCount = 0 }) {
       {mobileMenuOpen && (
         <div className="mobile-drawer animate-fade-in">
           <NavLink to="/" end className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-            Home
+            {t("navHome") || "Home"}
           </NavLink>
           <NavLink to={user ? "/dashboard" : "/login"} className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-            Schemes
+            {t("navSchemes") || "Schemes"}
           </NavLink>
           {user && (
             <button 
@@ -158,22 +158,22 @@ export default function Navbar({ savedCount = 0 }) {
                 else navigate("/dashboard");
               }}
             >
-              AI Assistant
+              {t("navAIAssistant") || "AI Assistant"}
             </button>
           )}
           <NavLink to={user ? "/dashboard" : "/login"} className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-            Eligibility Checker
+            {t("navEligibility") || "Eligibility Checker"}
           </NavLink>
           {user && (
             <>
               <NavLink to="/dashboard" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-                Dashboard
+                {t("navDashboard") || "Dashboard"}
               </NavLink>
               <NavLink to="/saved" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-                Saved Schemes ({savedCount})
+                {t("navSaved") || "Saved Schemes"} ({savedCount})
               </NavLink>
               <NavLink to="/analytics" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-                Analytics
+                {t("navAnalytics") || "Analytics"}
               </NavLink>
             </>
           )}
@@ -190,16 +190,16 @@ export default function Navbar({ savedCount = 0 }) {
               <div className="mobile-user-row">
                 <span className="mobile-username">{user.name}</span>
                 <button onClick={handleLogout} className="btn-logout w-full">
-                  Logout
+                  {t("navLogout") || "Logout"}
                 </button>
               </div>
             ) : (
               <div className="mobile-auth-row">
                 <Link to="/login" className="btn-login-outline w-full text-center" onClick={() => setMobileMenuOpen(false)}>
-                  Login
+                  {t("navLogin") || "Login"}
                 </Link>
                 <Link to="/register" className="btn-register-solid w-full text-center" onClick={() => setMobileMenuOpen(false)}>
-                  Register
+                  {t("navRegister") || "Register"}
                 </Link>
               </div>
             )}

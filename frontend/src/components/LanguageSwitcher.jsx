@@ -6,10 +6,10 @@ const LANGUAGES = [
   { code: "hi", flag: "🇮🇳", native: "हिन्दी", english: "Hindi" },
   { code: "bn", flag: "🇮🇳", native: "বাংলা", english: "Bengali" },
   { code: "ta", flag: "🇮🇳", native: "தமிழ்", english: "Tamil" },
+  { code: "mr", flag: "🇮🇳", native: "मराठी", english: "Marathi" },
   { code: "te", flag: "🇮🇳", native: "తెలుగు", english: "Telugu" },
   { code: "kn", flag: "🇮🇳", native: "ಕನ್ನಡ", english: "Kannada" },
   { code: "gu", flag: "🇮🇳", native: "ગુજરાતી", english: "Gujarati" },
-  { code: "ml", flag: "🇮🇳", native: "മലയാളം", english: "Malayalam" },
 ];
 
 export default function LanguageSwitcher() {
