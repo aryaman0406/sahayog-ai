@@ -246,10 +246,10 @@ export default function Hero({ isLanding = true }) {
       <section className="hero-main-grid">
         {/* LEFT COLUMN: Headlines, Search, Glowing India Map & Stats */}
         <div className="hero-left-column">
-          {/* AI Discovery Badge */}
+          {/* Discovery Badge */}
           <div className="hero-discovery-badge">
             <span className="badge-sparkle">✦</span>
-            <span>AI-Powered Government Scheme Discovery</span>
+            <span>{user ? "AI-Powered Government Scheme Discovery" : "Government Welfare Schemes Portal"}</span>
           </div>
 
           {/* Main Hero Heading */}
@@ -261,16 +261,18 @@ export default function Hero({ isLanding = true }) {
 
           {/* Subheading */}
           <p className="hero-main-subtitle">
-            Discover, understand and apply for 1200+ government welfare schemes using the power of AI in your language.
+            {user
+              ? "Discover, understand and apply for 1200+ government welfare schemes using the power of AI in your language."
+              : "Discover, understand and apply for 1200+ central and state government welfare schemes in your preferred language."}
           </p>
 
-          {/* Main Search Bar with Ask AI & Mic */}
+          {/* Main Search Bar */}
           <form className="hero-search-bar" onSubmit={handleSearchSubmit}>
             <span className="search-bar-icon">🔍</span>
             <input
               type="text"
               className="search-bar-input"
-              placeholder="Ask anything about government schemes..."
+              placeholder={user ? "Ask anything about government schemes..." : "Search government schemes by name, category, or benefit..."}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search government schemes"
@@ -285,13 +287,17 @@ export default function Hero({ isLanding = true }) {
               🎙️
             </button>
             <button type="submit" className="search-ask-btn">
-              Ask AI <span className="ask-sparkle">✨</span>
+              {user ? (
+                <>Ask AI <span className="ask-sparkle">✨</span></>
+              ) : (
+                <>Search <span className="ask-sparkle">🔍</span></>
+              )}
             </button>
           </form>
 
-          {/* Try Asking Suggestion Pills */}
+          {/* Try Asking / Quick Topics */}
           <div className="hero-try-asking-row">
-            <span className="try-label">Try asking:</span>
+            <span className="try-label">{user ? "Try asking:" : "Popular topics:"}</span>
             <button
               type="button"
               className="try-pill"
@@ -303,7 +309,7 @@ export default function Hero({ isLanding = true }) {
                 }
               }}
             >
-              🎓 I am a student, which scholarships can I get?
+              🎓 Student Scholarships
             </button>
             <button
               type="button"
@@ -316,7 +322,7 @@ export default function Hero({ isLanding = true }) {
                 }
               }}
             >
-              🚜 Schemes for farmers
+              🚜 Farmer Welfare Schemes
             </button>
             <button
               type="button"
@@ -329,7 +335,7 @@ export default function Hero({ isLanding = true }) {
                 }
               }}
             >
-              🏠 Housing schemes for families
+              🏠 Housing Schemes for Families
             </button>
           </div>
 
@@ -359,7 +365,7 @@ export default function Hero({ isLanding = true }) {
               </div>
               <div className="metric-info">
                 <div className="metric-val">Instant Results</div>
-                <div className="metric-desc">AI matches your profile with relevant schemes in seconds</div>
+                <div className="metric-desc">Match your profile with relevant schemes in seconds</div>
               </div>
             </div>
 
@@ -371,7 +377,7 @@ export default function Hero({ isLanding = true }) {
               <div className="metric-info">
                 <div className="metric-val">10K+</div>
                 <div className="metric-title">Active Users</div>
-                <div className="metric-desc">Citizens across India trusting Sahayog AI</div>
+                <div className="metric-desc">Citizens across India trusting Sahayog</div>
               </div>
             </div>
 
@@ -435,30 +441,42 @@ export default function Hero({ isLanding = true }) {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Feature Highlights & Embedded AI Assistant */}
+        {/* RIGHT COLUMN: Feature Highlights & Interactive Panels */}
         <div className="hero-right-column">
           {/* Top Feature Highlights Stack */}
           <div className="feature-highlights-stack">
-            <div
-              className="feature-highlight-card"
-              onClick={() => {
-                if (user) {
+            {user ? (
+              <div
+                className="feature-highlight-card"
+                onClick={() => {
                   const el = document.getElementById("ai-assistant-card");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
-                } else {
-                  navigate("/login");
-                }
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="feature-badge-icon icon-purple">
-                <span>🤖</span>
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="feature-badge-icon icon-purple">
+                  <span>🤖</span>
+                </div>
+                <div className="feature-content">
+                  <h4 className="feature-name">AI Assistant</h4>
+                  <p className="feature-summary">Get instant answers in your language</p>
+                </div>
               </div>
-              <div className="feature-content">
-                <h4 className="feature-name">AI Assistant</h4>
-                <p className="feature-summary">Get instant answers in your language</p>
+            ) : (
+              <div
+                className="feature-highlight-card"
+                onClick={() => navigate("/login")}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="feature-badge-icon icon-purple">
+                  <span>🌐</span>
+                </div>
+                <div className="feature-content">
+                  <h4 className="feature-name">Multilingual Support</h4>
+                  <p className="feature-summary">Available in 8 Indian regional languages</p>
+                </div>
               </div>
-            </div>
+            )}
 
             <div
               className="feature-highlight-card"
@@ -470,7 +488,7 @@ export default function Hero({ isLanding = true }) {
               </div>
               <div className="feature-content">
                 <h4 className="feature-name">Smart Scheme Matching</h4>
-                <p className="feature-summary">AI matches schemes perfectly for you</p>
+                <p className="feature-summary">Matches schemes perfectly for your profile</p>
               </div>
             </div>
 
@@ -503,7 +521,7 @@ export default function Hero({ isLanding = true }) {
             </div>
           </div>
 
-          {/* Embedded Live AI Assistant Chat Panel OR Login-Gated Preview */}
+          {/* Embedded Live AI Assistant (When Logged In) OR Eligibility Checker Card (When Guest) */}
           {user ? (
             <div className="ai-assistant-card-panel animate-fade-in" id="ai-assistant-card">
               {/* Chat Header */}
@@ -625,44 +643,52 @@ export default function Hero({ isLanding = true }) {
               </form>
             </div>
           ) : (
-            <div className="ai-assistant-card-panel ai-assistant-locked-panel animate-fade-in" id="ai-assistant-card">
+            <div className="ai-assistant-card-panel hero-eligibility-gate-panel animate-fade-in" id="eligibility-card">
               <div className="chat-card-header">
                 <div className="chat-bot-brand">
-                  <div className="chat-bot-avatar">🤖</div>
-                  <span className="chat-bot-title">AI Assistant</span>
+                  <div className="chat-bot-avatar" style={{ background: "rgba(245, 158, 11, 0.2)", borderColor: "rgba(245, 158, 11, 0.4)" }}>
+                    📋
+                  </div>
+                  <span className="chat-bot-title">Eligibility Checker</span>
                 </div>
-                <span className="locked-badge">🔒 Sign In Required</span>
+                <span className="locked-badge" style={{ background: "rgba(16, 185, 129, 0.15)", borderColor: "rgba(16, 185, 129, 0.4)", color: "#34D399" }}>
+                  ⚡ Free Instant Scan
+                </span>
               </div>
 
               <div className="locked-card-body">
                 <div className="locked-icon-wrapper">
-                  <div className="locked-bot-icon">🤖</div>
-                  <span className="locked-sparkle-badge">✨ Gemini AI</span>
+                  <div className="locked-bot-icon" style={{ background: "radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, rgba(217, 119, 6, 0.15) 100%)", borderColor: "rgba(245, 158, 11, 0.5)", boxShadow: "0 0 24px rgba(245, 158, 11, 0.3)" }}>
+                    🏛️
+                  </div>
+                  <span className="locked-sparkle-badge" style={{ background: "linear-gradient(135deg, #F59E0B, #D97706)" }}>
+                    1200+ Schemes
+                  </span>
                 </div>
 
-                <h3 className="locked-card-title">Chat with Gemini AI</h3>
+                <h3 className="locked-card-title">Check Your Scheme Eligibility</h3>
                 <p className="locked-card-desc">
-                  Sign in or register to unlock our Gemini-powered conversational assistant. Ask questions in 8 Indian languages, check real-time eligibility, and get step-by-step guidance.
+                  Find out which central and state government welfare schemes you and your family qualify for in less than 2 minutes.
                 </p>
 
                 <div className="locked-features-list">
                   <div className="locked-feature-item">
                     <span className="locked-check-icon">✓</span>
-                    <span>Multilingual Q&A in 8 Indian languages</span>
+                    <span>100% Free & Secure Profile Matching</span>
                   </div>
                   <div className="locked-feature-item">
                     <span className="locked-check-icon">✓</span>
-                    <span>Instant eligibility checking & document checklists</span>
+                    <span>Verified Criteria & Required Documents List</span>
                   </div>
                   <div className="locked-feature-item">
                     <span className="locked-check-icon">✓</span>
-                    <span>Direct conversational guidance for 1200+ schemes</span>
+                    <span>Direct Application Steps & Portal Links</span>
                   </div>
                 </div>
 
                 <div className="locked-actions-group">
                   <Link to="/login" className="btn-locked-login">
-                    Login to Access Gemini AI →
+                    Check Eligibility Now →
                   </Link>
                   <Link to="/register" className="btn-locked-register">
                     Create Free Account
@@ -670,8 +696,8 @@ export default function Hero({ isLanding = true }) {
                 </div>
               </div>
 
-              <div className="chat-gemini-badge">
-                <span>⚡ Powered by Google Gemini AI</span>
+              <div className="chat-gemini-badge" style={{ color: "#94A3B8" }}>
+                <span>🇮🇳 Official Central & State Welfare Schemes</span>
               </div>
             </div>
           )}
@@ -691,7 +717,7 @@ export default function Hero({ isLanding = true }) {
         <div className="trust-metric-item">
           <span className="trust-icon">💬</span>
           <div className="trust-text-col">
-            <span className="trust-main-val">24/7 AI Assistant</span>
+            <span className="trust-main-val">{user ? "24/7 AI Assistant" : "24/7 Assistance"}</span>
             <span className="trust-sub-label">Available</span>
           </div>
         </div>

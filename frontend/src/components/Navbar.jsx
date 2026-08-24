@@ -45,21 +45,19 @@ export default function Navbar({ savedCount = 0 }) {
           <NavLink to={user ? "/dashboard" : "/login"} className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
             Schemes
           </NavLink>
-          <button 
-            type="button" 
-            className="nav-item-btn" 
-            onClick={() => {
-              if (user) {
+          {user && (
+            <button 
+              type="button" 
+              className="nav-item-btn" 
+              onClick={() => {
                 const el = document.getElementById("ai-assistant-card");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
                 else navigate("/dashboard");
-              } else {
-                navigate("/login");
-              }
-            }}
-          >
-            AI Assistant
-          </button>
+              }}
+            >
+              AI Assistant
+            </button>
+          )}
           <button 
             type="button" 
             className="nav-item-btn" 
@@ -148,23 +146,21 @@ export default function Navbar({ savedCount = 0 }) {
           <NavLink to={user ? "/dashboard" : "/login"} className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
             Schemes
           </NavLink>
-          <button 
-            type="button" 
-            className="mobile-nav-item text-left w-full"
-            style={{ background: "none", border: "none", font: "inherit", color: "inherit", cursor: "pointer", padding: "10px 16px" }}
-            onClick={() => {
-              setMobileMenuOpen(false);
-              if (user) {
+          {user && (
+            <button 
+              type="button" 
+              className="mobile-nav-item text-left w-full"
+              style={{ background: "none", border: "none", font: "inherit", color: "inherit", cursor: "pointer", padding: "10px 16px" }}
+              onClick={() => {
+                setMobileMenuOpen(false);
                 const el = document.getElementById("ai-assistant-card");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
                 else navigate("/dashboard");
-              } else {
-                navigate("/login");
-              }
-            }}
-          >
-            AI Assistant
-          </button>
+              }}
+            >
+              AI Assistant
+            </button>
+          )}
           <NavLink to={user ? "/dashboard" : "/login"} className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
             Eligibility Checker
           </NavLink>
