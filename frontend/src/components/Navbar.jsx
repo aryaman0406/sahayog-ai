@@ -5,7 +5,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import DarkModeToggle from "./DarkModeToggle.jsx";
 import LanguageSwitcher from "./LanguageSwitcher.jsx";
 
-export default function Navbar({ savedCount }) {
+export default function Navbar({ savedCount = 0 }) {
   const { user, logout } = useAuth();
   const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,49 +21,104 @@ export default function Navbar({ savedCount }) {
     }
   };
 
+  const handleNavLinkClick = (path) => {
+    setMobileMenuOpen(false);
+    navigate(path);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
+        {/* Brand Logo */}
         <Link to="/" className="navbar-logo" onClick={() => setMobileMenuOpen(false)}>
-          <span className="logo-seal">स</span> {t("brand")}
+          <div className="logo-badge-icon">
+            <span className="logo-letter">स</span>
+          </div>
+          <span className="logo-brand-text">Sahayog AI</span>
         </Link>
 
         {/* Desktop Links */}
         <div className="navbar-links">
-          <NavLink to="/" end className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
-            {t("navHome")}
+          <NavLink to="/" end className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+            Home
           </NavLink>
-          {user && (
-            <>
-              <NavLink to="/dashboard" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
-                {t("navDashboard")}
-              </NavLink>
-              <NavLink to="/saved" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
-                {t("navSaved")}
-                {savedCount > 0 && <span className="badge">{savedCount}</span>}
-              </NavLink>
-              <NavLink to="/analytics" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
-                {t("navAnalytics")}
-              </NavLink>
-            </>
+          <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+            Schemes
+          </NavLink>
+          <button 
+            type="button" 
+            className="nav-item-btn" 
+            onClick={() => {
+              const el = document.getElementById("ai-assistant-card");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+              else navigate("/dashboard");
+            }}
+          >
+            AI Assistant
+          </button>
+          <button 
+            type="button" 
+            className="nav-item-btn" 
+            onClick={() => navigate(user ? "/dashboard" : "/login")}
+          >
+            Eligibility Checker
+          </button>
+          {user ? (
+            <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+              Dashboard
+            </NavLink>
+          ) : (
+            <NavLink to="/login" className="nav-item">
+              Dashboard
+            </NavLink>
           )}
+          <button
+            type="button"
+            className="nav-item-btn"
+            onClick={() => {
+              const el = document.getElementById("about-section");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            About Us
+          </button>
+          <button
+            type="button"
+            className="nav-item-btn"
+            onClick={() => {
+              const el = document.getElementById("contact-section");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
+          >
+            Contact
+          </button>
         </div>
 
         {/* Desktop Actions */}
         <div className="navbar-actions">
           <LanguageSwitcher />
           <DarkModeToggle />
+
           {user ? (
             <div className="user-profile-menu">
               <span className="user-name-display">{user.name}</span>
+              {savedCount > 0 && (
+                <Link to="/saved" className="nav-saved-pill" title="Saved Schemes">
+                  🔖 {savedCount}
+                </Link>
+              )}
               <button onClick={handleLogout} className="btn-logout">
-                {t("navLogout")}
+                Logout
               </button>
             </div>
           ) : (
-            <div className="auth-links">
-              <Link to="/login" className="btn-login-link">{t("navLogin")}</Link>
-              <Link to="/register" className="btn-register-link btn-primary-nav">{t("navRegister")}</Link>
+            <div className="auth-action-group">
+              <Link to="/login" className="btn-login-outline">
+                Login
+              </Link>
+              <Link to="/register" className="btn-register-solid">
+                Register
+              </Link>
             </div>
           )}
         </div>
@@ -84,39 +139,51 @@ export default function Navbar({ savedCount }) {
       {mobileMenuOpen && (
         <div className="mobile-drawer animate-fade-in">
           <NavLink to="/" end className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-            {t("navHome")}
+            Home
+          </NavLink>
+          <NavLink to="/dashboard" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
+            Schemes
+          </NavLink>
+          <NavLink to="/dashboard" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
+            Eligibility Checker
           </NavLink>
           {user && (
             <>
               <NavLink to="/dashboard" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-                {t("navDashboard")}
+                Dashboard
               </NavLink>
               <NavLink to="/saved" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-                {t("navSaved")}
-                {savedCount > 0 && <span className="badge mobile-badge">{savedCount}</span>}
+                Saved Schemes ({savedCount})
               </NavLink>
               <NavLink to="/analytics" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-                {t("navAnalytics")}
+                Analytics
               </NavLink>
             </>
           )}
+
           <hr className="drawer-divider" />
+
           <div className="mobile-drawer-actions">
             <div className="toggles-row">
               <LanguageSwitcher />
               <DarkModeToggle />
             </div>
+
             {user ? (
               <div className="mobile-user-row">
                 <span className="mobile-username">{user.name}</span>
                 <button onClick={handleLogout} className="btn-logout w-full">
-                  {t("navLogout")}
+                  Logout
                 </button>
               </div>
             ) : (
               <div className="mobile-auth-row">
-                <Link to="/login" className="btn-login-link" onClick={() => setMobileMenuOpen(false)}>{t("navLogin")}</Link>
-                <Link to="/register" className="btn-primary-nav w-full text-center" onClick={() => setMobileMenuOpen(false)}>{t("navRegister")}</Link>
+                <Link to="/login" className="btn-login-outline w-full text-center" onClick={() => setMobileMenuOpen(false)}>
+                  Login
+                </Link>
+                <Link to="/register" className="btn-register-solid w-full text-center" onClick={() => setMobileMenuOpen(false)}>
+                  Register
+                </Link>
               </div>
             )}
           </div>
