@@ -56,6 +56,8 @@ export function AuthProvider({ children }) {
       if (!savedToken || isTokenExpired(savedToken)) {
         if (savedToken) localStorage.removeItem(TOKEN_KEY);
         setLoading(false);
+        // Pre-warm backend server and MongoDB pool in background while user is on login/signup page
+        fetch(`${BASE_URL}/api/health`).catch(() => {});
         return;
       }
       try {
@@ -85,13 +87,21 @@ export function AuthProvider({ children }) {
 
   async function login(email, password) {
     let res;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
     try {
       res = await fetch(`${BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+        signal: controller.signal,
       });
-    } catch {
+      clearTimeout(timeout);
+    } catch (err) {
+      clearTimeout(timeout);
+      if (err.name === "AbortError") {
+        throw new Error("Connection timed out. Server may be starting up, please try again.");
+      }
       throw new Error("Network error — please check your connection.");
     }
     if (!res.ok) {
@@ -107,13 +117,21 @@ export function AuthProvider({ children }) {
 
   async function register(registerData) {
     let res;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
     try {
       res = await fetch(`${BASE_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(registerData),
+        signal: controller.signal,
       });
-    } catch {
+      clearTimeout(timeout);
+    } catch (err) {
+      clearTimeout(timeout);
+      if (err.name === "AbortError") {
+        throw new Error("Connection timed out. Server may be starting up, please try again.");
+      }
       throw new Error("Network error — please check your connection.");
     }
     if (!res.ok) {

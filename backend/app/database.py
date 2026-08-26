@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from motor.motor_asyncio import AsyncIOMotorClient
 from app.config import settings
@@ -14,6 +15,19 @@ def get_database():
         raise RuntimeError("Database client is not initialized")
     return db.client.sahayog_ai
 
+async def _ensure_indexes(database):
+    try:
+        await asyncio.gather(
+            database.users.create_index("email", unique=True, background=True),
+            database.saved.create_index([("user_id", 1), ("scheme_id", 1)], unique=True, background=True),
+            database.saved.create_index([("user_id", 1), ("saved_at", -1)], background=True),
+            database.sessions.create_index([("user_id", 1), ("created_at", -1)], background=True),
+            return_exceptions=True
+        )
+        logger.info("MongoDB indexes verified in background.")
+    except Exception as e:
+        logger.warning(f"Background index creation warning: {e}")
+
 async def connect_to_mongo():
     try:
         db.client = AsyncIOMotorClient(
@@ -25,14 +39,11 @@ async def connect_to_mongo():
             connectTimeoutMS=5000,
             socketTimeoutMS=10000,
         )
-        # Verify connection
+        # Verify connection instantly
         await db.client.admin.command('ping')
-        # Ensure indexes for fast authentication and data lookups
         database = db.client.sahayog_ai
-        await database.users.create_index("email", unique=True, background=True)
-        await database.saved.create_index([("user_id", 1), ("scheme_id", 1)], unique=True, background=True)
-        await database.saved.create_index([("user_id", 1), ("saved_at", -1)], background=True)
-        await database.sessions.create_index([("user_id", 1), ("created_at", -1)], background=True)
+        # Ensure indexes concurrently without blocking startup
+        asyncio.create_task(_ensure_indexes(database))
         print("MongoDB connected")
         logger.info("MongoDB connected")
     except Exception as e:

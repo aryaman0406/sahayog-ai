@@ -19,6 +19,7 @@ export default function AuthForm({ isRegister = false }) {
     gender: "other"
   });
   const [loading, setLoading] = useState(false);
+  const [loadingMsg, setLoadingMsg] = useState("");
   const [error, setError] = useState("");
 
   const update = (field, val) => {
@@ -31,7 +32,12 @@ export default function AuthForm({ isRegister = false }) {
     if (isRegister && !form.name) return;
 
     setLoading(true);
+    setLoadingMsg("");
     setError("");
+
+    const warmupTimer = setTimeout(() => {
+      setLoadingMsg("Connecting to server (warming up background service)...");
+    }, 1500);
 
     try {
       if (isRegister) {
@@ -45,7 +51,9 @@ export default function AuthForm({ isRegister = false }) {
       console.error(err);
       setError(err.message || "Authentication failed. Please verify credentials.");
     } finally {
+      clearTimeout(warmupTimer);
       setLoading(false);
+      setLoadingMsg("");
     }
   };
 
@@ -149,8 +157,9 @@ export default function AuthForm({ isRegister = false }) {
         </label>
 
         <button type="submit" className="btn-primary w-full justify-center" disabled={loading}>
-          {loading ? t("profileUpdating") : isRegister ? t("authRegisterBtn") : t("authLoginBtn")}
+          {loading ? (loadingMsg || t("profileUpdating")) : isRegister ? t("authRegisterBtn") : t("authLoginBtn")}
         </button>
+        {loadingMsg && <p className="text-center" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>⏳ {loadingMsg}</p>}
 
         <div className="auth-footer-link text-center">
           {isRegister ? (
