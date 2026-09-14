@@ -1,6 +1,6 @@
 # Sahayog AI — Government Schemes, Simplified
 
-> An AI-powered, multilingual citizen welfare discovery platform helping Indian citizens seamlessly find, evaluate eligibility, and apply for government schemes using Hybrid Search and Generative AI (RAG).
+> An AI-powered, multilingual citizen welfare discovery and assistance platform helping Indian citizens seamlessly find, evaluate eligibility, locate physical help centers, draft legal grievances/RTIs, and apply for government schemes using Hybrid Search and Generative AI (RAG).
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115.0-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-18.3.1-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
@@ -20,8 +20,9 @@ India has hundreds of central and state government welfare schemes across agricu
 - Complex eligibility criteria across multiple parameters (income, landholding, caste, age, state).
 - Fragmented portals and lack of unified search.
 - Language barriers.
+- Lack of physical facilitation points and redressal mechanisms when applications stall.
 
-**Sahayog AI** bridges this gap by combining **smart eligibility matching**, **fast vector/hybrid semantic search**, and a **context-aware Generative AI Assistant (Google Gemini RAG)** supporting **8 Indian languages**, empowering citizens to find schemes they are eligible for in seconds.
+**Sahayog AI** bridges this gap by combining **smart eligibility matching**, **fast vector/hybrid semantic search**, **GPS-powered physical Seva Kendra discovery**, **AI-assisted legal redressal (CPGRAMS & RTI drafting)**, and a **context-aware Generative AI Assistant (Google Gemini RAG)** supporting **8 Indian languages**, empowering citizens from discovery to actual fulfillment.
 
 ---
 
@@ -29,6 +30,8 @@ India has hundreds of central and state government welfare schemes across agricu
 
 - **🎯 Smart Eligibility Engine**: Evaluates citizen profiles (age, gender, income, occupation, location, caste, state) against 700+ government schemes with granular scoring, eligibility explanations, and gap analysis.
 - **🤖 Multilingual AI Chatbot (RAG)**: Conversational assistant powered by Google Gemini (with an offline rule-based fallback). Features conversation memory, active-scheme follow-up resolution, off-topic detection, and real-time WebSocket streaming (`/ws/chat`).
+- **📍 Nearest CSC & Seva Kendra Locator**: Map-based and GPS distance-ranked physical center finder for **Common Service Centers (CSCs)**, **Maha E-Seva**, **MeeSeva**, **E-Mitra**, **Bangalore One**, **e-Sevai**, and **Taluk/Tehsildar offices** with turn-by-turn Google Maps directions and service details.
+- **⚖️ Citizen Legal Redressal (Grievance & RTI Assistant)**: Generates legally structured, officially formatted **CPGRAMS Public Grievances** and **Section 6(1) RTI Act 2005 Applications** with statutory citations, PDF/TXT export, and direct submission links (`pgportal.gov.in`, `rtionline.gov.in`).
 - **🌐 8 Supported Languages**: Full UI localization across **English (`en`)**, **हिन्दी (`hi`)**, **தமிழ் (`ta`)**, **मराठी (`mr`)**, **বাংলা (`bn`)**, **తెలుగు (`te`)**, **ಕನ್ನಡ (`kn`)**, and **ગુજરાતી (`gu`)** with instant switching and translation caching.
 - **⚡ High-Performance Hybrid & Semantic Search**: Pure-Python TF-IDF vector indexing and cosine similarity with disk caching (`tfidf_index.pkl`), pre-warmed $O(1)$ scheme dictionary lookups, and optional Gemini embeddings.
 - **📊 Interactive Analytics Dashboard**: Real-time visualization of scheme distribution across categories, state coverage, and personal eligibility breakdowns.
@@ -61,16 +64,20 @@ India has hundreds of central and state government welfare schemes across agricu
        │  │ Auth & Users │  │ Scheme Search│  │ Match Engine │  │
        │  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘  │
        │         │                 │                 │          │
-       │  ┌──────┴───────┐  ┌──────┴───────┐         │          │
-       │  │ Saved Schemes│  │ Chat & RAG   │         │          │
-       │  └──────────────┘  └──────┬───────┘         │          │
+       │  ┌──────┴───────┐  ┌──────┴───────┐  ┌──────┴───────┐  │
+       │  │ Saved Schemes│  │ Chat & RAG   │  │ CSC Locator  │  │
+       │  └──────────────┘  └──────┬───────┘  └──────┬───────┘  │
+       │                           │                 │          │
+       │                    ┌──────┴───────┐         │          │
+       │                    │Grievance/RTI │         │          │
+       │                    └──────────────┘         │          │
        └───────────────────────────┼─────────────────┼──────────┘
                                    │                 │
             ┌──────────────────────┼─────────────────┴────────────┐
             ▼                      ▼                              ▼
  ┌────────────────────┐ ┌────────────────────┐ ┌────────────────────┐
  │  MongoDB Database  │ │ TF-IDF Vector Store│ │  Google Gemini AI  │
- │ (Users, Saved Data)│ │ (Fast In-Memory/DB)│ │ (RAG Generation)   │
+ │ (Users, Saved Data)│ │ (Fast In-Memory/DB)│ │ (RAG & Grievances) │
  └────────────────────┘ └────────────────────┘ └────────────────────┘
 ```
 
@@ -103,7 +110,9 @@ sahayog-ai/
 │   │   │   ├── schemes.py    # Scheme catalogue & details (/api/schemes)
 │   │   │   ├── match.py      # Profile eligibility match (/api/match)
 │   │   │   ├── chat.py       # AI chat & WebSocket stream (/api/chat, /ws/chat)
-│   │   │   └── saved.py      # User bookmarks (/api/saved)
+│   │   │   ├── saved.py      # User bookmarks (/api/saved)
+│   │   │   ├── centers.py    # Physical CSC & Seva Kendra Locator (/api/centers)
+│   │   │   └── grievance.py  # CPGRAMS & RTI legal draft generator (/api/grievance)
 │   │   ├── auth.py           # JWT generation & password verification
 │   │   ├── config.py         # App configuration & settings
 │   │   ├── database.py       # MongoDB async client (Motor)
@@ -113,7 +122,7 @@ sahayog-ai/
 │   └── requirements.txt      # Python dependencies
 ├── frontend/                 # React 18 + Vite Frontend Application
 │   ├── src/
-│   │   ├── components/       # Reusable components (Hero, Navbar, Chatbot, Forms, Cards)
+│   │   ├── components/       # Reusable components (Hero, Navbar, Chatbot, Forms, Cards, CenterLocator, GrievanceAssistant)
 │   │   ├── context/          # React Contexts (AuthContext, ThemeContext, LanguageContext)
 │   │   ├── i18n/             # Translations (en, hi, bn, mr, ta, te, gu, kn)
 │   │   ├── styles/           # Global styles & design tokens
@@ -205,7 +214,7 @@ sahayog-ai/
 
 | Variable | Type | Default | Description |
 |---|---|---|---|
-| `GEMINI_API_KEY` | `string` | *(Optional)* | Google Gemini API key for conversational RAG. (Falls back to rule-based assistant if not provided) |
+| `GEMINI_API_KEY` | `string` | *(Optional)* | Google Gemini API key for conversational RAG & grievance generation. (Falls back to rule-based assistant if not provided) |
 | `MONGO_URI` | `string` | `mongodb://127.0.0.1:27017/sahayog_ai` | MongoDB connection string |
 | `JWT_SECRET` | `string` | *(Required)* | Secret key used for signing JWT access tokens (minimum 32 characters recommended) |
 | `JWT_EXPIRE_HOURS` | `integer` | `72` | Token validity duration in hours |
@@ -239,6 +248,9 @@ Interactive API documentation is automatically generated by FastAPI:
 | `WS` | `/ws/chat` | Real-time WebSocket streaming for conversational AI |
 | `GET` | `/api/chat/history/{session_id}` | Retrieve session chat history |
 | `DELETE`| `/api/chat/history/{session_id}` | Clear session chat history |
+| `GET` | `/api/centers/` | Search physical CSC/Seva Kendras with distance calculation |
+| `GET` | `/api/centers/states` | List states and districts with physical centers |
+| `POST` | `/api/grievance/draft` | Generate formal CPGRAMS or RTI Section 6(1) legal draft |
 | `GET` | `/api/saved/` | Get user's saved/bookmarked schemes |
 | `POST` | `/api/saved/` | Bookmark a scheme |
 | `DELETE`| `/api/saved/{scheme_id}` | Remove scheme from bookmarks |
@@ -281,5 +293,3 @@ Contributions are welcome!
 ## 📄 License
 
 This project is distributed under the MIT License. See `LICENSE` for more information.
-
-

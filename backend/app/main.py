@@ -11,6 +11,8 @@ from app.routes.schemes import router as schemes_router
 from app.routes.match import router as match_router
 from app.routes.chat import router as chat_router, ws_router as chat_ws_router
 from app.routes.saved import router as saved_router
+from app.routes.centers import router as centers_router
+from app.routes.grievance import router as grievance_router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -70,6 +72,8 @@ app.include_router(match_router)
 app.include_router(chat_router)
 app.include_router(chat_ws_router)
 app.include_router(saved_router)
+app.include_router(centers_router)
+app.include_router(grievance_router)
 
 @app.get("/")
 async def root():

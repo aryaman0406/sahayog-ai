@@ -74,6 +74,12 @@ export default function Navbar({ savedCount = 0 }) {
               {t("navDashboard") || "Dashboard"}
             </NavLink>
           )}
+          <NavLink to="/centers" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+            📍 {t("navCenters") || "Find Centers"}
+          </NavLink>
+          <NavLink to="/grievance" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
+            ⚖️ {t("navGrievance") || "Grievance / RTI"}
+          </NavLink>
           <button
             type="button"
             className="nav-item-btn"
@@ -145,6 +151,12 @@ export default function Navbar({ savedCount = 0 }) {
           </NavLink>
           <NavLink to={user ? "/dashboard" : "/login"} className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
             {t("navSchemes") || "Schemes"}
+          </NavLink>
+          <NavLink to="/centers" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
+            📍 {t("navCenters") || "Find Centers"}
+          </NavLink>
+          <NavLink to="/grievance" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
+            ⚖️ {t("navGrievance") || "Grievance / RTI"}
           </NavLink>
           {user && (
             <button 
