@@ -190,6 +190,7 @@ export const en = {
   chatConnecting: "Connecting to chat server...",
   chatAskAny: "Ask questions in your preferred language.",
   chatDisconnected: "Chat server disconnected. Reconnecting, please wait...",
+  chatProfileFilled: "Profile auto-filled from your message!",
   pdfGenerating: "Generating Guide...",
   pdfDownload: "📥 Download PDF Guide",
 

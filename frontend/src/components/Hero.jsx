@@ -87,7 +87,13 @@ export default function Hero({ isLanding = true }) {
     }
   }, [chatMessages, isChatLoading]);
 
-  // Voice Input Handler (Web Speech API)
+  // Speech locale map for all 8 supported languages
+  const HERO_SPEECH_LOCALES = {
+    en: "en-IN", hi: "hi-IN", ta: "ta-IN", mr: "mr-IN",
+    bn: "bn-IN", te: "te-IN", kn: "kn-IN", gu: "gu-IN"
+  };
+
+  // Voice Input Handler (Web Speech API) — supports all 8 languages
   const handleVoiceInput = (target = "search") => {
     if (!user) {
       navigate("/login");
@@ -101,26 +107,57 @@ export default function Hero({ isLanding = true }) {
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
-    recognition.lang = language === "hi" ? "hi-IN" : "en-IN";
+    recognition.lang = HERO_SPEECH_LOCALES[language] || "en-IN";
     recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.interimResults = true;
 
     if (target === "search") {
       setIsListening(true);
       recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setSearchQuery(transcript);
-        setIsListening(false);
+        let finalTranscript = "";
+        let currentInterim = "";
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            currentInterim += event.results[i][0].transcript;
+          }
+        }
+        // Show interim text in search bar as user speaks
+        if (currentInterim) {
+          setSearchQuery(currentInterim);
+        }
+        if (finalTranscript.trim()) {
+          setSearchQuery(finalTranscript.trim());
+          setIsListening(false);
+        }
       };
       recognition.onerror = () => setIsListening(false);
       recognition.onend = () => setIsListening(false);
       recognition.start();
     } else {
+      // Chat voice: auto-send when speech is finalized
       setIsChatListening(true);
       recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setChatInput(transcript);
-        setIsChatListening(false);
+        let finalTranscript = "";
+        let currentInterim = "";
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscript += event.results[i][0].transcript;
+          } else {
+            currentInterim += event.results[i][0].transcript;
+          }
+        }
+        // Show interim text in chat input as user speaks
+        if (currentInterim) {
+          setChatInput(currentInterim);
+        }
+        if (finalTranscript.trim()) {
+          setChatInput("");
+          setIsChatListening(false);
+          // Auto-send directly to chat instead of just filling input
+          handleSendChatMessage(finalTranscript.trim());
+        }
       };
       recognition.onerror = () => setIsChatListening(false);
       recognition.onend = () => setIsChatListening(false);

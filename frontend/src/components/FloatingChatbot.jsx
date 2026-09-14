@@ -3,7 +3,7 @@ import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import ChatPanel from "./ChatPanel.jsx";
 
-export default function FloatingChatbot({ matches }) {
+export default function FloatingChatbot({ matches, onProfileExtracted }) {
   const { t } = useLanguage();
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +31,7 @@ export default function FloatingChatbot({ matches }) {
             </button>
           </div>
           <div className="floating-chatbot-body">
-            <ChatPanel profile={user} matches={matches} />
+            <ChatPanel profile={user} matches={matches} onProfileExtracted={onProfileExtracted} />
           </div>
         </div>
       )}

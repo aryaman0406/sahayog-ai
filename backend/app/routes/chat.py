@@ -1,6 +1,9 @@
+import logging
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 from app.models import ChatRequest
 from app.rag.memory import memory
+
+logger = logging.getLogger(__name__)
 
 async def _rag_stream(*args, **kwargs):
     from app.rag.generator import rag_stream
@@ -10,6 +13,15 @@ async def _rag_stream(*args, **kwargs):
 def _rag_generate(*args, **kwargs):
     from app.rag.generator import rag_generate
     return rag_generate(*args, **kwargs)
+
+def _extract_profile(text: str) -> dict:
+    """Run profile extraction (Gemini + regex fallback)."""
+    try:
+        from app.rag.profile_extractor import extract_profile
+        return extract_profile(text)
+    except Exception as e:
+        logger.warning(f"Profile extraction failed: {e}")
+        return {}
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
 ws_router = APIRouter(tags=["chat-ws"])
@@ -28,10 +40,24 @@ async def websocket_chat(websocket: WebSocket):
             session_id = data.get("session_id", "default")
             language = data.get("language", "en")
 
+            # Stream the RAG response
             async for chunk in _rag_stream(message, profile, session_id, language):
                 await websocket.send_json({"type": "token", "content": chunk})
 
             await websocket.send_json({"type": "done", "session_id": session_id})
+
+            # After response is done, extract profile fields from user message
+            # This is non-blocking for the chat UX — user already has their answer
+            try:
+                extracted = _extract_profile(message)
+                if extracted:
+                    await websocket.send_json({
+                        "type": "profile_extracted",
+                        "profile": extracted
+                    })
+                    logger.info(f"Profile extracted from chat: {extracted}")
+            except Exception as e:
+                logger.warning(f"Profile extraction send failed: {e}")
 
     except WebSocketDisconnect:
         pass

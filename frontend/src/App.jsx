@@ -48,7 +48,7 @@ function AuthRoute({ children }) {
 }
 
 function AppContent() {
-  const { user, authFetch } = useAuth();
+  const { user, authFetch, updateProfile } = useAuth();
 
   // Seed matches instantly from cache so dashboard is never empty on load
   const [matches, setMatches] = useState(() => {
@@ -80,6 +80,45 @@ function AppContent() {
       console.error("Scoring request failed:", err);
     }
   }, [authFetch]);
+
+  // Handle profile extracted from AI chat conversation
+  // Merges extracted fields into current profile, persists to DB, triggers scheme match
+  const handleProfileExtracted = useCallback(async (extractedFields) => {
+    if (!user || !extractedFields || Object.keys(extractedFields).length === 0) return;
+
+    try {
+      // Merge: only overwrite fields that were extracted, keep existing for the rest
+      const mergedProfile = {
+        age: extractedFields.age ?? user.age,
+        occupation: extractedFields.occupation ?? user.occupation,
+        annual_income: extractedFields.annual_income ?? user.annual_income,
+        location_type: extractedFields.location_type ?? user.location_type,
+        gender: extractedFields.gender ?? user.gender,
+        state: extractedFields.state ?? user.state,
+        language: user.language,
+      };
+
+      // Persist to MongoDB via AuthContext
+      await updateProfile(mergedProfile);
+
+      // Trigger scheme matching with the merged profile
+      const matchPayload = {
+        age: mergedProfile.age,
+        occupation: mergedProfile.occupation,
+        annual_income: mergedProfile.annual_income,
+        location_type: mergedProfile.location_type,
+        gender: mergedProfile.gender,
+        state: mergedProfile.state,
+      };
+
+      // Only match if we have the minimum required fields
+      if (matchPayload.age && matchPayload.occupation && matchPayload.annual_income) {
+        await handleProfileSubmit(matchPayload);
+      }
+    } catch (err) {
+      console.error("Profile extraction save failed:", err);
+    }
+  }, [user, updateProfile, handleProfileSubmit]);
 
   // On user change: fire saved list + match in PARALLEL — not sequential
   useEffect(() => {
@@ -210,7 +249,7 @@ function AppContent() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      {user && <FloatingChatbot matches={matches} />}
+      {user && <FloatingChatbot matches={matches} onProfileExtracted={handleProfileExtracted} />}
     </div>
   );
 }

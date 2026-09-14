@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.models import MatchRequest
 from app.data.matcher import score_scheme
@@ -47,7 +47,7 @@ async def match_semantic(request: SemanticRequest):
 async def explain_match(scheme_id: str, profile: MatchRequest):
     scheme = get_scheme_by_id(scheme_id)
     if not scheme:
-        return {"error": "Scheme not found"}
+        raise HTTPException(status_code=404, detail="Scheme not found")
         
     score, reasons = score_scheme(profile.model_dump(), scheme)
     
