@@ -22,7 +22,7 @@ India has hundreds of central and state government welfare schemes across agricu
 - Language barriers.
 - Lack of physical facilitation points and redressal mechanisms when applications stall.
 
-**Sahayog AI** bridges this gap by combining **smart eligibility matching**, **fast vector/hybrid semantic search**, **GPS-powered physical Seva Kendra discovery**, **AI-assisted legal redressal (CPGRAMS & RTI drafting)**, and a **context-aware Generative AI Assistant (Google Gemini RAG)** supporting **8 Indian languages**, empowering citizens from discovery to actual fulfillment.
+**Sahayog AI** bridges this gap by combining **smart eligibility matching**, **fast vector/hybrid semantic search**, **GPS-powered physical Seva Kendra & CSC discovery**, and a **context-aware Generative AI Assistant (Google Gemini RAG)** supporting **8 Indian languages**, empowering citizens from discovery to actual fulfillment.
 
 ---
 
@@ -31,7 +31,6 @@ India has hundreds of central and state government welfare schemes across agricu
 - **🎯 Smart Eligibility Engine**: Evaluates citizen profiles (age, gender, income, occupation, location, caste, state) against 700+ government schemes with granular scoring, eligibility explanations, and gap analysis.
 - **🤖 Multilingual AI Chatbot (RAG)**: Conversational assistant powered by Google Gemini (with an offline rule-based fallback). Features conversation memory, active-scheme follow-up resolution, off-topic detection, and real-time WebSocket streaming (`/ws/chat`).
 - **📍 Nearest CSC & Seva Kendra Locator**: Map-based and GPS distance-ranked physical center finder for **Common Service Centers (CSCs)**, **Maha E-Seva**, **MeeSeva**, **E-Mitra**, **Bangalore One**, **e-Sevai**, and **Taluk/Tehsildar offices** with turn-by-turn Google Maps directions and service details.
-- **⚖️ Citizen Legal Redressal (Grievance & RTI Assistant)**: Generates legally structured, officially formatted **CPGRAMS Public Grievances** and **Section 6(1) RTI Act 2005 Applications** with statutory citations, PDF/TXT export, and direct submission links (`pgportal.gov.in`, `rtionline.gov.in`).
 - **🌐 8 Supported Languages**: Full UI localization across **English (`en`)**, **हिन्दी (`hi`)**, **தமிழ் (`ta`)**, **मराठी (`mr`)**, **বাংলা (`bn`)**, **తెలుగు (`te`)**, **ಕನ್ನಡ (`kn`)**, and **ગુજરાતી (`gu`)** with instant switching and translation caching.
 - **⚡ High-Performance Hybrid & Semantic Search**: Pure-Python TF-IDF vector indexing and cosine similarity with disk caching (`tfidf_index.pkl`), pre-warmed $O(1)$ scheme dictionary lookups, and optional Gemini embeddings.
 - **📊 Interactive Analytics Dashboard**: Real-time visualization of scheme distribution across categories, state coverage, and personal eligibility breakdowns.
@@ -66,18 +65,14 @@ India has hundreds of central and state government welfare schemes across agricu
        │         │                 │                 │          │
        │  ┌──────┴───────┐  ┌──────┴───────┐  ┌──────┴───────┐  │
        │  │ Saved Schemes│  │ Chat & RAG   │  │ CSC Locator  │  │
-       │  └──────────────┘  └──────┬───────┘  └──────┬───────┘  │
-       │                           │                 │          │
-       │                    ┌──────┴───────┐         │          │
-       │                    │Grievance/RTI │         │          │
-       │                    └──────────────┘         │          │
+       │  └──────────────┘  └──────┬───────┘  └──────────────┘  │
        └───────────────────────────┼─────────────────┼──────────┘
                                    │                 │
             ┌──────────────────────┼─────────────────┴────────────┐
             ▼                      ▼                              ▼
  ┌────────────────────┐ ┌────────────────────┐ ┌────────────────────┐
  │  MongoDB Database  │ │ TF-IDF Vector Store│ │  Google Gemini AI  │
- │ (Users, Saved Data)│ │ (Fast In-Memory/DB)│ │ (RAG & Grievances) │
+ │ (Users, Saved Data)│ │ (Fast In-Memory/DB)│ │ (RAG Generation)   │
  └────────────────────┘ └────────────────────┘ └────────────────────┘
 ```
 
@@ -111,8 +106,7 @@ sahayog-ai/
 │   │   │   ├── match.py      # Profile eligibility match (/api/match)
 │   │   │   ├── chat.py       # AI chat & WebSocket stream (/api/chat, /ws/chat)
 │   │   │   ├── saved.py      # User bookmarks (/api/saved)
-│   │   │   ├── centers.py    # Physical CSC & Seva Kendra Locator (/api/centers)
-│   │   │   └── grievance.py  # CPGRAMS & RTI legal draft generator (/api/grievance)
+│   │   │   └── centers.py    # Physical CSC & Seva Kendra Locator (/api/centers)
 │   │   ├── auth.py           # JWT generation & password verification
 │   │   ├── config.py         # App configuration & settings
 │   │   ├── database.py       # MongoDB async client (Motor)
@@ -122,7 +116,7 @@ sahayog-ai/
 │   └── requirements.txt      # Python dependencies
 ├── frontend/                 # React 18 + Vite Frontend Application
 │   ├── src/
-│   │   ├── components/       # Reusable components (Hero, Navbar, Chatbot, Forms, Cards, CenterLocator, GrievanceAssistant)
+│   │   ├── components/       # Reusable components (Hero, Navbar, Chatbot, Forms, Cards, CenterLocator)
 │   │   ├── context/          # React Contexts (AuthContext, ThemeContext, LanguageContext)
 │   │   ├── i18n/             # Translations (en, hi, bn, mr, ta, te, gu, kn)
 │   │   ├── styles/           # Global styles & design tokens
@@ -250,7 +244,6 @@ Interactive API documentation is automatically generated by FastAPI:
 | `DELETE`| `/api/chat/history/{session_id}` | Clear session chat history |
 | `GET` | `/api/centers/` | Search physical CSC/Seva Kendras with distance calculation |
 | `GET` | `/api/centers/states` | List states and districts with physical centers |
-| `POST` | `/api/grievance/draft` | Generate formal CPGRAMS or RTI Section 6(1) legal draft |
 | `GET` | `/api/saved/` | Get user's saved/bookmarked schemes |
 | `POST` | `/api/saved/` | Bookmark a scheme |
 | `DELETE`| `/api/saved/{scheme_id}` | Remove scheme from bookmarks |

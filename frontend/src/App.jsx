@@ -10,7 +10,6 @@ import SchemeDetail from "./components/SchemeDetail.jsx";
 import AuthForm from "./components/AuthForm.jsx";
 import FloatingChatbot from "./components/FloatingChatbot.jsx";
 import CenterLocator from "./components/CenterLocator.jsx";
-import GrievanceAssistant from "./components/GrievanceAssistant.jsx";
 import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { LanguageProvider } from "./context/LanguageContext.jsx";
@@ -241,7 +240,6 @@ function AppContent() {
             }
           />
           <Route path="/centers" element={<CenterLocator />} />
-          <Route path="/grievance" element={<GrievanceAssistant />} />
           <Route
             path="/scheme/:id"
             element={
