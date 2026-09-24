@@ -6,9 +6,11 @@ from typing import AsyncGenerator
 
 from app.config import settings
 from .memory import memory
+from .prompt_versions import get_active_prompt, ACTIVE_VERSION
 from app.data.assistant import generate_fallback_reply, is_off_topic
 
 logger = logging.getLogger(__name__)
+logger.info(f"[Prompt] Active version: {ACTIVE_VERSION}")
 
 # ── Gemini model initialisation ───────────────────────────────────────────────
 model = None
@@ -93,33 +95,9 @@ def _build_search_query(user_message: str, session_id: str) -> str:
     return user_message
 
 
-# ── System prompt ─────────────────────────────────────────────────────────────
-SYSTEM_PROMPT = """You are Sahayog AI (सहयोग AI), a warm, helpful assistant \
-for Indian citizens seeking government welfare schemes and benefits.
-
-Personality:
-- Warm and respectful; use "ji" occasionally when speaking Hindi
-- Simple language, avoid jargon
-- Specific: mention exact amounts, dates, scheme names
-- Honest: if a scheme doesn't match, say so
-- Actionable: always end with a clear next step
-
-Strict Rules:
-1. Answer ONLY questions about Indian government schemes, eligibility, \
-   documents, application process, or welfare benefits.
-2. If the user asks ANYTHING unrelated (cricket, movies, coding, jokes, \
-   general knowledge, etc.) respond EXACTLY with:
-   "I'm Sahayog AI, designed only to help with Indian government welfare \
-   schemes. Please ask me about schemes, eligibility, documents, or how to apply!"
-3. IMPORTANT: When the user says "how to apply", "documents needed", "benefits" \
-   without naming a scheme — look at CONVERSATION HISTORY to find which scheme \
-   was being discussed, then answer about THAT scheme only.
-4. If context doesn't contain the answer, say:
-   "I don't have that specific information. Please visit myscheme.gov.in \
-   or call 1800-180-1111 for details."
-5. Never invent scheme details, amounts, or dates.
-6. Always name the scheme you are referring to.
-"""
+# ── System prompt (loaded from versioned prompt registry) ────────────────────
+# Switch ACTIVE_VERSION in app/rag/prompt_versions.py to A/B test prompt iterations.
+SYSTEM_PROMPT = get_active_prompt()
 
 LANG_MAP = {
     "en": "English", "hi": "Hindi", "ta": "Tamil",
