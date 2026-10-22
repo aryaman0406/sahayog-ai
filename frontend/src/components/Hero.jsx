@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import IndiaMap from "./IndiaMap.jsx";
@@ -8,6 +8,20 @@ export default function Hero({ isLanding = true }) {
   const { user } = useAuth();
   const { language, t } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Scroll to section requested via navigation state
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const targetId = location.state.scrollTo;
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 150);
+    }
+  }, [location.state]);
 
   // Search Bar State
   const [searchQuery, setSearchQuery] = useState("");
@@ -170,12 +184,7 @@ export default function Hero({ isLanding = true }) {
     if (e) e.preventDefault();
     if (!searchQuery.trim()) return;
 
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
-    // Send to embedded chat
+    // Send to embedded chat directly for both guests and logged in users
     handleSendChatMessage(searchQuery);
     setSearchQuery("");
 
@@ -334,16 +343,14 @@ export default function Hero({ isLanding = true }) {
 
           {/* Try Asking / Quick Topics */}
           <div className="hero-try-asking-row">
-            <span className="try-label">{user ? (t("heroTryLabelAI") || "Try asking:") : (t("heroTryLabel") || "Popular topics:")}</span>
+            <span className="try-label">{t("heroTryLabelAI") || "Try asking:"}</span>
             <button
               type="button"
               className="try-pill"
               onClick={() => {
-                if (!user) {
-                  navigate("/login");
-                } else {
-                  handleSendChatMessage("I am a student, which scholarships can I get?");
-                }
+                handleSendChatMessage("I am a student, which scholarships can I get?");
+                const chatEl = document.getElementById("ai-assistant-card");
+                if (chatEl) chatEl.scrollIntoView({ behavior: "smooth" });
               }}
             >
               {t("heroPillStudent") || "🎓 Student Scholarships"}
@@ -352,11 +359,9 @@ export default function Hero({ isLanding = true }) {
               type="button"
               className="try-pill"
               onClick={() => {
-                if (!user) {
-                  navigate("/login");
-                } else {
-                  handleSendChatMessage("Schemes for farmers");
-                }
+                handleSendChatMessage("Schemes for farmers");
+                const chatEl = document.getElementById("ai-assistant-card");
+                if (chatEl) chatEl.scrollIntoView({ behavior: "smooth" });
               }}
             >
               {t("heroPillFarmer") || "🚜 Farmer Welfare Schemes"}
@@ -365,11 +370,9 @@ export default function Hero({ isLanding = true }) {
               type="button"
               className="try-pill"
               onClick={() => {
-                if (!user) {
-                  navigate("/login");
-                } else {
-                  handleSendChatMessage("Housing schemes for families");
-                }
+                handleSendChatMessage("Housing schemes for families");
+                const chatEl = document.getElementById("ai-assistant-card");
+                if (chatEl) chatEl.scrollIntoView({ behavior: "smooth" });
               }}
             >
               {t("heroPillHousing") || "🏠 Housing Schemes for Families"}
@@ -482,38 +485,22 @@ export default function Hero({ isLanding = true }) {
         <div className="hero-right-column">
           {/* Top Feature Highlights Stack */}
           <div className="feature-highlights-stack">
-            {user ? (
-              <div
-                className="feature-highlight-card"
-                onClick={() => {
-                  const el = document.getElementById("ai-assistant-card");
-                  if (el) el.scrollIntoView({ behavior: "smooth" });
-                }}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="feature-badge-icon icon-purple">
-                  <span>🤖</span>
-                </div>
-                <div className="feature-content">
-                  <h4 className="feature-name">{t("featAI") || "AI Assistant"}</h4>
-                  <p className="feature-summary">{t("featAIDesc") || "Get instant answers in your language"}</p>
-                </div>
+            <div
+              className="feature-highlight-card"
+              onClick={() => {
+                const el = document.getElementById("ai-assistant-card");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              <div className="feature-badge-icon icon-purple">
+                <span>🤖</span>
               </div>
-            ) : (
-              <div
-                className="feature-highlight-card"
-                onClick={() => navigate("/login")}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="feature-badge-icon icon-purple">
-                  <span>🌐</span>
-                </div>
-                <div className="feature-content">
-                  <h4 className="feature-name">{t("featMultilingual") || "Multilingual Support"}</h4>
-                  <p className="feature-summary">{t("featMultilingualDesc") || "Available in 8 Indian regional languages"}</p>
-                </div>
+              <div className="feature-content">
+                <h4 className="feature-name">{t("featAI") || "AI Assistant"}</h4>
+                <p className="feature-summary">{t("featAIDesc") || "Ask questions & get instant scheme guidance in your language"}</p>
               </div>
-            )}
+            </div>
 
             <div
               className="feature-highlight-card"
@@ -558,186 +545,126 @@ export default function Hero({ isLanding = true }) {
             </div>
           </div>
 
-          {/* Embedded Live AI Assistant (When Logged In) OR Eligibility Checker Card (When Guest) */}
-          {user ? (
-            <div className="ai-assistant-card-panel animate-fade-in" id="ai-assistant-card">
-              {/* Chat Header */}
-              <div className="chat-card-header">
-                <div className="chat-bot-brand">
-                  <div className="chat-bot-avatar">🤖</div>
-                  <span className="chat-bot-title">{t("featAI") || "AI Assistant"}</span>
-                </div>
-                <button
-                  type="button"
-                  className="btn-new-chat"
-                  onClick={handleResetChat}
-                  title="Start a new chat conversation"
-                >
-                  New Chat
-                </button>
+          {/* Embedded Live AI Assistant for all citizens */}
+          <div className="ai-assistant-card-panel animate-fade-in" id="ai-assistant-card">
+            {/* Chat Header */}
+            <div className="chat-card-header">
+              <div className="chat-bot-brand">
+                <div className="chat-bot-avatar">🤖</div>
+                <span className="chat-bot-title">{t("featAI") || "AI Assistant"}</span>
               </div>
-
-              {/* Chat Message Stream */}
-              <div className="chat-messages-viewport">
-                {chatMessages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`chat-bubble-row ${msg.sender === "user" ? "user-row" : "bot-row"}`}
-                  >
-                    {msg.sender === "assistant" && (
-                      <div className="bot-bubble-avatar">🤖</div>
-                    )}
-                    <div className={`chat-bubble ${msg.sender === "user" ? "user-bubble" : "bot-bubble"}`}>
-                      <p>{msg.text}</p>
-                    </div>
-                  </div>
-                ))}
-
-                {isChatLoading && (
-                  <div className="chat-bubble-row bot-row">
-                    <div className="bot-bubble-avatar">🤖</div>
-                    <div className="chat-bubble bot-bubble loading-dots">
-                      <span>•</span><span>•</span><span>•</span>
-                    </div>
-                  </div>
-                )}
-
-                {/* Suggested Quick Prompt Bubbles inside Chat */}
-                {chatMessages.length <= 2 && (
-                  <div className="chat-quick-suggestions">
-                    <button
-                      type="button"
-                      className="suggestion-chip"
-                      onClick={() => handleSendChatMessage("Which schemes can I apply for as a student?")}
-                    >
-                      <span className="chip-icon">📄</span>
-                      <span>Which schemes can I apply for as a student?</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      className="suggestion-chip"
-                      onClick={() => handleSendChatMessage("I'm a farmer from MP, what schemes are for me?")}
-                    >
-                      <span className="chip-icon">❓</span>
-                      <span>I'm a farmer from MP, what schemes are for me?</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      className="suggestion-chip"
-                      onClick={() => handleSendChatMessage("मैं एक महिला हूँ, मेरे लिए कौन सी योजनाएं हैं?")}
-                    >
-                      <span className="chip-icon">💬</span>
-                      <span>मैं एक महिला हूँ, मेरे लिए कौन सी योजनाएं हैं?</span>
-                    </button>
-                  </div>
-                )}
-
-                <div ref={chatBottomRef} />
-              </div>
-
-              {/* Powered By Gemini Footer Tag */}
-              <div className="chat-gemini-badge">
-                <span>⚡ Powered by Gemini AI</span>
-              </div>
-
-              {/* Chat Input Bar */}
-              <form
-                className="chat-input-wrapper"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSendChatMessage();
-                }}
+              <button
+                type="button"
+                className="btn-new-chat"
+                onClick={handleResetChat}
+                title="Start a new chat conversation"
               >
-                <input
-                  type="text"
-                  className="chat-text-input"
-                  placeholder="Type your question..."
-                  value={chatInput}
-                  onChange={(e) => setChatInput(e.target.value)}
-                  disabled={isChatLoading}
-                  aria-label="Type your question to AI Assistant"
-                />
-                <button
-                  type="button"
-                  className={`chat-mic-icon-btn ${isChatListening ? "listening" : ""}`}
-                  onClick={() => handleVoiceInput("chat")}
-                  title="Speak question"
-                  aria-label="Voice input"
-                >
-                  🎙️
-                </button>
-                <button
-                  type="submit"
-                  className="chat-send-icon-btn"
-                  disabled={!chatInput.trim() || isChatLoading}
-                  title="Send message"
-                  aria-label="Send message"
-                >
-                  <span>➤</span>
-                </button>
-              </form>
+                New Chat
+              </button>
             </div>
-          ) : (
-            <div className="ai-assistant-card-panel hero-eligibility-gate-panel animate-fade-in" id="eligibility-card">
-              <div className="chat-card-header">
-                <div className="chat-bot-brand">
-                  <div className="chat-bot-avatar" style={{ background: "rgba(245, 158, 11, 0.2)", borderColor: "rgba(245, 158, 11, 0.4)" }}>
-                    📋
-                  </div>
-                  <span className="chat-bot-title">{t("checkerTitle") || "Eligibility Checker"}</span>
-                </div>
-                <span className="locked-badge" style={{ background: "rgba(16, 185, 129, 0.15)", borderColor: "rgba(16, 185, 129, 0.4)", color: "#34D399" }}>
-                  ⚡ {t("checkerBadge") || "Free Instant Scan"}
-                </span>
-              </div>
 
-              <div className="locked-card-body">
-                <div className="locked-icon-wrapper">
-                  <div className="locked-bot-icon" style={{ background: "radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, rgba(217, 119, 6, 0.15) 100%)", borderColor: "rgba(245, 158, 11, 0.5)", boxShadow: "0 0 24px rgba(245, 158, 11, 0.3)" }}>
-                    🏛️
-                  </div>
-                  <span className="locked-sparkle-badge" style={{ background: "linear-gradient(135deg, #F59E0B, #D97706)" }}>
-                    {t("checkerBadgeSchemes") || "1200+ Schemes"}
-                  </span>
-                </div>
-
-                <h3 className="locked-card-title">{t("checkerHeading") || "Check Your Scheme Eligibility"}</h3>
-                <p className="locked-card-desc">
-                  {t("checkerDesc") || "Find out which central and state government welfare schemes you and your family qualify for in less than 2 minutes."}
-                </p>
-
-                <div className="locked-features-list">
-                  <div className="locked-feature-item">
-                    <span className="locked-check-icon">✓</span>
-                    <span>{t("checkerFeat1") || "100% Free & Secure Profile Matching"}</span>
-                  </div>
-                  <div className="locked-feature-item">
-                    <span className="locked-check-icon">✓</span>
-                    <span>{t("checkerFeat2") || "Verified Criteria & Required Documents List"}</span>
-                  </div>
-                  <div className="locked-feature-item">
-                    <span className="locked-check-icon">✓</span>
-                    <span>{t("checkerFeat3") || "Direct Application Steps & Portal Links"}</span>
+            {/* Chat Message Stream */}
+            <div className="chat-messages-viewport">
+              {chatMessages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={`chat-bubble-row ${msg.sender === "user" ? "user-row" : "bot-row"}`}
+                >
+                  {msg.sender === "assistant" && (
+                    <div className="bot-bubble-avatar">🤖</div>
+                  )}
+                  <div className={`chat-bubble ${msg.sender === "user" ? "user-bubble" : "bot-bubble"}`}>
+                    <p>{msg.text}</p>
                   </div>
                 </div>
+              ))}
 
-                <div className="locked-actions-group">
-                  <Link to="/login" className="btn-locked-login">
-                    {t("checkerBtn") || "Check Eligibility Now →"}
-                  </Link>
-                  <Link to="/register" className="btn-locked-register">
-                    {t("checkerRegister") || "Create Free Account"}
-                  </Link>
+              {isChatLoading && (
+                <div className="chat-bubble-row bot-row">
+                  <div className="bot-bubble-avatar">🤖</div>
+                  <div className="chat-bubble bot-bubble loading-dots">
+                    <span>•</span><span>•</span><span>•</span>
+                  </div>
                 </div>
-              </div>
+              )}
 
-              <div className="chat-gemini-badge" style={{ color: "#94A3B8" }}>
-                <span>🇮🇳 {t("checkerFooter") || "Official Central & State Welfare Schemes"}</span>
-              </div>
+              {/* Suggested Quick Prompt Bubbles inside Chat */}
+              {chatMessages.length <= 2 && (
+                <div className="chat-quick-suggestions">
+                  <button
+                    type="button"
+                    className="suggestion-chip"
+                    onClick={() => handleSendChatMessage("Which schemes can I apply for as a student?")}
+                  >
+                    <span className="chip-icon">📄</span>
+                    <span>Which schemes can I apply for as a student?</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="suggestion-chip"
+                    onClick={() => handleSendChatMessage("I'm a farmer from MP, what schemes are for me?")}
+                  >
+                    <span className="chip-icon">❓</span>
+                    <span>I'm a farmer from MP, what schemes are for me?</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    className="suggestion-chip"
+                    onClick={() => handleSendChatMessage("मैं एक महिला हूँ, मेरे लिए कौन सी योजनाएं हैं?")}
+                  >
+                    <span className="chip-icon">💬</span>
+                    <span>मैं एक महिला हूँ, मेरे लिए कौन सी योजनाएं हैं?</span>
+                  </button>
+                </div>
+              )}
+
+              <div ref={chatBottomRef} />
             </div>
-          )}
+
+            {/* Powered By Gemini Footer Tag */}
+            <div className="chat-gemini-badge">
+              <span>⚡ Powered by Gemini AI</span>
+            </div>
+
+            {/* Chat Input Bar */}
+            <form
+              className="chat-input-wrapper"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSendChatMessage();
+              }}
+            >
+              <input
+                type="text"
+                className="chat-text-input"
+                placeholder="Type your question..."
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                disabled={isChatLoading}
+                aria-label="Type your question to AI Assistant"
+              />
+              <button
+                type="button"
+                className={`chat-mic-icon-btn ${isChatListening ? "listening" : ""}`}
+                onClick={() => handleVoiceInput("chat")}
+                title="Speak question"
+                aria-label="Voice input"
+              >
+                🎙️
+              </button>
+              <button
+                type="submit"
+                className="chat-send-icon-btn"
+                disabled={!chatInput.trim() || isChatLoading}
+                title="Send message"
+                aria-label="Send message"
+              >
+                <span>➤</span>
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 
@@ -814,28 +741,300 @@ export default function Hero({ isLanding = true }) {
 
       {/* ── CONTACT & CITIZEN HELPDESK SECTION ──────────────────────── */}
       <section className="hero-contact-section" id="contact-section">
-        <div className="contact-card-box">
-          <div className="contact-text-col">
-            <h2 className="contact-main-title">{t("contactTitle") || "Contact Below"}</h2>
-            <p className="contact-main-subtitle">
-              {t("contactSubtitle") || "Have questions about scheme eligibility or documentation? Reach out through official government channels."}
-            </p>
+        <div className="contact-header-group">
+          <div className="contact-badge-pill">
+            <span>🛡️ Verified Government of India Directory</span>
+          </div>
+          <h2 className="contact-main-title">{t("contactTitle") || "Official Government Helpdesk & Verified Portals"}</h2>
+          <p className="contact-main-subtitle">
+            {t("contactSubtitle") || "Connect directly with verified Government of India helplines, official national portals, and citizen grievance redressal authorities."}
+          </p>
+        </div>
+
+        <div className="contact-grid">
+          {/* 1. Official Toll-Free Helpline Numbers */}
+          <div className="contact-card-box">
+            <div className="contact-card-heading-wrap">
+              <h3 className="contact-card-heading">
+                <span>📞</span> Official Toll-Free Helplines
+              </h3>
+              <span className="contact-card-count">7 Helplines</span>
+            </div>
             <div className="contact-details-list">
               <div className="contact-detail-row">
-                <span className="contact-detail-icon">📞</span>
-                <span>{t("contactTollFree") || "Official Government Toll-Free Number: 1800-115-555 (Govt. of India Citizen Helpline, 24x7 Toll-Free)"}</span>
+                <span className="contact-detail-icon-wrap">⚖️</span>
+                <div className="contact-detail-info">
+                  <div className="contact-detail-header-row">
+                    <a href="tel:1915" className="contact-link-phone">1915</a>
+                    <span className="contact-tag-verified">✓ 24×7 Toll-Free</span>
+                  </div>
+                  <span className="contact-detail-name">National Consumer Helpline (NCH)</span>
+                  <span className="contact-detail-label">Ministry of Consumer Affairs (Also: 1800-11-4000)</span>
+                </div>
               </div>
+
               <div className="contact-detail-row">
-                <span className="contact-detail-icon">✉️</span>
-                <span>{t("contactEmail") || "Official Government Email: support-myscheme@gov.in"}</span>
+                <span className="contact-detail-icon-wrap">💙</span>
+                <div className="contact-detail-info">
+                  <div className="contact-detail-header-row">
+                    <a href="tel:14555" className="contact-link-phone">14555</a>
+                    <span className="contact-tag-verified">✓ 24×7 Toll-Free</span>
+                  </div>
+                  <span className="contact-detail-name">Ayushman Bharat (PM-JAY)</span>
+                  <span className="contact-detail-label">National Health Authority — Health cover queries (Alt: 1800-111-565)</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🚜</span>
+                <div className="contact-detail-info">
+                  <div className="contact-detail-header-row">
+                    <a href="tel:155261" className="contact-link-phone">155261</a>
+                    <span className="contact-tag-verified">✓ Toll-Free</span>
+                  </div>
+                  <span className="contact-detail-name">PM-KISAN Samman Nidhi Helpline</span>
+                  <span className="contact-detail-label">Ministry of Agriculture — e-KYC & DBT installment queries (Alt: 1800-11-5526)</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🌾</span>
+                <div className="contact-detail-info">
+                  <div className="contact-detail-header-row">
+                    <a href="tel:18001801551" className="contact-link-phone">1800-180-1551</a>
+                    <span className="contact-tag-verified">✓ 6 AM–10 PM</span>
+                  </div>
+                  <span className="contact-detail-name">Kisan Call Centre (Farmer Advisory)</span>
+                  <span className="contact-detail-label">Dept. of Agriculture — Free expert advice in 22 regional Indian languages</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🆔</span>
+                <div className="contact-detail-info">
+                  <div className="contact-detail-header-row">
+                    <a href="tel:1947" className="contact-link-phone">1947</a>
+                    <span className="contact-tag-verified">✓ 24×7 Toll-Free</span>
+                  </div>
+                  <span className="contact-detail-name">UIDAI Aadhaar Citizen Helpline</span>
+                  <span className="contact-detail-label">Unique Identification Authority of India — Enrollment & update status</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🛡️</span>
+                <div className="contact-detail-info">
+                  <div className="contact-detail-header-row">
+                    <a href="tel:1930" className="contact-link-phone">1930</a>
+                    <span className="contact-tag-verified">✓ 24×7 Citizen Line</span>
+                  </div>
+                  <span className="contact-detail-name">National Cyber Crime Helpline</span>
+                  <span className="contact-detail-label">Ministry of Home Affairs — Financial fraud & cyber grievance reporting</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">💻</span>
+                <div className="contact-detail-info">
+                  <div className="contact-detail-header-row">
+                    <a href="tel:14599" className="contact-link-phone">14599</a>
+                    <span className="contact-tag-verified">✓ Mon–Sat</span>
+                  </div>
+                  <span className="contact-detail-name">CSC e-Governance Services Helpdesk</span>
+                  <span className="contact-detail-label">MeitY — Common Service Centre locator & operator assistance (Alt: 1800-121-3468)</span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="contact-action-col">
-            <Link to={user ? "/dashboard" : "/login"} className="btn-contact-action">
-              {user ? (t("navDashboard") || "Go to Dashboard →") : (t("checkerBtn") || "Check Eligibility Now →")}
-            </Link>
+
+          {/* 2. Official Government Portals */}
+          <div className="contact-card-box">
+            <div className="contact-card-heading-wrap">
+              <h3 className="contact-card-heading">
+                <span>🌐</span> Verified Government Portals
+              </h3>
+              <span className="contact-card-count">8 Portals</span>
+            </div>
+            <div className="contact-details-list">
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🇮🇳</span>
+                <div className="contact-detail-info">
+                  <a href="https://www.india.gov.in" target="_blank" rel="noopener noreferrer" className="contact-link-url">
+                    india.gov.in ↗
+                  </a>
+                  <span className="contact-detail-name">National Portal of India</span>
+                  <span className="contact-detail-label">Single window access to 12,000+ Government of India services & ministries</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🏛️</span>
+                <div className="contact-detail-info">
+                  <a href="https://www.myscheme.gov.in" target="_blank" rel="noopener noreferrer" className="contact-link-url">
+                    myscheme.gov.in ↗
+                  </a>
+                  <span className="contact-detail-name">myScheme National Platform</span>
+                  <span className="contact-detail-label">Explore 1,200+ Central and State welfare programs across India (MeitY)</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">📋</span>
+                <div className="contact-detail-info">
+                  <a href="https://pgportal.gov.in" target="_blank" rel="noopener noreferrer" className="contact-link-url">
+                    pgportal.gov.in ↗
+                  </a>
+                  <span className="contact-detail-name">CPGRAMS Citizen Grievance Portal</span>
+                  <span className="contact-detail-label">Lodge grievances directly with Central ministries and State departments (DARPG)</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🏥</span>
+                <div className="contact-detail-info">
+                  <a href="https://pmjay.gov.in" target="_blank" rel="noopener noreferrer" className="contact-link-url">
+                    pmjay.gov.in ↗
+                  </a>
+                  <span className="contact-detail-name">Ayushman Bharat PM-JAY Portal</span>
+                  <span className="contact-detail-label">Check free ₹5 Lakh health cover eligibility, empaneled hospitals & cards</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🚜</span>
+                <div className="contact-detail-info">
+                  <a href="https://pmkisan.gov.in" target="_blank" rel="noopener noreferrer" className="contact-link-url">
+                    pmkisan.gov.in ↗
+                  </a>
+                  <span className="contact-detail-name">PM-KISAN Samman Nidhi</span>
+                  <span className="contact-detail-label">Check payment status, complete biometric e-KYC & new farmer registration</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">📱</span>
+                <div className="contact-detail-info">
+                  <a href="https://web.umang.gov.in" target="_blank" rel="noopener noreferrer" className="contact-link-url">
+                    umang.gov.in ↗
+                  </a>
+                  <span className="contact-detail-name">UMANG Unified Governance</span>
+                  <span className="contact-detail-label">Single platform for EPF, PAN, Aadhaar, DigiLocker, and utility bill services</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🏠</span>
+                <div className="contact-detail-info">
+                  <a href="https://pmaymis.gov.in" target="_blank" rel="noopener noreferrer" className="contact-link-url">
+                    pmaymis.gov.in ↗
+                  </a>
+                  <span className="contact-detail-name">PM Awas Yojana (Urban / Gramin)</span>
+                  <span className="contact-detail-label">Track pucca house housing subsidy status and beneficiary verification</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">🎓</span>
+                <div className="contact-detail-info">
+                  <a href="https://scholarships.gov.in" target="_blank" rel="noopener noreferrer" className="contact-link-url">
+                    scholarships.gov.in ↗
+                  </a>
+                  <span className="contact-detail-name">National Scholarship Portal (NSP)</span>
+                  <span className="contact-detail-label">Central, UGC, and AICTE educational scholarship applications</span>
+                </div>
+              </div>
+            </div>
           </div>
+
+          {/* 3. Official Email & Support Channels */}
+          <div className="contact-card-box">
+            <div className="contact-card-heading-wrap">
+              <h3 className="contact-card-heading">
+                <span>✉️</span> Official Support Helpdesks
+              </h3>
+              <span className="contact-card-count">6 Email Desks</span>
+            </div>
+            <div className="contact-details-list">
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">📧</span>
+                <div className="contact-detail-info">
+                  <a href="mailto:helpdesk-myscheme@digitalindia.gov.in" className="contact-link-url">
+                    helpdesk-myscheme@digitalindia.gov.in
+                  </a>
+                  <span className="contact-detail-name">myScheme National Platform Helpdesk</span>
+                  <span className="contact-detail-label">Technical issues, scheme search inquiries & portal onboarding</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">📧</span>
+                <div className="contact-detail-info">
+                  <a href="mailto:pmkisan-ict@gov.in" className="contact-link-url">
+                    pmkisan-ict@gov.in
+                  </a>
+                  <span className="contact-detail-name">PM-KISAN Technical Cell</span>
+                  <span className="contact-detail-label">Direct Benefit Transfer (DBT) failures, bank account corrections</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">📧</span>
+                <div className="contact-detail-info">
+                  <a href="mailto:help@uidai.gov.in" className="contact-link-url">
+                    help@uidai.gov.in
+                  </a>
+                  <span className="contact-detail-name">UIDAI Grievance & Technical Cell</span>
+                  <span className="contact-detail-label">Aadhaar card updation, mobile number seeding & biometric locking</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">📧</span>
+                <div className="contact-detail-info">
+                  <a href="mailto:support.pmjay@nha.gov.in" className="contact-link-url">
+                    support.pmjay@nha.gov.in
+                  </a>
+                  <span className="contact-detail-name">PM-JAY National Health Authority</span>
+                  <span className="contact-detail-label">Cashless hospital admissions, Ayushman card denial grievances</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">📧</span>
+                <div className="contact-detail-info">
+                  <a href="mailto:support@csc.gov.in" className="contact-link-url">
+                    support@csc.gov.in
+                  </a>
+                  <span className="contact-detail-name">CSC e-Governance India Support</span>
+                  <span className="contact-detail-label">Locate nearby CSC Village Level Entrepreneur (VLE) & service complaints</span>
+                </div>
+              </div>
+
+              <div className="contact-detail-row">
+                <span className="contact-detail-icon-wrap">📧</span>
+                <div className="contact-detail-info">
+                  <a href="mailto:helpdesk@nsp.gov.in" className="contact-link-url">
+                    helpdesk@nsp.gov.in
+                  </a>
+                  <span className="contact-detail-name">National Scholarship Portal Support</span>
+                  <span className="contact-detail-label">Institute verification, biometric authentication & payment tracking</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Action Navigation Buttons */}
+        <div className="contact-cta-row">
+          <Link to="/centers" className="btn-contact-center">
+            📍 Find Nearest CSC &amp; Seva Kendra →
+          </Link>
+          <Link to={user ? "/dashboard" : "/login"} className="btn-contact-action">
+            🔍 Explore Schemes on Sahayog →
+          </Link>
+          <a href="https://www.india.gov.in" target="_blank" rel="noopener noreferrer" className="btn-contact-portal">
+            🌐 Visit National Portal (india.gov.in) ↗
+          </a>
         </div>
       </section>
 

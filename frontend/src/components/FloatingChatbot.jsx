@@ -8,6 +8,12 @@ export default function FloatingChatbot({ matches, onProfileExtracted }) {
   const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
+  React.useEffect(() => {
+    const handleOpen = () => setIsOpen(true);
+    window.addEventListener("open-sahayog-chatbot", handleOpen);
+    return () => window.removeEventListener("open-sahayog-chatbot", handleOpen);
+  }, []);
+
   return (
     <div className="floating-chatbot-container">
       {/* Floating Chat Popup Window */}
@@ -17,7 +23,7 @@ export default function FloatingChatbot({ matches, onProfileExtracted }) {
             <div className="floating-chatbot-title">
               <span className="chatbot-avatar-icon">🤖</span>
               <div>
-                <span className="chatbot-header-name">{t("chatTitle")}</span>
+                <span className="chatbot-header-name">{t("chatTitle") || "Sahayog AI Assistant"}</span>
                 <span className="chatbot-online-status">● Live Assistant</span>
               </div>
             </div>

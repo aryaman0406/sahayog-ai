@@ -60,23 +60,27 @@ export default function ProfileForm({ onSubmit }) {
     };
 
     try {
-      // Save profile persistently in MongoDB
-      await updateProfile(formattedProfile);
+      // Save profile persistently in MongoDB if available
+      try {
+        await updateProfile(formattedProfile);
+      } catch (saveErr) {
+        console.warn("Could not sync profile to backend, proceeding with local matching:", saveErr);
+      }
       
       // Trigger schemes match matching logic
       if (onSubmit) {
-        onSubmit(formattedProfile);
+        await onSubmit(formattedProfile);
       }
     } catch (err) {
       console.error(err);
-      setError(err.message || "Failed to save profile. Please try again.");
+      setError(err.message || "Failed to check scheme eligibility. Please try again.");
     } finally {
       setSubmitting(false);
     }
   }
 
   return (
-    <section className="card-panel form-panel animate-fade-in">
+    <section className="card-panel form-panel animate-fade-in" id="eligibility-profile-form">
       <p className="panel-label">{t("profileFormTitle")}</p>
       <h2 className="panel-title">{t("profileFormSubtitle")}</h2>
 

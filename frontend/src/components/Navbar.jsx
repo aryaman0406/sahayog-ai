@@ -21,9 +21,26 @@ export default function Navbar({ savedCount = 0 }) {
     }
   };
 
-  const handleNavLinkClick = (path) => {
+  const handleAIAssistantClick = () => {
     setMobileMenuOpen(false);
-    navigate(path);
+    const el = document.getElementById("ai-assistant-card");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/", { state: { scrollTo: "ai-assistant-card" } });
+    }
+  };
+
+
+
+  const handleSectionNavigate = (sectionId) => {
+    setMobileMenuOpen(false);
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/", { state: { scrollTo: sectionId } });
+    }
   };
 
   return (
@@ -45,26 +62,14 @@ export default function Navbar({ savedCount = 0 }) {
           <NavLink to={user ? "/dashboard" : "/login"} className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
             {t("navSchemes") || "Schemes"}
           </NavLink>
-          {user && (
-            <button 
-              type="button" 
-              className="nav-item-btn" 
-              onClick={() => {
-                const el = document.getElementById("ai-assistant-card");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
-                else navigate("/dashboard");
-              }}
-            >
-              {t("navAIAssistant") || "AI Assistant"}
-            </button>
-          )}
           <button 
             type="button" 
             className="nav-item-btn" 
-            onClick={() => navigate(user ? "/dashboard" : "/login")}
+            onClick={handleAIAssistantClick}
           >
-            {t("navEligibility") || "Eligibility Checker"}
+            🤖 {t("navAIAssistant") || "AI Assistant"}
           </button>
+
           {user ? (
             <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
               {t("navDashboard") || "Dashboard"}
@@ -75,25 +80,19 @@ export default function Navbar({ savedCount = 0 }) {
             </NavLink>
           )}
           <NavLink to="/centers" className={({ isActive }) => (isActive ? "nav-item active" : "nav-item")}>
-            📍 {t("navCenters") || "Find Centers"}
+            📍 {t("navCenters") && t("navCenters") !== "navCenters" ? t("navCenters") : "Find Centers"}
           </NavLink>
           <button
             type="button"
             className="nav-item-btn"
-            onClick={() => {
-              const el = document.getElementById("about-section");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
+            onClick={() => handleSectionNavigate("about-section")}
           >
             {t("navAbout") || "About Us"}
           </button>
           <button
             type="button"
             className="nav-item-btn"
-            onClick={() => {
-              const el = document.getElementById("contact-section");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
+            onClick={() => handleSectionNavigate("contact-section")}
           >
             {t("navContact") || "Contact"}
           </button>
@@ -149,27 +148,34 @@ export default function Navbar({ savedCount = 0 }) {
           <NavLink to={user ? "/dashboard" : "/login"} className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
             {t("navSchemes") || "Schemes"}
           </NavLink>
+          <button 
+            type="button" 
+            className="mobile-nav-item text-left w-full"
+            style={{ background: "none", border: "none", font: "inherit", color: "inherit", cursor: "pointer", padding: "10px 16px" }}
+            onClick={handleAIAssistantClick}
+          >
+            🤖 {t("navAIAssistant") || "AI Assistant"}
+          </button>
+
           <NavLink to="/centers" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-            📍 {t("navCenters") || "Find Centers"}
+            📍 {t("navCenters") && t("navCenters") !== "navCenters" ? t("navCenters") : "Find Centers"}
           </NavLink>
-          {user && (
-            <button 
-              type="button" 
-              className="mobile-nav-item text-left w-full"
-              style={{ background: "none", border: "none", font: "inherit", color: "inherit", cursor: "pointer", padding: "10px 16px" }}
-              onClick={() => {
-                setMobileMenuOpen(false);
-                const el = document.getElementById("ai-assistant-card");
-                if (el) el.scrollIntoView({ behavior: "smooth" });
-                else navigate("/dashboard");
-              }}
-            >
-              {t("navAIAssistant") || "AI Assistant"}
-            </button>
-          )}
-          <NavLink to={user ? "/dashboard" : "/login"} className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>
-            {t("navEligibility") || "Eligibility Checker"}
-          </NavLink>
+          <button 
+            type="button" 
+            className="mobile-nav-item text-left w-full"
+            style={{ background: "none", border: "none", font: "inherit", color: "inherit", cursor: "pointer", padding: "10px 16px" }}
+            onClick={() => handleSectionNavigate("about-section")}
+          >
+            {t("navAbout") || "About Us"}
+          </button>
+          <button 
+            type="button" 
+            className="mobile-nav-item text-left w-full"
+            style={{ background: "none", border: "none", font: "inherit", color: "inherit", cursor: "pointer", padding: "10px 16px" }}
+            onClick={() => handleSectionNavigate("contact-section")}
+          >
+            {t("navContact") || "Contact"}
+          </button>
           {user && (
             <>
               <NavLink to="/dashboard" className="mobile-nav-item" onClick={() => setMobileMenuOpen(false)}>

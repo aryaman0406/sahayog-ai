@@ -1,6 +1,22 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "../context/LanguageContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import { FALLBACK_CENTERS, getFallbackStates } from "../data/fallbackCenters.js";
+
+// Haversine distance calculator for offline fallback
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Earth's radius in km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.round(R * c * 10) / 10;
+}
 
 const CENTER_TYPE_FILTERS = [
   { id: "all", label: "All Centers", icon: "🏛️" },
@@ -30,18 +46,22 @@ export default function CenterLocator() {
   const [geoError, setGeoError] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
 
-  // Fetch available states and districts
+// Fetch available states and districts
   useEffect(() => {
     async function fetchStates() {
       try {
         const res = await fetch("/api/centers/states");
         if (res.ok) {
           const data = await res.json();
-          setStatesList(data.states || []);
+          if (data.states && data.states.length > 0) {
+            setStatesList(data.states);
+            return;
+          }
         }
       } catch (err) {
-        console.error("Failed to load states list:", err);
+        console.warn("Backend states fetch unavailable, using verified offline states:", err);
       }
+      setStatesList(getFallbackStates());
     }
     fetchStates();
   }, []);
@@ -61,15 +81,45 @@ export default function CenterLocator() {
         params.append("lat", userCoords.lat);
         params.append("lng", userCoords.lng);
       }
-      params.append("limit", "30");
+      params.append("limit", "40");
 
       const res = await fetch(`/api/centers/?${params.toString()}`);
-      if (!res.ok) throw new Error("Failed to fetch centers");
+      if (!res.ok) throw new Error("Failed to fetch centers from backend");
       const data = await res.json();
       setCenters(data.centers || []);
     } catch (err) {
-      console.error("Error fetching centers:", err);
-      setError("Unable to load centers. Please check your connection and try again.");
+      console.warn("Falling back to verified local centers dataset:", err);
+      // Filter FALLBACK_CENTERS locally
+      let filtered = FALLBACK_CENTERS.filter((c) => {
+        if (selectedState && selectedState.toLowerCase() !== "all" && c.state.toLowerCase() !== selectedState.toLowerCase()) return false;
+        if (selectedDistrict && selectedDistrict.toLowerCase() !== "all" && c.district.toLowerCase() !== selectedDistrict.toLowerCase()) return false;
+        if (pincode.trim() && c.pincode !== pincode.trim()) return false;
+        if (centerType && centerType !== "all" && c.category.toLowerCase() !== centerType.toLowerCase() && !c.center_type.toLowerCase().includes(centerType.toLowerCase())) return false;
+        if (searchQuery.trim()) {
+          const q = searchQuery.toLowerCase().trim();
+          const corpus = `${c.name} ${c.address} ${c.district} ${c.state} ${c.services.join(" ")} ${c.center_type}`.toLowerCase();
+          if (!corpus.includes(q)) return false;
+        }
+        return true;
+      }).map((c) => {
+        let dist = null;
+        if (userCoords?.lat && userCoords?.lng) {
+          dist = calculateDistance(userCoords.lat, userCoords.lng, c.lat, c.lng);
+        }
+        return {
+          ...c,
+          distance_km: dist,
+          maps_url: `https://www.google.com/maps/dir/?api=1&destination=${c.lat},${c.lng}`
+        };
+      });
+
+      if (userCoords?.lat && userCoords?.lng) {
+        filtered.sort((a, b) => (a.distance_km ?? 9999) - (b.distance_km ?? 9999));
+      } else {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+
+      setCenters(filtered);
     } finally {
       setLoading(false);
     }
@@ -122,9 +172,9 @@ export default function CenterLocator() {
             <span className="badge-pulse"></span>
             <span>📍 Physical Assistance Network</span>
           </div>
-          <h1 className="locator-title">Nearest CSC & Seva Kendra Locator</h1>
+          <h1 className="locator-title">Nearest CSC &amp; Citizen Seva Kendra Network</h1>
           <p className="locator-subtitle">
-            Find certified Common Service Centers (CSCs), MeeSeva, Maha E-Seva, E-Mitra, and Taluk/Tehsildar offices near you for offline scheme application, biometric e-KYC, and document verification.
+            Find certified Common Service Centers (CSCs), MeeSeva, Maha e-Seva, e-Mitra, Bangalore One, and Taluk/Tehsildar offices near you for offline scheme application, biometric e-KYC, and document verification.
           </p>
         </div>
 
@@ -340,13 +390,23 @@ export default function CenterLocator() {
                 {center.phone && (
                   <div className="meta-item">
                     <span className="meta-icon">📞</span>
-                    <span className="meta-text">{center.phone}</span>
+                    <a href={`tel:${center.phone.replace(/[^\d+]/g, '')}`} className="meta-text meta-link" title="Call this center">
+                      {center.phone}
+                    </a>
+                  </div>
+                )}
+                {center.email && (
+                  <div className="meta-item">
+                    <span className="meta-icon">✉️</span>
+                    <a href={`mailto:${center.email}`} className="meta-text meta-link" title="Email this center">
+                      {center.email}
+                    </a>
                   </div>
                 )}
                 {center.contact_person && (
                   <div className="meta-item">
                     <span className="meta-icon">👤</span>
-                    <span className="meta-text">In-Charge: {center.contact_person}</span>
+                    <span className="meta-text">Authority: {center.contact_person}</span>
                   </div>
                 )}
               </div>
@@ -375,6 +435,15 @@ export default function CenterLocator() {
                 >
                   🗺️ Open in Google Maps
                 </a>
+                {center.phone && (
+                  <a
+                    href={`tel:${center.phone.replace(/[^\d+]/g, '')}`}
+                    className="btn-action-call"
+                    title={`Call ${center.phone}`}
+                  >
+                    📞 Call
+                  </a>
+                )}
                 <button
                   type="button"
                   className="btn-action-secondary"
