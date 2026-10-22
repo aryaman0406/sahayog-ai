@@ -129,6 +129,8 @@ export const en = {
   authRegisterBtn: "Create Account",
   authNoAccount: "Don't have an account?",
   authHaveAccount: "Already have an account?",
+  continueWithGoogle: "Continue with Google",
+  authOrWithEmail: "or continue with email",
 
   // ProfileForm
   profileFormTitle: "Eligibility Questionnaire",

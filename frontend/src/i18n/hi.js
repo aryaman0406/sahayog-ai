@@ -129,6 +129,8 @@ export const hi = {
   authRegisterBtn: "खाता बनाएं",
   authNoAccount: "खाता नहीं है?",
   authHaveAccount: "पहले से खाता है?",
+  continueWithGoogle: "गूगल के साथ जारी रखें",
+  authOrWithEmail: "या ईमेल के साथ जारी रखें",
 
   // ProfileForm
   profileFormTitle: "पात्रता प्रश्नावली",

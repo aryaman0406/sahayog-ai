@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLanguage } from "../context/LanguageContext.jsx";
+import GoogleSignInButton from "./GoogleSignInButton.jsx";
 
 export default function AuthForm({ isRegister = false }) {
   const { login, register } = useAuth();
@@ -67,6 +68,15 @@ export default function AuthForm({ isRegister = false }) {
       </p>
 
       {error && <div className="error-message">{error}</div>}
+
+      {/* Google Sign-In Action */}
+      <div className="auth-social-section">
+        <GoogleSignInButton onSuccess={() => navigate("/dashboard")} />
+      </div>
+
+      <div className="auth-divider">
+        <span>{t("authOrWithEmail") || "or continue with email"}</span>
+      </div>
 
       <form className="profile-form" onSubmit={handleSubmit}>
         {isRegister && (

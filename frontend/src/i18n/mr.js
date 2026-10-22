@@ -129,6 +129,8 @@ export const mr = {
   authRegisterBtn: "खाते तयार करा",
   authNoAccount: "खाते नाही का?",
   authHaveAccount: "आधीच खाते आहे का?",
+  continueWithGoogle: "गुगलसह सुरू ठेवा",
+  authOrWithEmail: "किंवा ईमेलसह सुरू ठेवा",
 
   // ProfileForm
   profileFormTitle: "पात्रता प्रश्नावली",

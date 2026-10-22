@@ -176,8 +176,38 @@ export function AuthProvider({ children }) {
     return userData;
   }
 
+  async function loginWithGoogle({ credential, email, name, picture }) {
+    let res;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+      res = await fetch(`${BASE_URL}/api/auth/google`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ credential, email, name, picture }),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+    } catch (err) {
+      clearTimeout(timeout);
+      if (err.name === "AbortError") {
+        throw new Error("Connection timed out. Server may be starting up, please try again.");
+      }
+      throw new Error("Network error — please check your connection.");
+    }
+    if (!res.ok) {
+      let errorData;
+      try { errorData = await res.json(); } catch { throw new Error("Google authentication failed."); }
+      throw new Error(extractErrorMessage(errorData, "Google authentication failed"));
+    }
+    const data = await res.json();
+    localStorage.setItem(TOKEN_KEY, data.access_token);
+    setUser(data.user);
+    return data.user;
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, updateProfile, authFetch }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, loginWithGoogle, updateProfile, authFetch }}>
       {children}
     </AuthContext.Provider>
   );

@@ -129,6 +129,8 @@ export const te = {
   authRegisterBtn: "ఖాతాను సృష్టించండి",
   authNoAccount: "ఖాతా లేదా?",
   authHaveAccount: "ఇప్పటికే ఖాతా ఉందా?",
+  continueWithGoogle: "గూగుల్‌తో కొనసాగించండి",
+  authOrWithEmail: "లేదా ఈమెయిల్‌తో కొనసాగించండి",
 
   // SchemeResults
   resultsTitle: "మీ అర్హత కలిగిన పథకాలు",
@@ -375,6 +377,8 @@ export const gu = {
   authRegisterBtn: "ખાતું બનાવો",
   authNoAccount: "ખાતું નથી?",
   authHaveAccount: "પહેલેથી જ ખાતું છે?",
+  continueWithGoogle: "Google સાથે ચાલુ રાખો",
+  authOrWithEmail: "અથવા ઇમેઇલ સાથે ચાલુ રાખો",
 
   // ProfileForm
   profileFormTitle: "પાત્રતા પ્રશ્નાવલી",
@@ -621,6 +625,8 @@ export const kn = {
   authRegisterBtn: "ಖಾತೆಯನ್ನು ರಚಿಸಿ",
   authNoAccount: "ಖಾತೆ ಇಲ್ಲವೇ?",
   authHaveAccount: "ಈಗಾಗಲೇ ಖಾತೆ ಹೊಂದಿದ್ದೀರಾ?",
+  continueWithGoogle: "Google ನೊಂದಿಗೆ ಮುಂದುವರಿಯಿರಿ",
+  authOrWithEmail: "ಅಥವಾ ಇಮೇಲ್ ಮೂಲಕ ಮುಂದುವರಿಯಿರಿ",
 
   // ProfileForm
   profileFormTitle: "ಅರ್ಹತಾ ಪ್ರಶ್ನಾವಳಿ",

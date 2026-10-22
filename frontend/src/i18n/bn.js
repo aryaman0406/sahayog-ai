@@ -129,6 +129,8 @@ export const bn = {
   authRegisterBtn: "অ্যাকাউন্ট তৈরি করুন",
   authNoAccount: "অ্যাকাউন্ট নেই?",
   authHaveAccount: "ইতিমধ্যেই অ্যাকাউন্ট আছে?",
+  continueWithGoogle: "গুগল দিয়ে চালিয়ে যান",
+  authOrWithEmail: "বা ইমেলের মাধ্যমে চালিয়ে যান",
 
   // ProfileForm
   profileFormTitle: "যোগ্যতার প্রশ্নাবলী",

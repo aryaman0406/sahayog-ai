@@ -36,7 +36,7 @@ India has hundreds of central and state government welfare schemes across agricu
 - **📊 Interactive Analytics Dashboard**: Real-time visualization of scheme distribution across categories, state coverage, and personal eligibility breakdowns.
 - **💾 Saved Schemes & Bookmarking**: Save, manage, and track schemes with persistent user accounts in MongoDB.
 - **🌓 Modern Responsive UI**: Clean light/dark mode design, floating AI assistant widget, collapsible animated scheme cards with required documents checklists, and mobile-friendly layouts.
-- **🔐 Secure Authentication**: JWT (JSON Web Token) authentication with non-blocking async bcrypt password hashing and user profile management.
+- **🔐 Secure Authentication**: JWT (JSON Web Token) authentication with non-blocking async bcrypt password hashing, **Sign in with Google (OAuth & Google Identity Services)**, and user profile management.
 
 ---
 

@@ -18,6 +18,12 @@ class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
+class GoogleAuthRequest(BaseModel):
+    credential: Optional[str] = None
+    email: Optional[EmailStr] = None
+    name: Optional[str] = None
+    picture: Optional[str] = None
+
 class UserResponse(BaseModel):
     id: str
     name: str
@@ -29,6 +35,8 @@ class UserResponse(BaseModel):
     gender: str
     state: str
     language: str
+    picture: Optional[str] = None
+    auth_provider: Optional[str] = "local"
     created_at: datetime
 
 class TokenResponse(BaseModel):

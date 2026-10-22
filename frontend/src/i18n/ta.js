@@ -129,6 +129,8 @@ export const ta = {
   authRegisterBtn: "கணக்கை உருவாக்கு",
   authNoAccount: "கணக்கு இல்லையா?",
   authHaveAccount: "ஏற்கனவே கணக்கு உள்ளதா?",
+  continueWithGoogle: "கூகிள் மூலம் தொடரவும்",
+  authOrWithEmail: "அல்லது மின்னஞ்சல் மூலம் தொடரவும்",
 
   // SchemeResults
   resultsTitle: "உங்கள் தகுதியான திட்டங்கள்",
