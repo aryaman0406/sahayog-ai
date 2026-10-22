@@ -118,14 +118,16 @@ export default function GoogleSignInButton({ onSuccess }) {
 
   const handleClick = () => {
     if (isRealClientConfigured && window.google?.accounts?.id) {
-      // Trigger Google One Tap or prompt
       try {
-        window.google.accounts.id.prompt();
+        window.google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            setShowDemoModal(true);
+          }
+        });
       } catch (e) {
         setShowDemoModal(true);
       }
     } else {
-      // Show dev/demo Google account picker modal
       setShowDemoModal(true);
     }
   };
