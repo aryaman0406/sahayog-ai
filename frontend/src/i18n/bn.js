@@ -241,7 +241,18 @@ export const bn = {
   aboutCard3Desc: "আপনার ব্যক্তিগত ও যোগ্যতার তথ্য সম্পূর্ণ গোপন রাখা হয়।",
   contactTitle: "অফিসিয়াল সরকারি যোগাযোগ ও হেল্পলাইন ডিরেক্টরি",
   contactSubtitle: "প্রকল্পের যোগ্যতা, ই-কেওয়াইসি, আধার বা অভিযোগ নিষ্পত্তির জন্য অফিসিয়াল ভারত সরকার পোর্টাল ও টোল-ফ্রি নম্বরে যোগাযোগ করুন।",
+  contactBadge: "যাচাইকৃত ভারত সরকার ডিরেক্টরি",
+  contactHelplinesHeading: "অফিসিয়াল টোল-ফ্রি হেল্পলাইন",
+  contactHelplinesCount: "৭টি হেল্পলাইন",
+  contactPortalsHeading: "যাচাইকৃত সরকারি পোর্টাল",
+  contactPortalsCount: "৮টি পোর্টাল",
+  contactHelpdesksHeading: "অফিসিয়াল সাপোর্ট হেল্পডেস্ক",
+  contactHelpdesksCount: "৬টি ইমেল ডেস্ক",
+  contactBtnNearestCSC: "নিকটস্থ সিএসসি ও সেবা কেন্দ্র খুঁজুন →",
+  contactBtnExplore: "সহযোগে প্রকল্প খুঁজুন →",
+  contactBtnNationalPortal: "জাতীয় পোর্টালে যান (india.gov.in) ↗",
   contactTollFree: "জাতীয় গ্রাহক হেল্পলাইন: ১৯১৫ / ১৮০০-১১-৪০০০ (টোল-ফ্রি, ২৪x৭)",
   contactEmail: "অফিসিয়াল সরকারি সহায়তা: helpdesk-myscheme@digitalindia.gov.in",
   footerRights: "© 2026 সহযোগ। সহজ কল্যাণমূলক প্রকল্প অ্যাক্সেসের মাধ্যমে নাগরিকদের ক্ষমতায়ন।",
 };
+

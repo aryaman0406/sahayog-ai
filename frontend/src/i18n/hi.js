@@ -241,7 +241,18 @@ export const hi = {
   aboutCard3Desc: "आपका व्यक्तिगत और पात्रता डेटा पूरी तरह से गोपनीय रखा जाता है।",
   contactTitle: "आधिकारिक सरकारी हेल्पलाइन और पोर्टल",
   contactSubtitle: "सत्यापित भारत सरकार की हेल्पलाइन, आधिकारिक राष्ट्रीय पोर्टल और नागरिक शिकायत निवारण चैनलों से सीधे जुड़ें।",
+  contactBadge: "सत्यापित भारत सरकार निर्देशिका",
+  contactHelplinesHeading: "आधिकारिक टोल-फ्री हेल्पलाइन",
+  contactHelplinesCount: "7 हेल्पलाइन",
+  contactPortalsHeading: "सत्यापित सरकारी पोर्टल",
+  contactPortalsCount: "8 पोर्टल",
+  contactHelpdesksHeading: "आधिकारिक सहायता डेस्क",
+  contactHelpdesksCount: "6 ईमेल डेस्क",
+  contactBtnNearestCSC: "निकटतम सीएससी और सेवा केंद्र खोजें →",
+  contactBtnExplore: "सहयोग पर योजनाएं देखें →",
+  contactBtnNationalPortal: "राष्ट्रीय पोर्टल देखें (india.gov.in) ↗",
   contactTollFree: "राष्ट्रीय उपभोक्ता हेल्पलाइन: 1915 / 1800-11-4000 (टोल-फ्री, 24x7)",
   contactEmail: "आधिकारिक हेल्पडेस्क: helpdesk-myscheme@digitalindia.gov.in",
   footerRights: "© 2026 सहयोग। कल्याणकारी योजनाओं तक निर्बाध पहुंच के साथ भारत भर के नागरिकों को सशक्त बनाना।",
 };
+

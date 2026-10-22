@@ -218,7 +218,18 @@ export const ta = {
   aboutCard3Desc: "உங்கள் தனிப்பட்ட மற்றும் தகுதித் தரவு முற்றிலும் ரகசியமாக வைக்கப்படுகிறது.",
   contactTitle: "அதிகாரப்பூர்வ அரசு தொடர்பு மற்றும் உதவி எண் பட்டியல்",
   contactSubtitle: "திட்ட தகுதி, இ-கேஒய்சி, ஆதார் அல்லது குறைகளுக்கான அதிகாரப்பூர்வ இந்திய அரசு போர்ட்டல்கள் மற்றும் உதவி எண்களைத் தொடர்பு கொள்ளவும்.",
+  contactBadge: "சரிபார்க்கப்பட்ட இந்திய அரசு கோப்பகம்",
+  contactHelplinesHeading: "அதிகாரப்பூர்வ கட்டணமில்லா உதவி எண்கள்",
+  contactHelplinesCount: "7 உதவி எண்கள்",
+  contactPortalsHeading: "சரிபார்க்கப்பட்ட அரசு இணையதளங்கள்",
+  contactPortalsCount: "8 தளங்கள்",
+  contactHelpdesksHeading: "அதிகாரப்பூர்வ ஆதரவு உதவி மையங்கள்",
+  contactHelpdesksCount: "6 மின்னஞ்சல் மையங்கள்",
+  contactBtnNearestCSC: "அருகிலுள்ள சி.எஸ்.சி & சேவை மையத்தைக் கண்டறியவும் →",
+  contactBtnExplore: "சஹயோக்கில் திட்டங்களை ஆராயுங்கள் →",
+  contactBtnNationalPortal: "தேசிய தளத்திற்குச் செல்லவும் (india.gov.in) ↗",
   contactTollFree: "தேசிய நுகர்வோர் உதவி எண்: 1915 / 1800-11-4000 (இலவசம், 24x7)",
   contactEmail: "அதிகாரப்பூர்வ அரசு உதவி: helpdesk-myscheme@digitalindia.gov.in",
   footerRights: "© 2026 சஹயோக். குடிமக்களுக்கு நலத்திட்டங்களை எளிதாகக் கொண்டு சேர்த்து மேம்படுத்துதல்.",
 };
+

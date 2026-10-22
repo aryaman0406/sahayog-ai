@@ -743,7 +743,7 @@ export default function Hero({ isLanding = true }) {
       <section className="hero-contact-section" id="contact-section">
         <div className="contact-header-group">
           <div className="contact-badge-pill">
-            <span>🛡️ Verified Government of India Directory</span>
+            <span>🛡️ {t("contactBadge") || "Verified Government of India Directory"}</span>
           </div>
           <h2 className="contact-main-title">{t("contactTitle") || "Official Government Helpdesk & Verified Portals"}</h2>
           <p className="contact-main-subtitle">
@@ -756,9 +756,9 @@ export default function Hero({ isLanding = true }) {
           <div className="contact-card-box">
             <div className="contact-card-heading-wrap">
               <h3 className="contact-card-heading">
-                <span>📞</span> Official Toll-Free Helplines
+                <span>📞</span> {t("contactHelplinesHeading") || "Official Toll-Free Helplines"}
               </h3>
-              <span className="contact-card-count">7 Helplines</span>
+              <span className="contact-card-count">{t("contactHelplinesCount") || "7 Helplines"}</span>
             </div>
             <div className="contact-details-list">
               <div className="contact-detail-row">
@@ -851,9 +851,9 @@ export default function Hero({ isLanding = true }) {
           <div className="contact-card-box">
             <div className="contact-card-heading-wrap">
               <h3 className="contact-card-heading">
-                <span>🌐</span> Verified Government Portals
+                <span>🌐</span> {t("contactPortalsHeading") || "Verified Government Portals"}
               </h3>
-              <span className="contact-card-count">8 Portals</span>
+              <span className="contact-card-count">{t("contactPortalsCount") || "8 Portals"}</span>
             </div>
             <div className="contact-details-list">
               <div className="contact-detail-row">
@@ -950,9 +950,9 @@ export default function Hero({ isLanding = true }) {
           <div className="contact-card-box">
             <div className="contact-card-heading-wrap">
               <h3 className="contact-card-heading">
-                <span>✉️</span> Official Support Helpdesks
+                <span>✉️</span> {t("contactHelpdesksHeading") || "Official Support Helpdesks"}
               </h3>
-              <span className="contact-card-count">6 Email Desks</span>
+              <span className="contact-card-count">{t("contactHelpdesksCount") || "6 Email Desks"}</span>
             </div>
             <div className="contact-details-list">
               <div className="contact-detail-row">
@@ -1027,13 +1027,13 @@ export default function Hero({ isLanding = true }) {
         {/* Quick Action Navigation Buttons */}
         <div className="contact-cta-row">
           <Link to="/centers" className="btn-contact-center">
-            📍 Find Nearest CSC &amp; Seva Kendra →
+            📍 {t("contactBtnNearestCSC") || "Find Nearest CSC & Seva Kendra →"}
           </Link>
           <Link to={user ? "/dashboard" : "/login"} className="btn-contact-action">
-            🔍 Explore Schemes on Sahayog →
+            🔍 {t("contactBtnExplore") || "Explore Schemes on Sahayog →"}
           </Link>
           <a href="https://www.india.gov.in" target="_blank" rel="noopener noreferrer" className="btn-contact-portal">
-            🌐 Visit National Portal (india.gov.in) ↗
+            🌐 {t("contactBtnNationalPortal") || "Visit National Portal (india.gov.in) ↗"}
           </a>
         </div>
       </section>

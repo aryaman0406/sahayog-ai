@@ -241,7 +241,18 @@ export const mr = {
   aboutCard3Desc: "तुमचा वैयक्तिक आणि पात्रता डेटा पूर्णपणे गोपनीय ठेवला जातो.",
   contactTitle: "अधिकृत सरकारी संपर्क आणि हेल्पलाइन डिरेक्टरी",
   contactSubtitle: "योजनेची पात्रता, ई-केवायसी, आधार, किंवा तक्रार निवारणासाठी अधिकृत भारत सरकार पोर्टल्स आणि टोल-फ्री क्रमांकांशी संपर्क साधा.",
+  contactBadge: "प्रमाणित भारत सरकार डिरेक्टरी",
+  contactHelplinesHeading: "अधिकृत टोल-फ्री हेल्पलाईन",
+  contactHelplinesCount: "7 हेल्पलाईन",
+  contactPortalsHeading: "प्रमाणित सरकारी पोर्टल्स",
+  contactPortalsCount: "8 पोर्टल्स",
+  contactHelpdesksHeading: "अधिकृत सहाय्यता हेल्पडेस्क",
+  contactHelpdesksCount: "6 ईमेल डेस्क",
+  contactBtnNearestCSC: "जवळचे सीएससी आणि सेवा केंद्र शोधा →",
+  contactBtnExplore: "सहयोगवर योजना शोधा →",
+  contactBtnNationalPortal: "राष्ट्रीय पोर्टलला भेट द्या (india.gov.in) ↗",
   contactTollFree: "राष्ट्रीय ग्राहक हेल्पलाइन: 1915 / 1800-11-4000 (टोल-फ्री, 24x7)",
   contactEmail: "अधिकृत सरकारी मदत: helpdesk-myscheme@digitalindia.gov.in",
   footerRights: "© 2026 सहयोग. कल्याणकारी योजनांचा सुलभ लाभ मिळवून भारतातील नागरिकांचे सक्षमीकरण.",
 };
+

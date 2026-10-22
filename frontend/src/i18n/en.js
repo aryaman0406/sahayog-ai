@@ -241,7 +241,18 @@ export const en = {
   aboutCard3Desc: "Your personal and eligibility data is kept strictly confidential.",
   contactTitle: "Official Government Helpdesk & Verified Portals",
   contactSubtitle: "Connect directly with verified Government of India helplines, official national portals, and citizen grievance redressal authorities.",
+  contactBadge: "Verified Government of India Directory",
+  contactHelplinesHeading: "Official Toll-Free Helplines",
+  contactHelplinesCount: "7 Helplines",
+  contactPortalsHeading: "Verified Government Portals",
+  contactPortalsCount: "8 Portals",
+  contactHelpdesksHeading: "Official Support Helpdesks",
+  contactHelpdesksCount: "6 Email Desks",
+  contactBtnNearestCSC: "Find Nearest CSC & Seva Kendra →",
+  contactBtnExplore: "Explore Schemes on Sahayog →",
+  contactBtnNationalPortal: "Visit National Portal (india.gov.in) ↗",
   contactTollFree: "National Consumer Helpline: 1915 / 1800-11-4000 (Toll-Free, 24x7)",
   contactEmail: "Official Helpdesk: helpdesk-myscheme@digitalindia.gov.in",
   footerRights: "© 2026 Sahayog. Empowering citizens across India with seamless access to welfare schemes.",
 };
+
