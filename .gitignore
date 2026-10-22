@@ -1,9 +1,63 @@
-node_modules/
-chroma_db/
-__pycache__/
-*.pyc
+# Environment variables and secrets
 .env
+.env.*
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
 dist/
-.venv/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
 *.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+**/.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Vector database & temporary caches
+chroma_db/
+backend/chroma_db/
 scratch/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node & Frontend
+node_modules/
+**/node_modules/
+frontend/dist/
+dist/
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
