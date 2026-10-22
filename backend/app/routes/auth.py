@@ -1,5 +1,5 @@
 import asyncio
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException
 from datetime import datetime
 from pymongo.errors import DuplicateKeyError
 import json

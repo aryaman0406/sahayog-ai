@@ -27,7 +27,6 @@ os.chdir(Path(__file__).parent.parent)
 
 logging.basicConfig(level=logging.WARNING)  # Suppress verbose startup logs
 
-from app.config import settings  # noqa: E402
 from app.rag.embedder import build_index  # noqa: E402
 from app.data.schemes import get_all_schemes  # noqa: E402
 

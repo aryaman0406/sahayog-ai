@@ -1,7 +1,6 @@
 import math
-from typing import List, Optional
+from typing import Optional
 from fastapi import APIRouter, Query
-from pydantic import BaseModel
 
 router = APIRouter(prefix="/api/centers", tags=["Centers"])
 

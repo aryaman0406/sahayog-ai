@@ -67,23 +67,3 @@ export function getCategoryLabel(rawCategory, t) {
   return t(key) || rawCategory || "General 📜";
 }
 
-export const CATEGORY_EMOJIS = {
-  catAgriculture: "🌾",
-  catHealthcare: "🏥",
-  catHousing: "🏠",
-  catEducation: "🎓",
-  catEmployment: "💼",
-  catSocialWelfare: "🤝",
-  catBusiness: "🏢",
-  catBanking: "🏦",
-  catWomenChild: "👩‍👧",
-  catUtility: "🧹",
-  catTransport: "🚜",
-  catTravel: "🧳",
-  catSports: "🏆",
-  catScience: "💻",
-  catSafety: "⚖️",
-  catHousehold: "🔥",
-  catPension: "👵",
-  catGeneral: "📜"
-};
